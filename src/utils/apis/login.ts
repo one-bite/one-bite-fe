@@ -4,8 +4,20 @@ export interface LoginResponseProps {
     user_email: string;
 }
 
+import { mockLoggedInUser } from "@/app/_mocks/mockUser";
+
 export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginResponseProps> => {
     try {
+        console.log("[MOCK] fetchAccessTokenFromGoogle 실행 (code:", code, ")");
+
+        if(process.env.NODE_ENV === "development") {
+            return {
+                access_token: mockLoggedInUser.access_token,
+                refresh_token: mockLoggedInUser.refresh_token,
+                user_email: mockLoggedInUser.user_email,
+            };
+        }
+
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
         const response = await fetch(`${apiUrl}oauth/google/login?auth_code=${code}`, {
@@ -28,6 +40,15 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
 
 export const validateUserEmail = async (access_token: string, user_email: string): Promise<{ res: string; auth: boolean }> => {
     try {
+
+        if (process.env.NODE_ENV === "development") {
+            console.log("[MOCK] validateUserEmail 실행");
+            return {
+                res: "MOCK: 인증 성공",
+                auth: true,
+            };
+        }
+
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
         const response = await fetch(`${apiUrl}oauth/google/auth?email=${user_email}`, {
