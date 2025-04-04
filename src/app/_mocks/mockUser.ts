@@ -1,6 +1,5 @@
 
 export const mockLoggedInUser = {
-  access_token: "mock_access_token_123",
-  refresh_token: "mock_refresh_token_456",
-  user_email: "mockuser@hanip.dev",
+  accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5ld191c2VyIjpmYWxzZSwiZXhwIjoxNzQzMTI4MTQ5LCJpYXQiOjE3NDM1MTEwNTh9.afQzLwUa2E32C2OMPBUslRDbPPDlNOsDn7O6gKmqDL8",
+  refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5ld191c2VyIjpmYWxzZSwiZXhwIjoxNzQzMTI4MTQ5LCJpYXQiOjE3NDM1MTEwNTh9.afQzLwUa2E32C2OMPBUslRDbPPDlNOsDn7O6gKmqDL8",
 };
