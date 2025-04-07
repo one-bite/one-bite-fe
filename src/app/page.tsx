@@ -1,13 +1,13 @@
 "use client";
 
 import { Github, Link } from "lucide-react";
-import MyButton from "./_components/MyButton";
+import StartQuizButton from "app/_components/main/StartQuizButton";
 
 export default function Page() {
     return (
         <>
             <div className="m-16">
-                <MyButton onClick={() => alert("시작!")}>학습 시작하기</MyButton>
+                <StartQuizButton subject="Python" />
             </div>
 
             <footer className="mt-16 p-4">

@@ -2,9 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import { Navbar, NavbarBrand, NavbarContent, Link, DropdownTrigger, Dropdown, Avatar } from "@nextui-org/react";
-import Menu from "./Menu";
-import { Logo } from "./icon/LogoIcon";
-import UserStats from "./UserStats"; // 추가!
+import { Logo } from "../icon/LogoIcon";
+import UserStats from "./UserStats";
+import ProfileMenu from "./ProfileMenu"; // 추가!
 
 export default function App() {
     const pathname = usePathname();
@@ -12,7 +12,7 @@ export default function App() {
     return (
         <Navbar className="bg-violet">
             <NavbarBrand>
-                <Link href="/" className="flex items-center">
+                <Link href="/spaghetti-fe/public" className="flex items-center">
                     <Logo />
                     <p className="font-bold text-white text-lg">한입코딩</p>
                 </Link>
@@ -32,7 +32,7 @@ export default function App() {
                             src="/defaultAvatar.png"
                         />
                     </DropdownTrigger>
-                    <Menu />
+                    <ProfileMenu />
                 </Dropdown>
             </NavbarContent>
         </Navbar>

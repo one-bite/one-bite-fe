@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/app/_components/Header";
+import Header from "app/_components/header/Header";
 import PageInfo from "@/app/_components/PageInfo";
 import { Button, Card, CardBody } from "@nextui-org/react";
 import GoogleIcon from "@/app/_components/icon/GoogleIcon";

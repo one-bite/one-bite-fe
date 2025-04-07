@@ -16,6 +16,9 @@ export default {
                 secondary: "#8ECEAA",
                 violet: "#7c3aed",
             },
+            fontFamily: {
+                line: ['LINESeedKR', 'sans-serif'],
+            },
         },
     },
     plugins: [nextui()],

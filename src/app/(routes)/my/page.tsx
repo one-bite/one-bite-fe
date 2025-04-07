@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/_components/Header";
+import Header from "app/_components/header/Header";
 import PageInfo from "@/app/_components/PageInfo";
 import { validateUserEmail, removeLocalUserData } from "@/utils/apis/login";
 import { Button, Spacer } from "@nextui-org/react";
@@ -17,7 +17,7 @@ const MyPage = () => {
         const accessToken = localStorage.getItem("access_token");
         const userEmail = localStorage.getItem("user_email");
 
-        if (!accessToken || !userEmail) {
+        if (!accessToken || !userEmail) { //Email 검사 제거?
             router.push("/login");
             return;
         }
@@ -55,9 +55,8 @@ const MyPage = () => {
     };
 
     return (
-        <>
+        <div>
             <PageInfo title="내 프로필" description="프로필 정보를 확인하고 변경할 수 있습니다." />
-
             <div className="container mx-auto p-6">
                 <div className="mt-4 space-y-4">
                     <div className="flex flex-row items-center">
@@ -81,7 +80,7 @@ const MyPage = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
