@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import Header from "@/app/_components/Header";
+import Header from "app/_components/header/Header";
 import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
 import { mockLoggedInUser } from "@/app/_mocks/mockUser";
@@ -38,7 +38,6 @@ const GoogleCallback = () => {
 
                         localStorage.setItem("access_token", data.accessToken);
                         localStorage.setItem("refresh_token", data.refreshToken);
-                        //localStorage.setItem("user_email", data.user_email); // 
                         localStorage.setItem("user_email", decoded.sub);
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
