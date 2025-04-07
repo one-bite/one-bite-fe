@@ -12,7 +12,7 @@ export default function App() {
     return (
         <Navbar className="bg-violet">
             <NavbarBrand>
-                <Link href="/spaghetti-fe/public" className="flex items-center">
+                <Link href="/" className="flex items-center">
                     <Logo />
                     <p className="font-bold text-white text-lg">한입코딩</p>
                 </Link>
