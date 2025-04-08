@@ -18,7 +18,7 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, gold,
 
     return (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-            <div className="bg-white rounded-[30px] w-[360px] px-6 py-8 shadow-xl text-center border-2 border-blue-300">
+            <div className="bg-white rounded-[30px] w-[360px] px-6 py-8 shadow-xl text-center border-none">
                 {/* 제목 */}
                 <h2 className="text-2xl font-extrabold mb-6">
                     <span className={isCorrect ? "text-lime-500" : "text-red-500"}>{isCorrect ? "정답" : "오답"}</span>
@@ -26,21 +26,21 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, gold,
                 </h2>
 
                 {/* 점수 */}
-                <div className={`text-[28px] font-extrabold mb-1 ${isCorrect ? "text-blue-500" : "text-orange-400"}`}>
+                <div className={`flex justify-center items-baseline gap-2 text-6xl font-extrabold mb-1 ${isCorrect ? "text-blue-500" : "text-orange-400"}`}>
                     {isCorrect ? `+ ${score}` : `- ${score}`}
+                    <div className="text-xs mb-6">레이팅 포인트</div>
                 </div>
-                <div className="text-xs text-gray-500 mb-6">레이팅 포인트</div>
 
                 {/* 정답일 때만 추가 정보 */}
                 {isCorrect && (
                     <div className="flex flex-col items-center text-sm text-gray-800 gap-2 mb-6">
-                        <div className="flex items-center gap-2">
-                            <StreakIcon className="w-4 h-4"></StreakIcon>
-                            <span className="text-red-500 font-semibold">{remaining} Problems Left</span>
+                        <div className="flex items-center gap-2 text-red-500">
+                            <StreakIcon className="w-4 h-4"/>
+                            <span className="font-semibold">{remaining} Problems Left</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <PointIcon className="w-4 h-4"></PointIcon>
-                            <span className="text-yellow-600 font-semibold">+ {gold} Gold</span>
+                        <div className="flex items-center gap-2  text-yellow-500">
+                            <PointIcon className="w-4 h-4"/>
+                            <span className="font-semibold">+ {gold} Gold</span>
                         </div>
                     </div>
                 )}
