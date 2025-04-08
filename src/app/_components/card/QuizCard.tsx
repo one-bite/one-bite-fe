@@ -46,8 +46,9 @@ const QuizCard: React.FC<QuizCardProps> = ({
                 <AnswerOptions options={options} onSelect={onSelect} selected={selected} />
                 <div className="flex justify-start"></div>
                 <div className="flex justify-end mt-8 gap-4">
-                    <MyButton className="bg-purple-500 hover:bg-purple-600" onClick={handleAskAI}>
-                        AI에게 물어보기
+                    <MyButton className="bg-gradient-to-r from-indigo-600 to-purple-500
+                     shadow-purple-900 hover:bg-purple-600 active:shadow-purple-900" onClick={handleAskAI}>
+                        AI에 질문하기
                     </MyButton>
                     <MyButton onClick={handleSubmit}>정답 제출 →</MyButton>
                 </div>
