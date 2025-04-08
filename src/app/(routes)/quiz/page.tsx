@@ -17,9 +17,9 @@ const Quiz = () => {
             <div className="flex justify-center">
                 <QuestionCard
                     leftStreak={9}
-                    courseTitle="Python 기초"
+                    subject="Python 기초"
                     question="다음 중 Python에서 리스트(List)를 생성하는 방법으로 올바른 것은?"
-                    options={["<section>", "<article>", "<div>", "<header>"]}
+                    options={["list = (1, 2, 3)", "print = (1, 2, 3)", "select = (1, 2, 3)", "option = (1, 2, 3)"]}
                     onSelect={handleAnswer}
                     selected={selected}
                 />
