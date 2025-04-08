@@ -25,7 +25,7 @@ const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQ
             w-64 h-12
             text-white text-base font-line font-bold
             bg-lime-500
-            rounded-[15px]
+            rounded-2xl
             shadow-[0_3px_0_#65A30D] /* lime-600 */
             hover:bg-lime-400
             active:translate-y-[3px]

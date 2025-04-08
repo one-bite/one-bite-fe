@@ -1,27 +1,34 @@
 "use client";
 
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { useState } from "react";
 import React from "react";
-import MyButton from "app/_components/MyButton";
+import QuestionCard from "app/_components/card/QuizCard";
 
 const Quiz = () => {
-    const handle = () => {
-        console.log("클릭됨");
+    const [selected, setSelected] = useState<string | null>(null);
+
+    const handleAnswer = (answer: string) => {
+        console.log("선택됨:", answer);
+        setSelected(answer);
     };
 
     return (
-        <div className="min-h-screen">
-            <div className="flex justify-center m-4 text-gray-500 text-xs">
-                <p>문제 풀이 페이지</p>
+        <div className="m-12 min-h-screen p-4">
+            <div className="flex justify-center">
+                <QuestionCard
+                    leftStreak={9}
+                    courseTitle="Python 기초"
+                    question="다음 중 Python에서 리스트(List)를 생성하는 방법으로 올바른 것은?"
+                    options={["<section>", "<article>", "<div>", "<header>"]}
+                    onSelect={handleAnswer}
+                    selected={selected}
+                />
             </div>
-            <div className="flex gap-4">
-                <MyButton className="bg-purple-500 hover:bg-purple-600" onClick={handle}>
-                    AI에게 물어보기
-                </MyButton>
-                <MyButton onClick={handle}>정답 제출 →</MyButton>
-            </div>
+
+
         </div>
     );
 };
 
 export default Quiz;
+
