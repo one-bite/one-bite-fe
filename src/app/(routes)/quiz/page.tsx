@@ -20,6 +20,7 @@ const Quiz = () => {
                     subject="Python 기초"
                     question="다음 중 Python에서 리스트(List)를 생성하는 방법으로 올바른 것은?"
                     options={["list = (1, 2, 3)", "print = (1, 2, 3)", "select = (1, 2, 3)", "option = (1, 2, 3)"]}
+                    correctAnswer="list = (1, 2, 3)"
                     onSelect={handleAnswer}
                     selected={selected}
                 />
