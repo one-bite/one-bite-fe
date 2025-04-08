@@ -54,13 +54,9 @@ console.log("일치 여부:", selected === correctAnswer);
                         <b>{leftStreak}문제</b>만 더 풀면 스트릭을 쌓아요
                     </p>
                 </div>
-<<<<<<< Updated upstream
-                <p className="text-xs text-gray-400 mb-1">한입코딩 > 코스 > {subject}</p>
-=======
                 <p className="text-xs text-gray-400 mb-1">
                     한입코딩 {">"} 코스 {">"} {subject}
                 </p>
->>>>>>> Stashed changes
                 <h2 className="text-lg font-semibold mb-4">{question}</h2>
                 <AnswerOptions options={options} onSelect={onSelect} selected={selected} />
                 <div className="flex justify-start"></div>
