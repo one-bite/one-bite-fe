@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import React from "react";
-import MyButton from "app/_components/MyButton";
 import QuestionCard from "app/_components/card/QuizCard";
 
 const Quiz = () => {
