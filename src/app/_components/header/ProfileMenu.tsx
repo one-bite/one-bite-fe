@@ -4,9 +4,9 @@ import { DropdownItem, DropdownMenu } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 // import { ThemeSwitcher } from "@/app/_components/ThemeSwitcher";
 import { useEffect, useState } from "react";
-import GoogleIcon from "./icon/GoogleIcon";
+import GoogleIcon from "../icon/GoogleIcon";
 
-export default function Menu() {
+export default function ProfileMenu() {
     const router = useRouter();
     const [userEmail, setUserEmail] = useState<string | null>(null);
 

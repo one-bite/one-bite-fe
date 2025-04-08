@@ -1,3 +1,5 @@
+import { mockLoggedInUser } from "@/app/_mocks/mockUser";
+
 export interface LoginResponseProps {
     access_token: string;
     refresh_token: string;
@@ -6,9 +8,14 @@ export interface LoginResponseProps {
 
 export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginResponseProps> => {
     try {
+
+        if (!code) {
+            throw new Error("Authorization code is missing.");
+        }
+
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-        const response = await fetch(`${apiUrl}oauth/google/login?auth_code=${code}`, {
+        const response = await fetch(`${apiUrl}oauth/google/login?token=${code}`, {
             method: "GET",
         });
 
@@ -20,6 +27,7 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
 
         const data: LoginResponseProps = await response.json();
         return data;
+
     } catch (error) {
         console.error("Login Failed: ", error);
         throw new Error("로그인 처리 중 오류가 발생했습니다.");
@@ -28,6 +36,10 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
 
 export const validateUserEmail = async (access_token: string, user_email: string): Promise<{ res: string; auth: boolean }> => {
     try {
+        if (!access_token || !user_email) {
+            throw new Error("Access token or user email is missing.");
+        }
+
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
         const response = await fetch(`${apiUrl}oauth/google/auth?email=${user_email}`, {
