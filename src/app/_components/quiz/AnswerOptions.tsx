@@ -17,7 +17,7 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
                     key={index}
                     fullWidth
                     variant={selected === option ? "bordered" : "bordered"}
-                    color={selected === option ? "primary" : undefined}
+                    color={selected === option ? "primary" : "default"}
                     onPress={() => onSelect(option)}
                     className="justify-start bg-gray-100"
                 >
