@@ -3,9 +3,8 @@
 import React, { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import Header from "app/_components/header/Header";
 import { jwtDecode } from "jwt-decode";
-import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
+//import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
 import { mockLoggedInUser } from "@/app/_mocks/mockUser";
 
 type Userinformation = {

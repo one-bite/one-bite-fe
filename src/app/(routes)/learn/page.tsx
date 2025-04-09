@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody } from "@nextui-org/react";
+//import { Button, Card, CardBody } from "@nextui-org/react";
 import React from "react";
 
 const Learn = () => {
