@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { Card, CardBody } from "@nextui-org/react";
-import MyButton from "app/_components/MyButton";
-import AnswerOptions from "app/_components/quiz/AnswerOptions";
-import ResultModal from "../quiz/ResultModal";
+import MyButton from "app/_components/buttons/MyButton";
+import AnswerOptions from "app/_components/options/AnswerOptions";
+import ResultModal from "../modals/ResultModal";
 
 interface QuizCardProps {
     leftStreak: number;

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import MyButton from "@/app/_components/MyButton";
-import ResultModal from "@/app/_components/quiz/ResultModal";
+import MyButton from "app/_components/buttons/MyButton";
+import ResultModal from "app/_components/modals/ResultModal";
 
 export default function Test() {
     const [showModal, setshowModal] = useState(false);
