@@ -5,20 +5,33 @@
 
 
 :root {
-    font-family: --apple-system, "Pretendard Variable", "Segoe UI", sans-serif, "LINESeedKR";
+    font-family: --apple-system, "Pretendard Variable", "Segoe UI", sans-serif, "LINESeedKR-Rg", "LINESeedKR-B";
     --background: #f8f9fa;
 }
 
 body {
-    font-family: 'LINESeedKR';
+    font-family: 'LINESeedKR-Rg';
 }
 
 @font-face {
-    font-family: 'LINESeedKR';
+    font-family: 'LINESeedKR-Rg';
     src: url('../../public/fonts/LINESeedKR-Rg.woff2') format('woff2');
-    font-weight: 400;
+    font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'LINESeedKR-B';
+    src: url('../../public/fonts/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Jungnajoch-M';
+    src: url('../../public/fonts/Jungnajoch-Medium.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 /* :root {
   --font-pretendard: "Pretendard Variable", sans-serif;
   --background: #ffffff;

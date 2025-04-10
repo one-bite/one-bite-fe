@@ -1,8 +1,8 @@
 "use client";
 
 import StreakIcon from "../icon/StreakIcon";
-import PointIcon from "../icon/PointIcon";
-import MyButton from "../MyButton";
+import GoldIcon from "../icon/GoldIcon";
+import MyButton from "../buttons/MyButton";
 
 interface ResultModalProps {
     isOpen: boolean; //모달 열까 말까
@@ -39,7 +39,7 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, gold,
                             <span className="font-semibold">{remaining} Problems Left</span>
                         </div>
                         <div className="flex items-center gap-2  text-yellow-500">
-                            <PointIcon className="w-4 h-4"/>
+                            <GoldIcon className="w-4 h-4"/>
                             <span className="font-semibold">+ {gold} Gold</span>
                         </div>
                     </div>
