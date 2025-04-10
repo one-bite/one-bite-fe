@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import MyButton from "app/_components/MyButton";
@@ -22,6 +23,8 @@ const QuizCard: React.FC<QuizCardProps> = ({ leftStreak, subject, question, opti
     const [score, setScore] = useState(0);
     const [showModal, setShowModal] = useState(false);
 
+    const router = useRouter();
+
     const handleAskAI = () => {
         console.log("AI에게 질문!");
     };
@@ -39,8 +42,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ leftStreak, subject, question, opti
     
     const handleNext = () => {
         console.log("다음 문제로 이동");
-        setShowModal(false);
-        setIsCorrect(null);
+        router.push("/results"); 
     };
 
     return (
