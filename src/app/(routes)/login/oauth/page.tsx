@@ -4,7 +4,7 @@ import React, { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
-//import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
+import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
 import { mockLoggedInUser } from "@/app/_mocks/mockUser";
 
 type Userinformation = {
@@ -26,9 +26,9 @@ const GoogleCallback = () => {
         if (code) {
             const fetchAccessToken = async () => {
                 try {
-                    // const data: LoginResponseProps = await fetchAccessTokenFromGoogle(code); // 실제 배포시 적용할 부분
+                    const data: LoginResponseProps = await fetchAccessTokenFromGoogle(code);
 
-                    const data = mockLoggedInUser;
+                    //const data = mockLoggedInUser;
 
                     if (data.accessToken) {
                         if (typeof window === "undefined") return;

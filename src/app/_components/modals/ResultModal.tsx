@@ -1,7 +1,7 @@
 "use client";
 
 import StreakIcon from "../icon/StreakIcon";
-import GoldIcon from "../icon/GoldIcon";
+import GoldIcon from "../icon/PointIcon";
 import MyButton from "../buttons/MyButton";
 
 interface ResultModalProps {

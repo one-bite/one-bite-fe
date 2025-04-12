@@ -1,13 +1,13 @@
 "use client";
 
 import { Github, Link } from "lucide-react";
-import StartQuizButton from "app/_components/main/StartQuizButton";
+import DailyStreakCard from "app/_components/card/DailyStreakCard";
 
 export default function Page() {
     return (
         <>
-            <div className="m-16">
-                <StartQuizButton subject="Python" />
+            <div>
+                <DailyStreakCard className="m-16" />
             </div>
 
             <footer className="mt-16 p-4">
