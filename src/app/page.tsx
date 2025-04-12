@@ -7,7 +7,7 @@ export default function Page() {
     return (
         <>
             <div>
-                <DailyStreakCard className="m-16" />
+                <DailyStreakCard className="m-16" streakleftquiz={10}/>
             </div>
 
             <footer className="mt-16 p-4">

@@ -5,17 +5,21 @@ import BigCard from "app/_components/base_components/BigCard"
 import StreakIcon from "app/_components/icon/StreakIcon";
 import StartQuizButton from "app/_components/buttons/StartQuizButton";
 
-const DailyStreakCard = () => {
+interface DailyStreakCardProps {
+    streakleftquiz: number;
+}
+
+const DailyStreakCard = ({ streakleftquiz = 8 }: DailyStreakCardProps) => {
     return(
         <BigCard className="m-16 w-[880px] border border-lime-400">
             <div className="flex justify-between">
                 <div className="flex justify-center items-center p-8 w-1/2
-                                bg-[radial-gradient(ellipse_at_bottom,_rgba(251,146,60,0.3),_transparent_80%)]">
+                                bg-[radial-gradient(ellipse_at_bottom,_rgba(251,146,60,0.3),_transparent_70%)]">
                     <StreakIcon className="m-4 size-32 text-red-500"/>
                     <div>
                         <p className="text-lg font-linebold">오늘 스트릭 달성까지</p>
-                        <h1 className="text-3xl font-linebold">
-                            <span className="text-4xl text-orange-500 font-linebold">{8/*남은 스트릭 변수*/}문제</span>
+                        <h1 className="text-3xl font-linebold whitespace-nowrap">
+                            <span className="text-4xl text-red-500 font-linebold">{streakleftquiz}문제 </span>
                             남았어요!
                         </h1>
                     </div>
