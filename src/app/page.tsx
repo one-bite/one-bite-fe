@@ -11,7 +11,7 @@ export default function Page() {
                 <DailyStreakCard className="m-16" streakleftquiz={10}/>
             </div>
             <div>
-                <ResumeCourseButton subject={"Python"}/>
+                <ResumeCourseButton courseName={"Python"}/>
             </div>
             <footer className="mt-16 p-4">
                 <div className="flex justify-center space-x-4">
