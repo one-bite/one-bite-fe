@@ -2,6 +2,7 @@
 
 import { Github, Link } from "lucide-react";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
+import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 
 export default function Page() {
     return (
@@ -9,7 +10,9 @@ export default function Page() {
             <div>
                 <DailyStreakCard className="m-16" streakleftquiz={10}/>
             </div>
-
+            <div>
+                <ResumeCourseButton courseName={"Python"}/>
+            </div>
             <footer className="mt-16 p-4">
                 <div className="flex justify-center space-x-4">
                     <a
