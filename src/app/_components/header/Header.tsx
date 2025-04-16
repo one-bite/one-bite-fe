@@ -29,7 +29,7 @@ export default function App() {
                             color="default"
                             name="Jason Hughes"
                             size="sm"
-                            src="/defaultAvatar.png"
+                            src="/icons/defaultAvatar.png"
                         />
                     </DropdownTrigger>
                     <ProfileMenu />
