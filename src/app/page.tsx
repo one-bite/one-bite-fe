@@ -3,6 +3,7 @@
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
+import BigCard from "app/_components/base_components/BigCard";
 
 export default function Page() {
     return (
@@ -15,8 +16,11 @@ export default function Page() {
                     <CourseButton iconType="python" label="파이썬 기초" bgColor="bg-blue-200" />
                 </div>
             </div>
-            <div>
+            <div className="flex">
                 <ResumeCourseButton courseName={"Python"}/>
+                <BigCard className="flex m-4 w-[560px] h-[232px] bg-white">
+                    <h2>여기에 코스 진척도 % 표시 (미정)</h2>
+                </BigCard>
             </div>
         </>
     );
