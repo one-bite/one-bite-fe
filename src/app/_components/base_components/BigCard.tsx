@@ -8,7 +8,7 @@ interface BigCardProps {
 
 const BigCard = ({ children, className = "" }: BigCardProps) => {
     return (
-        <Card className={`w-full bg-white rounded-3xl ${className}`}>
+        <Card className={`flex justify-center items-center m-16 rounded-3xl ${className}`}>
             {children}
         </Card>
     );
