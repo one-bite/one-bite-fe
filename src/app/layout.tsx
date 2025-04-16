@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Providers } from "./providers";
 import "./globals.css";
 import Header from "./_components/header/Header";
+import Footer from "./_components/Footer";
 import env from "./_configs/env"
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <Providers>{children}</Providers>
                     </div>
                 </div>
+                <Footer />
             </body>
         </html>
     );
