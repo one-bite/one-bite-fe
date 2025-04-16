@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { quizProblems } from "@/app/_mocks/quizProblems";
 import QuizCard from "@/app/_components/card/QuizCard";
-import MyButton from "@/app/_components/MyButton";
-import ResultModal from "@/app/_components/quiz/ResultModal";
+import MyButton from "app/_components/buttons/MyButton";
+import ResultModal from "app/_components/modals/ResultModal";
 
 const QuizPage = () => {
   const router = useRouter();

@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import PointIcon from "@/app/_components/icon/PointIcon";
-import MyButton from "@/app/_components/MyButton";
+import MyButton from "app/_components/buttons/MyButton";
 
 interface ResultCardProps {
   correctAnswers: number;
