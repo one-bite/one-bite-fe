@@ -2,7 +2,8 @@
 
 import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
-import AnswerOptions from "@/app/_components/quiz/AnswerOptions";
+import AnswerOptions from "app/_components/options/AnswerOptions";
+
 
 interface QuizCardProps {
   leftStreak: number;  // 남은 문제 수

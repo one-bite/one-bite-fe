@@ -17,12 +17,14 @@ export default {
                 violet: "#7c3aed",
             },
             fontFamily: {
-                line: ['LINESeedKR', 'sans-serif'],
+                line: ['LINESeedKR-Rg', 'sans-serif'],
+                linebold: ['LINESeedKR-B', 'sans-serif'],
+                jungM : ['Jungnajoch-M' , 'sans-serif']
             },
         },
     },
     plugins: [nextui()],
-} satisfies Config;
+} as Config;
 
 // nextui({
 //   prefix: "nextui",
