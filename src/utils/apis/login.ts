@@ -1,8 +1,8 @@
 //import { mockLoggedInUser } from "@/app/_mocks/mockUser";
 
 export interface LoginResponseProps {
-    access_token: string;
-    refresh_token: string;
+    accessToken: string;
+    refreshToken: string;
     user_email: string;
 }
 

@@ -12,7 +12,7 @@ interface DailyStreakCardProps {
 
 const DailyStreakCard = ({ streakleftquiz = 8 }: DailyStreakCardProps) => {
     return(
-        <BigCard className="m-16 w-[880px] h-[220px] border border-lime-400">
+        <BigCard className="m-8 w-[880px] h-[220px] border border-lime-400">
             <div className="flex justify-between">
                 <div className="flex justify-center items-center p-8 w-1/2
                                 bg-[radial-gradient(ellipse_at_bottom,_rgba(251,146,60,0.3),_transparent_70%)]">

@@ -1,6 +1,6 @@
-const PointIcon = () => {
+const PointIcon = ({ className = "size-6 text-lime-600" }: { className?: string }) => {
     return (
-    <h6 className = " size-6 text-lime-600">P</h6>
+    <h6 className = {className}>P</h6>
     );
 };
 
