@@ -9,7 +9,7 @@ export default function Page() {
     return (
         <>
             <div>
-                <DailyStreakCard className="m-8" streakleftquiz={10} />
+                <DailyStreakCard streakleftquiz={10} />
                 <div className="flex gap-2 justify-start mt-2 max-w-4xl mx-auto">
                     <CourseButton iconType="algorithm" label="알고리즘" bgColor="bg-purple-200" />
                     <CourseButton iconType="javascript" label="자바스크립트" bgColor="bg-yellow-200" />

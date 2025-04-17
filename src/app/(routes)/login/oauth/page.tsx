@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
-import { mockLoggedInUser } from "@/app/_mocks/mockUser";
+//import { mockLoggedInUser } from "@/app/_mocks/mockUser";
 
 type Userinformation = {
     sub: string;
