@@ -9,7 +9,8 @@ import env from "@/app/_configs/env";
 
 const Login = () => {
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${env.googleClientId}&access_type=offline&prompt=consent&redirect_uri=${env.frontendUrl}login/oauth&response_type=code&scope=email profile`;
-
+    console.log("googleAuthUrl: ", env.googleClientId);
+    console.log("googleAuthUrl: ", env.frontendUrl);
     return (
         <div className="min-h-screen">
             <PageInfo title="로그인" description="계속하려면 Google로 로그인하세요." />
