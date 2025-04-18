@@ -2,9 +2,6 @@
 
 FROM node:18-alpine AS base
 
-ARG API_URL
-ENV API_URL=$API_URL
-
 # Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
