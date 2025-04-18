@@ -8,6 +8,7 @@ export interface LoginResponseProps {
 
 export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginResponseProps> => {
     try {
+        console.log('code:' + code)
 
         if (!code) {
             throw new Error("Authorization code is missing.");
@@ -15,7 +16,7 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
 
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-        const response = await fetch(`${apiUrl}oauth/google/login?token=${code}`, {
+        const response = await fetch(`${apiUrl}/oauth/google?token=${code}`, {
             method: "GET",
         });
 
