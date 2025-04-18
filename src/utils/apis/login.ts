@@ -34,9 +34,9 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
     }
 };
 
-export const validateUserEmail = async (access_token: string, user_email: string): Promise<{ res: string; auth: boolean }> => {
+export const validateUserEmail = async (accessToken: string, user_email: string): Promise<{ res: string; auth: boolean }> => {
     try {
-        if (!access_token || !user_email) {
+        if (!accessToken || !user_email) {
             throw new Error("Access token or user email is missing.");
         }
 
@@ -45,7 +45,7 @@ export const validateUserEmail = async (access_token: string, user_email: string
         const response = await fetch(`${apiUrl}oauth/google/auth?email=${user_email}`, {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${accessToken}`,
             },
         });
 
@@ -65,7 +65,7 @@ export const validateUserEmail = async (access_token: string, user_email: string
 
 export const removeLocalUserData = (): void => {
     if (typeof window === "undefined") return;
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("accessToken");
     localStorage.removeItem("user_email");
     // window.location.href = "/login";
     // Router 사용

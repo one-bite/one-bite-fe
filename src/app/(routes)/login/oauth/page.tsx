@@ -35,8 +35,8 @@ const GoogleCallback = () => {
 
                         const decoded = jwtDecode<Userinformation>(data.accessToken);
 
-                        localStorage.setItem("access_token", data.accessToken);
-                        localStorage.setItem("refresh_token", data.refreshToken);
+                        localStorage.setItem("accessToken", data.accessToken);
+                        localStorage.setItem("refreshToken", data.refreshToken);
                         localStorage.setItem("user_email", decoded.sub);
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());

@@ -14,7 +14,7 @@ const MyPage = () => {
 
     useEffect(() => {
         if (typeof window === "undefined") return;
-        const accessToken = localStorage.getItem("access_token");
+        const accessToken = localStorage.getItem("accessToken");
         const userEmail = localStorage.getItem("user_email");
 
         if (!accessToken || !userEmail) { //Email 검사 제거?
@@ -48,7 +48,7 @@ const MyPage = () => {
     };
 
     const handleClearLocalStorage = () => {
-        localStorage.removeItem("access_token");
+        localStorage.removeItem("accessToken");
         localStorage.removeItem("user_email");
         alert("로컬 스토리지가 초기화되었습니다.");
         router.push("/login"); // 로그인 페이지로 리다이렉트
