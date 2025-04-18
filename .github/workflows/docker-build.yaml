@@ -44,6 +44,10 @@ jobs:
                   push: true
                   tags: |
                       ${{ env.TAGS }}
+                  build-args: |
+                      NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+                      GOOGLE_CLIENT_SECRET=${{secrets.GOOGLE_CLIENT_SECRET}}
+                      NEXT_PUBLIC_FRONTEND_URL=${{secrets.NEXT_PUBLIC_FRONTEND_URL}}
 
     call-update-k8s:
         needs: build-and-push
