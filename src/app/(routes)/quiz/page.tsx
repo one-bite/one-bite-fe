@@ -1,13 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { quizProblems } from "@/app/_mocks/quizProblems";
+import { fetchProblems } from "@/utils/apis/problem";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
 
 const QuizPage = () => {
+  const [problems, setProblems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProblems = async () => {
+      try {
+        const data = await fetchProblems();
+        setProblems(data);
+      } catch (error) {
+        console.error("문제 불러오기 오류:", error);
+        alert("문제를 불러오는 데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProblems();
+  }, []);
+
   const router = useRouter();
 
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
@@ -17,8 +36,8 @@ const QuizPage = () => {
   const [score, setScore] = useState(0); // 총 점수
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
 
-  const currentProblem = quizProblems[currentIndex];
-  const isLast = currentIndex === quizProblems.length - 1; // 마지막 문제 체크
+  const currentProblem = problems[currentIndex];
+  const isLast = currentIndex === problems.length - 1;
 
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
@@ -60,16 +79,20 @@ const QuizPage = () => {
     console.log("AI에게 질문!");
   };
 
+  if (loading || problems.length === 0) {
+    return <div className="text-center mt-10">문제를 불러오는 중입니다...</div>;
+  }
+
   return (
     <div className="m-12 min-h-screen p-4">
       <div className="flex justify-center">
         <QuizCard
-          leftStreak={quizProblems.length - currentIndex}
-          subject={currentProblem.title}
-          question={currentProblem.description}
-          options={currentProblem.options}
-          selected={selected}
-          onSelect={handleAnswer}
+            leftStreak={problems.length - currentIndex}
+            subject={currentProblem.title}
+            question={currentProblem.description.question}
+            options={currentProblem.description.options}
+            selected={selected}
+            onSelect={handleAnswer}
         />
       </div>
 
@@ -89,7 +112,7 @@ const QuizPage = () => {
         isOpen={showModal}
         isCorrect={selected === currentProblem.answer}
         score={score}
-        remaining={quizProblems.length - currentIndex - 1}
+        remaining={problems.length - currentIndex - 1}
         gold={correctCount * 10}
         onNext={handleNext}
         isLast={isLast}
