@@ -5,10 +5,12 @@ import PageInfo from "@/app/_components/PageInfo";
 import { Button, Card, CardBody } from "@nextui-org/react";
 import GoogleIcon from "@/app/_components/icon/GoogleIcon";
 import React from "react";
-//import env from "@/app/_configs/env";
 
 const Login = () => {
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&access_type=offline&prompt=consent&redirect_uri=${process.env.NEXT_PUBLIC_FRONTEND_URL}login/oauth&response_type=code&scope=email profile`;
+
+    const redirectUri = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/login/oauth`;
+
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&access_type=offline&prompt=consent&redirect_uri=${redirectUri}&response_type=code&scope=email profile`;
     return (
         <div className="min-h-screen">
             <PageInfo title="로그인" description="계속하려면 Google로 로그인하세요." />
