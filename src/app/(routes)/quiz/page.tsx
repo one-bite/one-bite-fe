@@ -6,9 +6,10 @@ import { fetchProblems } from "@/utils/apis/problem";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
+import {QuizProblem} from "app/_configs/types/quiz";
 
 const QuizPage = () => {
-  const [problems, setProblems] = useState([]);
+  const [problems, setProblems] = useState<QuizProblem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,6 +36,8 @@ const QuizPage = () => {
   const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
   const [score, setScore] = useState(0); // 총 점수
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
 
   const currentProblem = problems[currentIndex];
   const isLast = currentIndex === problems.length - 1;
@@ -49,15 +52,15 @@ const QuizPage = () => {
       return;
     }
 
-    const isCorrect = selected === currentProblem.answer;
+    const correct = selected === currentProblem.answer;
+    setIsCorrect(correct);
 
     // 맞힌 문제는 점수 부여
-    if (isCorrect) {
+    if (correct) {
       setCorrectCount((prev) => prev + 1);
       setScore((prev) => prev + 10);
     } else {
       setWrongCount((prev) => prev + 1);
-      setScore((prev) => prev); // 틀리면 점수 변화 없음
     }
 
     setShowModal(true); // 모달 표시
@@ -110,11 +113,11 @@ const QuizPage = () => {
 
       <ResultModal
         isOpen={showModal}
-        isCorrect={selected === currentProblem.answer}
+        isCorrect={isCorrect ?? false}
         score={score}
         remaining={problems.length - currentIndex - 1}
         gold={correctCount * 10}
-        onNext={handleNext}
+        onNextAction={handleNext}
         isLast={isLast}
       />
     </div>

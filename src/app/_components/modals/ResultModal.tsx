@@ -10,11 +10,11 @@ interface ResultModalProps {
     score: number; // 스코어 변화
     remaining: number; // 남은 문제 수. 정답일 때만 표시
     gold: number; // 보상. 정답일 때만 표시
-    onNext: () => void; //닫기 or 다음 문제로 넘어가기
+    onNextAction: () => void; //닫기 or 다음 문제로 넘어가기
     isLast: boolean; // 마지막 문제인지 여부
 }
 
-export default function ResultModal({ isOpen, isCorrect, score, remaining, gold, onNext, isLast }: ResultModalProps) {
+export default function ResultModal({ isOpen, isCorrect, score, remaining, gold, onNextAction, isLast }: ResultModalProps) {
     if (!isOpen) return null;
 
     return (
@@ -44,7 +44,7 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, gold,
                 )}
 
                 {/* 버튼 텍스트 조건에 따라 변경 */}
-                <MyButton onClick={onNext} className="w-full text-sm py-3">
+                <MyButton onClick={onNextAction} className="w-full text-sm py-3">
                     {isLast ? "결과 보기 →" : isCorrect ? "다음 문제로 이동" : "다시 풀어보기"}
                 </MyButton>
             </div>
