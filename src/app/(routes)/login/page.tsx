@@ -9,8 +9,6 @@ import React from "react";
 
 const Login = () => {
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&access_type=offline&prompt=consent&redirect_uri=${process.env.NEXT_PUBLIC_FRONTEND_URL}login/oauth&response_type=code&scope=email profile`;
-    console.log("googleAuthUrl: ", process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
-    console.log("googleAuthUrl: ", process.env.NEXT_PUBLIC_FRONTEND_URL);
     return (
         <div className="min-h-screen">
             <PageInfo title="로그인" description="계속하려면 Google로 로그인하세요." />
