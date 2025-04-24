@@ -52,7 +52,6 @@ jobs:
                       ${{ env.TAGS }}
                   build-args: |
                       NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
-                      GOOGLE_CLIENT_SECRET=${{secrets.GOOGLE_CLIENT_SECRET}}
                       NEXT_PUBLIC_FRONTEND_URL=${{secrets.NEXT_PUBLIC_FRONTEND_URL}}
                       NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
 
