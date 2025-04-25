@@ -41,7 +41,7 @@ export const validateUserEmail = async (accessToken: string, user_email: string)
 
         const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-        const response = await fetch(`${apiUrl}oauth/google/auth?email=${user_email}`, {
+        const response = await fetch(`${apiUrl}/oauth/google/auth?email=${user_email}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
