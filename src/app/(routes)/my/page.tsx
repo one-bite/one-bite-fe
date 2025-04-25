@@ -14,19 +14,20 @@ const MyPage = () => {
 
     useEffect(() => {
         if (typeof window === "undefined") return;
-        const accessToken = localStorage.getItem("accessToken");
-        const userEmail = localStorage.getItem("user_email");
 
-        if (!accessToken || !userEmail) { //Email 검사 제거?
+        const accessToken = localStorage.getItem("accessToken");
+        const user_email = localStorage.getItem("user_email");
+
+        if (!accessToken || !user_email) { //Email 검사 제거?
             router.push("/login");
             return;
         }
 
-        setUserEmail(userEmail);
+        setUserEmail(user_email);
 
         const checkUserValidity = async () => {
             try {
-                const { res, auth } = await validateUserEmail(accessToken, userEmail);
+                const { res, auth } = await validateUserEmail(accessToken, user_email);
 
                 if (!auth) {
                     removeLocalUserData();
@@ -39,6 +40,7 @@ const MyPage = () => {
                 router.push("/login");
             }
         };
+
         checkUserValidity();
     }, [router]);
 
