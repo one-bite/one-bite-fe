@@ -39,6 +39,8 @@ const GoogleCallback = () => {
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
 
+
+
                         router.push("/");
 
                     } else {
