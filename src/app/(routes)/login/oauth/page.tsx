@@ -21,8 +21,6 @@ const GoogleCallback = () => {
     useEffect(() => {
         const code = searchParams.get("code");
 
-        console.log("code: ", code);
-
         if (code) {
             const fetchAccessToken = async () => {
                 try {
