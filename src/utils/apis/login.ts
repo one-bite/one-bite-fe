@@ -34,7 +34,6 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
 };
 
 export const validateUserEmail = async (accessToken: string, user_email: string): Promise<{ res: string; auth: boolean }> => {
-    console.log("accessToken ===>", accessToken);
 
     try {
         if (!accessToken || !user_email) {
@@ -49,9 +48,6 @@ export const validateUserEmail = async (accessToken: string, user_email: string)
                 Authorization: `Bearer ${accessToken}`,
             },
         });
-
-        console.log("accessToken 됐나? :", accessToken);
-
 
         if (!response.ok) {
             const errorData = await response.json();

@@ -19,8 +19,6 @@ const MyPage = () => {
         const accessToken = localStorage.getItem("accessToken");
         const user_email = localStorage.getItem("user_email");
 
-        console.log("accessToken ===>", accessToken);
-
         if (!accessToken || !user_email) { //Email 검사 제거?
             router.push("/login");
             return;
@@ -44,7 +42,7 @@ const MyPage = () => {
             }
         };
 
-        checkUserValidity();
+        //checkUserValidity();
     }, [router]);
 
     const handleLogout = () => {
