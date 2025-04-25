@@ -7,6 +7,7 @@ import Header from "app/_components/header/Header";
 import PageInfo from "@/app/_components/PageInfo";
 import { validateUserEmail, removeLocalUserData } from "@/utils/apis/login";
 import { Button, Spacer } from "@nextui-org/react";
+import {jwtDecode} from "jwt-decode";
 
 const MyPage = () => {
     const router = useRouter();
