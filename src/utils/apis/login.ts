@@ -8,8 +8,6 @@ export interface LoginResponseProps {
 
 export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginResponseProps> => {
     try {
-        console.log('code:' + code)
-
         if (!code) {
             throw new Error("Authorization code is missing.");
         }

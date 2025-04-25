@@ -7,14 +7,10 @@ export interface ProblemDescription {
 }
 
 export interface QuizProblem {
-  id: number;
-  topicId: number;
   title: string;
   description: ProblemDescription;
   answer: string;
   score: number;
-  type: questionType;
+  questionType: questionType;
   difficulty: difficulty;
-  hint?: string;
-  options?: string[]; // 객관식인 경우
 }
