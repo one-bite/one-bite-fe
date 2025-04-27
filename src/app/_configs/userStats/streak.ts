@@ -3,7 +3,6 @@ const STREAK_KEY = "userStreak";
 export interface UserStreakData {
     totalStreak: number;       // 현재 총 스트릭 수
     todayQuizLeft: number;      // 오늘 남은 문제 수
-    todayStreakAchieved: boolean; // 오늘 스트릭 달성 여부
     streakHistory: string[];    // 스트릭 달성한 날짜 리스트 (ex: ["2025-04-14", "2025-04-15"])
 }
 
@@ -11,7 +10,6 @@ export interface UserStreakData {
 const defaultStreak: UserStreakData = {
     totalStreak: 0,
     todayQuizLeft: 10,
-    todayStreakAchieved: false,
     streakHistory: [],
 };
 
@@ -45,14 +43,13 @@ export function decreaseTodayQuizLeft(): void {
     const streakData = getStreak();
     const updatedQuizLeft = Math.max(0, streakData.todayQuizLeft - 1);
 
-    if (updatedQuizLeft === 0 && !streakData.todayStreakAchieved) {
+    if (updatedQuizLeft === 0) {
         // 오늘 스트릭 달성!
         const today = new Date().toISOString().split("T")[0]; // "2025-04-27" 형식
 
         setStreak({
             totalStreak: streakData.totalStreak + 1,
             todayQuizLeft: 0,
-            todayStreakAchieved: true,
             streakHistory: [...streakData.streakHistory, today],
         });
     } else {
@@ -66,6 +63,5 @@ export function decreaseTodayQuizLeft(): void {
 export function resetTodayStreak(): void {
     setStreak({
         todayQuizLeft: 10, // 목표 문제 수로 초기화
-        todayStreakAchieved: false,
     });
 }
