@@ -2,11 +2,12 @@
 
 import StreakIcon from "app/_components/icon/StreakIcon";
 import TierIcon from "app/_components/icon/TierIcon";
+import {getStreak, getPoint, getRank} from "app/_configs/userStats";
 
 export default function UserStats() {
-    const streak = 3;
-    const gold = 850;
-    const tier = "실버";
+    const streak = getStreak();
+    const point = getPoint();
+    const rank = getRank();
 
     return (
         <div className="flex items-center gap-2">
@@ -19,13 +20,13 @@ export default function UserStats() {
             {/* Points */}
             <div className="flex justify-between min-w-20 h-8 items-center gap-1 bg-white px-3 py-1 rounded-full">
                 <h4 className="text-lg font-linebold text-lime-600">P</h4>
-                <span className="text-lime-600 text-sm font-linebold">{gold}</span>
+                <span className="text-lime-600 text-sm font-linebold">{point}</span>
             </div>
 
             {/* Lives */}
             <div className="flex justify-between min-w-20 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
                 <TierIcon className="size-6 text-gray-500" />
-                <span className="text-gray-700 text-sm font-linebold">{tier}</span>
+                <span className="text-gray-700 text-sm font-linebold">{rank}</span>
             </div>
         </div>
     );
