@@ -2,7 +2,7 @@
 
 import StreakIcon from "app/_components/icon/StreakIcon";
 import TierIcon from "app/_components/icon/TierIcon";
-import {getStreak, getPoint, getRank} from "app/_configs/userStats";
+import { getStreak, getPoint, getRank } from "@/app/_configs/userStats";
 
 export default function UserStats() {
     const streak = getStreak();
@@ -14,7 +14,7 @@ export default function UserStats() {
             {/* Streak */}
             <div className="flex justify-between min-w-20 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
                 <StreakIcon className="size-6 text-red-500" />
-                <span className="text-red-900 text-sm font-linebold">{streak}</span>
+                <span className="text-red-900 text-sm font-linebold">{streak.totalStreak}</span>
             </div>
 
             {/* Points */}
