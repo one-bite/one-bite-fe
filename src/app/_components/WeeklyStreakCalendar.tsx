@@ -10,7 +10,7 @@ const WeeklyStreakCalendar = ({ streakDates }: WeeklyStreakCalendarProps) => {
 
     const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
     const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
-    
+
     const streakDateSet = new Set(streakDates);
 
     // 날짜만 문자열로 비교 (ex: 2025-04-15)
