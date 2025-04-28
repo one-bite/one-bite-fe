@@ -4,16 +4,14 @@ import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import BigCard from "app/_components/base_components/BigCard";
-import {getStreak} from "app/_configs/userStats";
+import {getStreak} from "@/utils/user";
 
 export default function Page() {
     const mystreak = getStreak();
     const todayStreakLeft = mystreak.todayStreakQuizLeft;
 
-    console.log("스트릭: " + mystreak.totalStreak + "스트릭달성까지 남은 문제: " + mystreak.todayStreakQuizLeft);
-
-
     return (
+
         <>
             <div>
                 <DailyStreakCard streakleftquiz={todayStreakLeft} />

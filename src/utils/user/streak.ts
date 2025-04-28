@@ -44,7 +44,7 @@ export function decreaseTodayQuizLeft(): void {
     const updatedQuizLeft = Math.max(0, streakData.todayStreakQuizLeft - 1);
 
     if (updatedQuizLeft === 0) {
-        // 오늘 스트릭 달성!
+        // 오늘 스트릭 달성
         const today = new Date().toISOString().split("T")[0]; // "2025-04-27" 형식
 
         setStreak({
