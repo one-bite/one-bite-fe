@@ -1,3 +1,5 @@
+import {fetchUserStreak} from "@/utils/apis/streakApi";
+
 const STREAK_KEY = "userStreak";
 
 export interface UserStreakData {
@@ -74,4 +76,18 @@ export function resetTodayStreak(): void {
     setStreak({
         todayStreakQuizLeft: 10, // 목표 문제 수로 초기화
     });
+}
+
+export async function syncUserStreak(){
+    try {
+        const serverData = await fetchUserStreak();
+
+        setStreak({
+            totalStreak: serverData.max_streak_count,
+            todayStreakQuizLeft: defaultStreak.todayStreakQuizLeft, // 서버가 따로 주지 않으면 기본 10
+            streakHistory: serverData.activeDates,
+        });
+    } catch (e) {
+        console.error("유저 스트릭 동기 실패:", e);
+    }
 }
