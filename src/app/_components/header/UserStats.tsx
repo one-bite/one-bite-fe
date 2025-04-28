@@ -2,7 +2,7 @@
 
 import StreakIcon from "app/_components/icon/StreakIcon";
 import TierIcon from "app/_components/icon/TierIcon";
-import { getStreak, getPoint, getRank } from "@/app/_configs/userStats";
+import { getStreak, getPoint, getRank } from "@/utils/user";
 
 export default function UserStats() {
     const streak = getStreak();
