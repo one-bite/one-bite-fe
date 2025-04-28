@@ -26,6 +26,9 @@ export default function ProfileMenu() {
             case "course":
                 router.push("/course");
                 break;
+            case "clearLocal":
+                localStorage.clear();
+                alert("로컬 스토리지가 초기화되었습니다.");
             default:
                 break;
         }
@@ -49,6 +52,8 @@ export default function ProfileMenu() {
             <DropdownItem key="learn">학습 시작하기</DropdownItem>
 
             <DropdownItem key="course">코스 변경</DropdownItem>
+
+            <DropdownItem key="clearLocal">로컬스토리지 초기화</DropdownItem>
 
             {/* <DropdownItem key="theme-switcher">
                 <ThemeSwitcher />

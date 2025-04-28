@@ -4,6 +4,7 @@ import React from "react";
 import { Button, ButtonProps } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import { getStreak } from "@/utils/user";
 
 interface StartQuizButtonProps extends ButtonProps {
     subject?: string;
@@ -12,8 +13,13 @@ interface StartQuizButtonProps extends ButtonProps {
 const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQuizButtonProps) => {
 
     const router = useRouter();
+    const todaystreak = getStreak();
 
     const handleClick = () => {
+        if (todaystreak.todayStreakQuizLeft === 0) {
+            alert("오늘의 퀴즈는 모두 풀었습니다.");
+            return;
+        }
         router.push(`/quiz?subject=${subject}`)
     }
 

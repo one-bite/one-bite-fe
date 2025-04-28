@@ -8,6 +8,16 @@ const defaultPoint: UserPointData = {
     point: 0,
 };
 
+export function initPoint(): void {
+    if (typeof window === "undefined") return;
+
+    const data = localStorage.getItem(POINT_KEY);
+
+    if (!data) {
+        localStorage.setItem(POINT_KEY, JSON.stringify(defaultPoint));
+    }
+}
+
 // 가져오기
 export function getPoint(): number {
     if (typeof window === "undefined") return defaultPoint.point;
@@ -28,6 +38,8 @@ export function getPoint(): number {
 export function setPoint(newPoint: number): void {
     if (typeof window === "undefined") return;
     localStorage.setItem(POINT_KEY, JSON.stringify({ point: newPoint }));
+
+    window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
 
 // 포인트 추가

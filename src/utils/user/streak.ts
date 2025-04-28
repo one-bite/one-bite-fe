@@ -48,6 +48,8 @@ export function setStreak(newStreak: Partial<UserStreakData>): void {
     const current = getStreak();
     const updated = { ...current, ...newStreak };
     localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
+
+    window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
 
 // 문제를 하나 풀었을 때 호출
