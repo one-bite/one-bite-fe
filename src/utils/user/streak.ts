@@ -13,6 +13,16 @@ const defaultStreak: UserStreakData = {
     streakHistory: [],
 };
 
+export function initStreak(): void {
+    if (typeof window === "undefined") return;
+
+    const data = localStorage.getItem(STREAK_KEY);
+
+    if (!data) {
+        localStorage.setItem(STREAK_KEY, JSON.stringify(defaultStreak));
+    }
+}
+
 // get
 export function getStreak(): UserStreakData {
     if (typeof window === "undefined") return defaultStreak;
