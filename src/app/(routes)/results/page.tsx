@@ -1,14 +1,20 @@
 "use client";
 
-import React from "react";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import ResultCard from "@/app/_components/card/ResultCard";
+import {getStreak} from "@/utils/user";
 
-const ResultsPage = () => {
-  // 하드코딩된 값들
-  const correctAnswers = 9;
-  const wrongAnswers = 1;
-  const ratingPoints = 254;
-  const gold = 90;
+function Results() {
+
+  const searchParams = useSearchParams();
+
+  const streakQuizLeft = getStreak().todayStreakQuizLeft;
+  //query string 읽어옴
+  const score = Number(searchParams.get("score") || 0);
+  const reward = Number(searchParams.get("reward") || 0);
+  const correctAnswers = Number(searchParams.get("correct") || 0);
+  const wrongAnswers = Number(searchParams.get("wrong") || 0);
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
@@ -17,12 +23,19 @@ const ResultsPage = () => {
         <ResultCard
           correctAnswers={correctAnswers}
           wrongAnswers={wrongAnswers}
-          ratingPoints={ratingPoints}
-          gold={gold}
+          score={score}
+          point={reward}
+          todayStreakQuizLeft={streakQuizLeft}
         />
       </div>
     </main>
   );
-};
+}
 
-export default ResultsPage;
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<div>결과 불러오는 중...</div>}>
+      <Results />
+    </Suspense>
+  );
+}

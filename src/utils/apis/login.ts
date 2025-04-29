@@ -1,4 +1,3 @@
-//import { mockLoggedInUser } from "@/app/_mocks/mockUser";
 
 export interface LoginResponseProps {
     accessToken: string;
@@ -21,7 +20,7 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
         if (!response.ok) {
             const errorData = await response.json();
             console.error("Login Failed: ", errorData);
-            throw new Error("로그인 처리 중 오류가 발생했습니다.");
+            throw new Error("로그인 처리 중 오류가 발생했습니다.-1");
         }
 
         const data: LoginResponseProps = await response.json();
@@ -29,7 +28,7 @@ export const fetchAccessTokenFromGoogle = async (code: string): Promise<LoginRes
 
     } catch (error) {
         console.error("Login Failed: ", error);
-        throw new Error("로그인 처리 중 오류가 발생했습니다.");
+        throw new Error("로그인 처리 중 오류가 발생했습니다.-2");
     }
 };
 

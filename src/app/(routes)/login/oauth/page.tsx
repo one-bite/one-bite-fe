@@ -1,11 +1,11 @@
 "use client";
 
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
-//import { mockLoggedInUser } from "@/app/_mocks/mockUser";
+import {initPoint, initRank, initStreak } from "@/utils/user";
 
 type Userinformation = {
     sub: string;
@@ -17,8 +17,12 @@ type Userinformation = {
 const GoogleCallback = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
+    const isSentRef = useRef(false);
 
     useEffect(() => {
+        if (isSentRef.current) return;
+        isSentRef.current = true;
+
         const code = searchParams.get("code");
 
         if (code) {
@@ -39,19 +43,24 @@ const GoogleCallback = () => {
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
 
+                        //유저 스탯을 로컬스토리지에 초기 설정
+                        initStreak();
+                        initPoint();
+                        initRank();
 
 
-                        router.push("/");
+
+                        router.replace("/");
 
                     } else {
                         console.error("Login Failed: No Access Token.");
                         alert("로그인에 실패했습니다.");
-                        router.push("/login");
+                        router.replace("/login");
                     }
                 } catch (error) {
                     console.error("Login Failed: ", error);
                     alert("로그인 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.");
-                    router.push("/login");
+                    router.replace("/login");
                 }
             };
 

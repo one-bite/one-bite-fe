@@ -1,7 +1,7 @@
 import { format, startOfWeek, addDays } from "date-fns";
 
 interface WeeklyStreakCalendarProps {
-    streakDates: Date[]; // 스트릭 성공 날짜
+    streakDates: string[]; // 스트릭 성공 날짜
 }
 
 const WeeklyStreakCalendar = ({ streakDates }: WeeklyStreakCalendarProps) => {
@@ -11,16 +11,17 @@ const WeeklyStreakCalendar = ({ streakDates }: WeeklyStreakCalendarProps) => {
     const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
     const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
 
+    const streakDateSet = new Set(streakDates);
+
     // 날짜만 문자열로 비교 (ex: 2025-04-15)
     const formatDate = (date: Date) => format(date, "yyyy-MM-dd");
-    const streakDateStrings = streakDates.map(formatDate);
 
     return (
         <div className="flex gap-2">
             {days.map((date, idx) => {
                 const dateStr = formatDate(date);
                 const isFuture = date > today;
-                const isStreak = streakDateStrings.includes(dateStr);
+                const isStreak = streakDateSet.has(dateStr);
 
                 const bgColor = isStreak
                     ? "bg-lime-400"
