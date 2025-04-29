@@ -2,9 +2,11 @@
 
 import { useSearchParams } from "next/navigation";
 import ResultCard from "@/app/_components/card/ResultCard";
+import {getStreak} from "@/utils/user";
 
 export default function ResultsPage() {
 
+  const streakQuizLeft = getStreak().todayStreakQuizLeft;
   const searchParams = useSearchParams();
 
   //query string 읽어옴
@@ -22,6 +24,7 @@ export default function ResultsPage() {
           wrongAnswers={wrongAnswers}
           score={score}
           point={reward}
+          todayStreakQuizLeft={streakQuizLeft}
         />
       </div>
     </main>

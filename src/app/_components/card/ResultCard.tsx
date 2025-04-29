@@ -10,6 +10,7 @@ interface ResultCardProps {
   wrongAnswers: number;
   score: number;
   point: number;
+  todayStreakQuizLeft: number;
 }
 
 
@@ -22,7 +23,7 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
   );
 };
 
-const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, point }) => {
+const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, point, todayStreakQuizLeft }) => {
 
   const router = useRouter();
 
@@ -33,7 +34,12 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
   return (
     <div className="bg-white p-6 rounded-xl shadow-2xl border-2 border-gray-200 w-full max-w-4xl text-center">
       <h1 className="text-6xl font-extrabold text-lime-600 mb-6 mt-4">채점 결과</h1>
-      <p className="text-3xl font-extrabold text-gray-700 mb-8">오늘의 <span className="text-red-500">스트릭</span>을 달성했어요!</p>
+        {todayStreakQuizLeft > 0 ? (
+            <p className="text-3xl font-extrabold text-gray-700 mb-8">스트릭 달성까지 <span className="text-red-500">{todayStreakQuizLeft}</span>문제 남았어요!</p>
+        ) : (
+            <p className="text-3xl font-extrabold text-gray-700 mb-8"> 오늘의 <span className="text-red-500">스트릭</span>을 달성했어요!</p>
+        )}
+
 
       <div className="space-y-6 mb-6">
         <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
