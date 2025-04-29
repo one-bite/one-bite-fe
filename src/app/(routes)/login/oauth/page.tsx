@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
 import {initPoint, initRank, initStreak } from "@/utils/user";
-//import { mockLoggedInUser } from "@/app/_mocks/mockUser";
 
 type Userinformation = {
     sub: string;
