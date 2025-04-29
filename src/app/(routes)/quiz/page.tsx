@@ -87,13 +87,13 @@ const QuizPage = () => {
       decreaseTodayQuizLeft();
       addPoint(rewardPoint);
       setTodayStreak(getStreak());
+      setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
     }
     if (isLast) {
       // 마지막 문제에서 결과 페이지로 이동
       router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
     } else {
       // 다음 문제로 넘어가기
-      setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
       setSelected(null); // 답 초기화
       setIsCorrect(null); // 정답 여부 초기화
       setShowModal(false); // 모달 닫기

@@ -45,7 +45,7 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, point
 
                 {/* 버튼 텍스트 조건에 따라 변경 */}
                 <MyButton onClick={onNextAction} className="w-full text-sm py-3">
-                    {isLast ? "결과 보기 →" : isCorrect ? "다음 문제로 이동" : "다음 문제로 이동"}
+                    {isLast ? "결과 보기 →" : isCorrect ? "다음 문제로 이동" : "다시 풀어보기"}
                 </MyButton>
             </div>
         </div>
