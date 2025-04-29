@@ -2,13 +2,22 @@
 
 import StreakIcon from "app/_components/icon/StreakIcon";
 import TierIcon from "app/_components/icon/TierIcon";
-import { getStreak, getPoint, getRank } from "@/utils/user";
-import { useState, useEffect } from "react";
+//import { getStreak, getPoint, getRank } from "@/utils/user";
+//import { useState, useEffect } from "react";
 
-export default function UserStats() {
+interface userStatData {
+    streak: number;
+    point: number;
+    rank: string;
+}
+
+
+export default function UserStats({ streak, point, rank } : userStatData) {
     //const streak = getStreak();
     //const point = getPoint();
     //const rank = getRank();
+
+/*  //props로 유저 스탯 받아오기 **유저 스탯은 그냥 출려만 함**
 
     const [streak, setStreak] = useState(getStreak());
     const [point, setPoint] = useState(getPoint());
@@ -25,14 +34,15 @@ export default function UserStats() {
         return () => {
             window.removeEventListener("userStatsUpdated", handleStorageChange);
         };
-    }, []); // []// 빈 배열을 의존성 배열로 사용하여 컴포넌트가 처음 마운트될 때만 실행
+    }, []);
+*/
 
     return (
         <div className="flex items-center gap-2">
             {/* Streak */}
             <div className="flex justify-between min-w-20 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
                 <StreakIcon className="size-6 text-red-500" />
-                <span className="text-red-900 text-sm font-linebold">{streak.totalStreak}</span>
+                <span className="text-red-900 text-sm font-linebold">{streak}</span>
             </div>
 
             {/* Points */}
@@ -44,7 +54,7 @@ export default function UserStats() {
             {/* Lives */}
             <div className="flex justify-between min-w-20 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
                 <TierIcon className="size-6 text-gray-500" />
-                <span className="text-gray-700 text-sm font-linebold">{rank.rank}</span>
+                <span className="text-gray-700 text-sm font-linebold">{rank}</span>
             </div>
         </div>
     );
