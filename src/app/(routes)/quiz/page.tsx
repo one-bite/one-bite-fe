@@ -8,11 +8,11 @@ import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
 //import {QuizProblem} from "app/_configs/types/quiz";
 import { quizProblems } from "@/app/_mocks/quizProblems";
-import { getStreak, decreaseTodayQuizLeft, addPoint , addScore, subtractScore} from "@/utils/user";
+import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
 
 const QuizPage = () => {
 
-  const todaystreak = getStreak(); // 오늘의 스트릭 남은 문제 수
+  const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
 
   /*
   const [problems, setProblems] = useState<QuizProblem[]>([]);
@@ -45,13 +45,13 @@ const QuizPage = () => {
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  const correctScore = 23;  // 정답일 때 점수
-  const wrongScore = 7; // 오답일 때 점수
+  const correctScore = 20;  // 정답일 때 점수
+  const wrongScore = 5; // 오답일 때 점수
   const rewardPoint = 10; // 정답일 때 포인트
 
 //mock 데이터 사용 중
   const currentProblem = quizProblems[currentIndex];
-  const isLast = ((todaystreak.todayStreakQuizLeft - 1) === 0);
+  const isLast = currentIndex === (quizProblems.length - 1);
 
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
@@ -86,13 +86,14 @@ const QuizPage = () => {
     if(isCorrect) {
       decreaseTodayQuizLeft();
       addPoint(rewardPoint);
+      setTodayStreak(getStreak());
+      setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
     }
     if (isLast) {
       // 마지막 문제에서 결과 페이지로 이동
       router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
     } else {
       // 다음 문제로 넘어가기
-      setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
       setSelected(null); // 답 초기화
       setIsCorrect(null); // 정답 여부 초기화
       setShowModal(false); // 모달 닫기
@@ -111,7 +112,7 @@ const QuizPage = () => {
     <div className="m-12 min-h-screen p-4">
       <div className="flex justify-center">
         <QuizCard
-            leftStreak={todaystreak.todayStreakQuizLeft} // 스트릭까지 남은 문제 수
+            leftStreak={todayStreak.todayStreakQuizLeft} // 스트릭까지 남은 문제 수
             subject={currentProblem.title}
             question={currentProblem.description} //description.question으로
             options={currentProblem.options}  //description.options로
@@ -136,7 +137,7 @@ const QuizPage = () => {
         isOpen={showModal}
         isCorrect={isCorrect ?? false}
         score={isCorrect ? correctScore : wrongScore}
-        remaining={todaystreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
+        remaining={todayStreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
         point={rewardPoint}  // 정답일 때 포인트
         onNextAction={handleNext}
         isLast={isLast}

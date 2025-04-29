@@ -55,6 +55,11 @@ export function setStreak(newStreak: Partial<UserStreakData>): void {
 // 문제를 하나 풀었을 때 호출
 export function decreaseTodayQuizLeft(): void {
     const streakData = getStreak();
+
+    if (streakData.todayStreakQuizLeft === 0) {
+        return; //이미 스트릭이 달성됨
+    }
+
     const updatedQuizLeft = Math.max(0, streakData.todayStreakQuizLeft - 1);
 
     if (updatedQuizLeft === 0) {
