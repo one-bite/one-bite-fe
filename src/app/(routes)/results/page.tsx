@@ -1,14 +1,15 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ResultCard from "@/app/_components/card/ResultCard";
 import {getStreak} from "@/utils/user";
 
-export default function ResultsPage() {
+function Results() {
 
-  const streakQuizLeft = getStreak().todayStreakQuizLeft;
   const searchParams = useSearchParams();
 
+  const streakQuizLeft = getStreak().todayStreakQuizLeft;
   //query string 읽어옴
   const score = Number(searchParams.get("score") || 0);
   const reward = Number(searchParams.get("reward") || 0);
@@ -29,4 +30,12 @@ export default function ResultsPage() {
       </div>
     </main>
   );
-};
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<div>결과 불러오는 중...</div>}>
+      <Results />
+    </Suspense>
+  );
+}
