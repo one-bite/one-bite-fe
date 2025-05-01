@@ -4,7 +4,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface TokenResponse {
-    access_token: string;
+    accessToken: string;
     error?: string;
     error_description?: string;
 }
@@ -42,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(400).json({ error: data.error_description });
             }
 
-            return res.status(200).json({ access_token: data.access_token });
+            return res.status(200).json({ accessToken: data.accessToken });
         } catch (error) {
             console.error("구글 API 요청 실패:", error);
             return res.status(500).json({ error: "토큰 요청에 실패했습니다." });

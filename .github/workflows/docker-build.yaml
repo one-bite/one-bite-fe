@@ -15,6 +15,12 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            # - name: Create .env.production
+            #   run: |
+            #       echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}" >> .env.production
+            #       echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.production
+            #       echo "NEXT_PUBLIC_FRONTEND_URL=${{ secrets.NEXT_PUBLIC_FRONTEND_URL }}" >> .env.production
+
             - name: Set up Docker image tags
               id: vars
               run: |
@@ -44,6 +50,11 @@ jobs:
                   push: true
                   tags: |
                       ${{ env.TAGS }}
+                  build-args: |
+                      NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+                      GOOGLE_CLIENT_SECRET=${{secrets.GOOGLE_CLIENT_SECRET}}
+                      NEXT_PUBLIC_FRONTEND_URL=${{secrets.NEXT_PUBLIC_FRONTEND_URL}}
+                      NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
 
     call-update-k8s:
         needs: build-and-push

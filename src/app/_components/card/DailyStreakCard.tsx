@@ -8,11 +8,12 @@ import WeeklyStreakCalendar from "app/_components/WeeklyStreakCalendar";
 
 interface DailyStreakCardProps {
     streakleftquiz: number;
+    streakHistory: string[];
 }
 
-const DailyStreakCard = ({ streakleftquiz = 8 }: DailyStreakCardProps) => {
+const DailyStreakCard = ({ streakleftquiz, streakHistory }: DailyStreakCardProps) => {
     return(
-        <BigCard className="m-8 w-[880px] h-[220px] border border-lime-400">
+        <BigCard className="m-8 w-[880px] h-[220px]">
             <div className="flex justify-between">
                 <div className="flex justify-center items-center p-8 w-1/2
                                 bg-[radial-gradient(ellipse_at_bottom,_rgba(251,146,60,0.3),_transparent_70%)]">
@@ -28,10 +29,7 @@ const DailyStreakCard = ({ streakleftquiz = 8 }: DailyStreakCardProps) => {
                 <div className="flex flex-col justify-center items-center p-8 pl-0 w-1/2 gap-4">
                     <div className="w-full text-sm text-center font-line">이번주 나의 스트릭</div>
                     <WeeklyStreakCalendar
-                        streakDates={[
-                            new Date("2025-04-14"), // 월
-                            new Date("2025-04-15"), // 화
-                        ]}
+                        streakDates={streakHistory}
                     />
                     <StartQuizButton className="self-center" subject="Python"/>
                 </div>

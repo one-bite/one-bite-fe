@@ -5,9 +5,28 @@ import { Navbar, NavbarBrand, NavbarContent, Link, DropdownTrigger, Dropdown, Av
 import { Logo } from "../icon/LogoIcon";
 import UserStats from "./UserStats";
 import ProfileMenu from "./ProfileMenu"; // 추가!
+import { getStreak, getPoint, getRank } from "@/utils/user";
+import { useState, useEffect } from "react";
 
 export default function App() {
     //const pathname = usePathname();
+
+    const [streak, setStreak] = useState(getStreak());
+    const [point, setPoint] = useState(getPoint());
+    const [rank, setRank] = useState(getRank());
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setStreak(getStreak());
+            setPoint(getPoint());
+            setRank(getRank());
+        };
+
+        window.addEventListener("userStatsUpdated", handleStorageChange);
+        return () => {
+            window.removeEventListener("userStatsUpdated", handleStorageChange);
+        };
+    }, []);
 
     return (
         <Navbar className="bg-lime-500">
@@ -19,7 +38,7 @@ export default function App() {
             </NavbarBrand>
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
-                <UserStats /> {/* ✅ 아바타 왼쪽에 삽입 */}
+                <UserStats streak={streak.totalStreak} point={point} rank={rank.rank}/> {/* ✅ 아바타 왼쪽에 삽입 */}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <Avatar

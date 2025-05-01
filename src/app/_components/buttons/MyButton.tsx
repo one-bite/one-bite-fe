@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 interface MyButtonProps extends ButtonProps {
     className?: string;
     children: ReactNode;
+    onClick?: () => void;
 }
 
 const MyButton = ({ className = "", children, ...props }: MyButtonProps) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import StreakIcon from "../icon/StreakIcon";
-import GoldIcon from "../icon/PointIcon";
+import PointIcon from "../icon/PointIcon";
 import MyButton from "../buttons/MyButton";
 
 interface ResultModalProps {
@@ -9,12 +9,12 @@ interface ResultModalProps {
     isCorrect: boolean; //정답 여부
     score: number; // 스코어 변화
     remaining: number; // 남은 문제 수. 정답일 때만 표시
-    gold: number; // 보상. 정답일 때만 표시
-    onNext: () => void; //닫기 or 다음 문제로 넘어가기
+    point: number; // 보상. 정답일 때만 표시
+    onNextAction: () => void; //닫기 or 다음 문제로 넘어가기
     isLast: boolean; // 마지막 문제인지 여부
 }
 
-export default function ResultModal({ isOpen, isCorrect, score, remaining, gold, onNext, isLast }: ResultModalProps) {
+export default function ResultModal({ isOpen, isCorrect, score, remaining, point, onNextAction, isLast }: ResultModalProps) {
     if (!isOpen) return null;
 
     return (
@@ -37,14 +37,14 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, gold,
                             <span className="font-semibold">{remaining} Problems Left</span>
                         </div>
                         <div className="flex items-center gap-2  text-yellow-500">
-                            <GoldIcon className="w-4 h-4"/>
-                            <span className="font-semibold">+ {gold} Gold</span>
+                            <PointIcon className="w-4 h-4"/>
+                            <span className="font-semibold">+ {point} Point</span>
                         </div>
                     </div>
                 )}
 
                 {/* 버튼 텍스트 조건에 따라 변경 */}
-                <MyButton onClick={onNext} className="w-full text-sm py-3">
+                <MyButton onClick={onNextAction} className="w-full text-sm py-3">
                     {isLast ? "결과 보기 →" : isCorrect ? "다음 문제로 이동" : "다시 풀어보기"}
                 </MyButton>
             </div>

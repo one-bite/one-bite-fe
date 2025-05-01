@@ -3,7 +3,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import Header from "./_components/header/Header";
 import Footer from "./_components/Footer";
-import env from "./_configs/env"
+import * as process from "process";
 
 export const metadata: Metadata = {
     title: "한입코딩",
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
     openGraph: {
         title: "한입코딩",
         description: "매일매일 배우는 맞춤형 코딩 학습 웹사이트, 한입코딩",
-        url: env.frontendUrl || "http://1bite-coding.duckdns.org",
+        url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}` || "http://one-bite-fe.site",
         images: [
             {
-                url: `${env.frontendUrl}/og-image.png`,
+                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/og-image.png`,
                 alt: "OG-IMAGE",
             },
         ],
