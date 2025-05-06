@@ -50,8 +50,6 @@ export function setStreak(newStreak: Partial<UserStreakData>): void {
     const current = getStreak();
     const updated = { ...current, ...newStreak };
 
-    console.log("업데이트된 스트릭 데이터:", updated); // 디버깅용
-
     localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
     window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
@@ -102,7 +100,6 @@ export function resetTodayStreak(): void {
 export async function syncUserStreak(){
     try {
         const serverData = await fetchUserStreak();
-        console.log("서버에서 가져온 유저 스트릭 데이터:", serverData);
 
         setStreak({
             maxStreak: serverData.maxStreak,
@@ -110,7 +107,6 @@ export async function syncUserStreak(){
             todayStreakQuizLeft: 10, // 서버가 따로 주지 않으면 기본 10
             streakHistory: serverData.streakHistory,
         });
-        console.log("로컬 스토리지에 저장된 유저 스트릭 데이터:", getStreak());
     } catch (e) {
         console.error("유저 스트릭 동기 실패:", e);
     }
