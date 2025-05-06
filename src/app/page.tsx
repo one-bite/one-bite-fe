@@ -4,14 +4,10 @@ import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import BigCard from "app/_components/base_components/BigCard";
-import { getStreak } from "@/utils/user";
-import { syncUserStreak } from "@/utils/user";
-import { useEffect } from "react";
+import { getStreak, /*syncUserStreak*/ } from "@/utils/user";
+//import { useEffect } from "react";
 
 export default function Page() {
-    useEffect(() => {
-        syncUserStreak();
-    }, []);
 
     const mystreak = getStreak();
     const todayStreakLeft = mystreak.todayStreakQuizLeft;

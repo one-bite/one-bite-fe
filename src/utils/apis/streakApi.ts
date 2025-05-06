@@ -3,19 +3,16 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL; // 환경변수 관리
 
 export interface UserStreakFromServer {
-    streak_id: number;
-    activeDates: string[];   // 달성한 날짜 문자열 배열
-    update_at: string;
-    max_streak_count: number;
-    min_streak_count: number;
-    user: number;
+    maxStreak: number;  // 최대 스트릭 수
+    nowStreak: number;  // 현재 스트릭 수
+    streakHistory: string[];   // 달성한 날짜 문자열 배열
 }
 // 스트릭 정보 가져오기
 export async function fetchUserStreak(): Promise<UserStreakFromServer> {
-    const response = await fetch(`${API_URL}/user/streak`, {
+    const response = await fetch(`${API_URL}/users/streak`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
     });
 

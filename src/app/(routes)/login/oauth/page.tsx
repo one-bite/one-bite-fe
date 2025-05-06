@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
-import {initPoint, initRank, initStreak } from "@/utils/user";
+import { syncUserStreak } from "@/utils/user/streak"; // 스트릭 동기화 함수
 
 type Userinformation = {
     sub: string;
@@ -43,11 +43,8 @@ const GoogleCallback = () => {
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
 
-                        //유저 스탯을 로컬스토리지에 초기 설정
-                        initStreak();
-                        initPoint();
-                        initRank();
-
+                        //유저 스트릭 동기화
+                        syncUserStreak();
 
 
                         router.replace("/");
