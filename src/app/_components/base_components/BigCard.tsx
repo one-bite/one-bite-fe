@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "@nextui-org/react";
 
 interface BigCardProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     className?: string;
 }
 

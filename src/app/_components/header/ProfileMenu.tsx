@@ -17,8 +17,8 @@ export default function ProfileMenu() {
 
     const handleAction = (key: React.Key) => {
         switch (key) {
-            case "learn":
-                router.push("/learn");
+            case "log":
+                router.push("/log");
                 break;
             case "profile":
                 router.push("/my");
@@ -49,7 +49,7 @@ export default function ProfileMenu() {
                 </DropdownItem>
             )}
 
-            <DropdownItem key="learn">학습 시작하기</DropdownItem>
+            <DropdownItem key="log">문제 풀이 내역</DropdownItem>
 
             <DropdownItem key="course">코스 변경</DropdownItem>
 
