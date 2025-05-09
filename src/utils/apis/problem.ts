@@ -1,12 +1,13 @@
-import {QuizProblem} from "app/_configs/types/quiz";
+import {TodayQuizResponse} from "app/_configs/types/quiz";
 
-export const fetchProblems = async () : Promise<QuizProblem[]> => {
+export const fetchTodayProblems = async () : Promise<TodayQuizResponse> => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const response = await fetch(`${apiUrl}/db/problems`, {
-        method: "POST",
+    const response = await fetch(`${apiUrl}/users/today`, {
+        method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
         },
     });
 

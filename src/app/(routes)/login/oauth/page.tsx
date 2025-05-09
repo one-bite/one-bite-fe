@@ -30,8 +30,6 @@ const GoogleCallback = () => {
                 try {
                     const data: LoginResponseProps = await fetchAccessTokenFromGoogle(code);
 
-                    //const data = mockLoggedInUser;
-
                     if (data.accessToken) {
                         if (typeof window === "undefined") return;
 

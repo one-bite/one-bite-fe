@@ -1,39 +1,36 @@
 "use client";
 
-import { useState/*, useEffect*/ } from "react";
-import { useRouter } from "next/navigation";
-//import { fetchProblems } from "@/utils/apis/problem";
+import { useState, useEffect } from "react";
+import { fetchTodayProblems } from "@/utils/apis/problem";
+import {TodayQuizResponse} from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
-//import {QuizProblem} from "app/_configs/types/quiz";
-import { quizProblems } from "@/app/_mocks/quizProblems";
+import { quizProblems } from "@/app/_mocks/quizProblems_converted"; //mock 데이터 사용
 import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
-
+import { useRouter } from "next/navigation";
 const QuizPage = () => {
 
   const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
 
-  /*
-  const [problems, setProblems] = useState<QuizProblem[]>([]);
-  const [loading, setLoading] = useState(true);
+  
+  const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
 
   useEffect(() => {
     const loadProblems = async () => {
       try {
-        const data = await fetchProblems();
-        setProblems(data);
+        const data = await fetchTodayProblems();
+        console.log("응답 형태:", data);
+        setQuizData(data);
       } catch (error) {
         console.error("문제 불러오기 오류:", error);
         alert("문제를 불러오는 데 실패했습니다.");
-      } finally {
-        setLoading(false);
       }
     };
 
     loadProblems();
   }, []);
-  */
+  
   const router = useRouter();
 
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
@@ -45,13 +42,13 @@ const QuizPage = () => {
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  const correctScore = 20;  // 정답일 때 점수
-  const wrongScore = 5; // 오답일 때 점수
-  const rewardPoint = 10; // 정답일 때 포인트
-
 //mock 데이터 사용 중
   const currentProblem = quizProblems[currentIndex];
   const isLast = currentIndex === (quizProblems.length - 1);
+
+  const correctScore = currentProblem.point;  // 정답일 때 점수
+  const wrongScore = 7; // 오답일 때 점수
+  const rewardPoint = 10; // 정답일 때 포인트
 
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
@@ -69,12 +66,12 @@ const QuizPage = () => {
     // 맞힌 문제는 점수 부여
     if (correct) {
       setCorrectCount((prev) => prev + 1);
-      setScore((prev) => prev + correctScore);  // 정답일 때 23점 획득
+      setScore((prev) => prev + correctScore);  // 정답일때 
       setReward((prev) => prev + rewardPoint); // 정답이면 10포인트
       addScore(correctScore);
     } else {
       setWrongCount((prev) => prev + 1);
-      setScore(7); // 오답일 때 -7점
+      setScore((prev) => prev - wrongScore); // 오답일 때 -7점
       subtractScore(wrongScore); // 점수 감소
     }
 
@@ -113,9 +110,9 @@ const QuizPage = () => {
       <div className="flex justify-center">
         <QuizCard
             leftStreak={todayStreak.todayStreakQuizLeft} // 스트릭까지 남은 문제 수
-            subject={currentProblem.title}
-            question={currentProblem.description} //description.question으로
-            options={currentProblem.options}  //description.options로
+            title={currentProblem.title}
+            question={currentProblem.description.question} //description.question으로
+            options={currentProblem.description.options}  //description.options로
             selected={selected}
             onSelect={handleAnswer}
         />
