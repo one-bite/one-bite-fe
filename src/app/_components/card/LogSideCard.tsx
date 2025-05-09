@@ -12,9 +12,10 @@ interface LogSideCardProps {
     className?: string
     QuizProblems: QuizProblem[]
     currentAlign?: string
+    onSelect: (problem: QuizProblem) => void;
 }
 
-const LogSideCard = ({className="", QuizProblems} :LogSideCardProps) => {
+const LogSideCard = ({className="", QuizProblems, onSelect} :LogSideCardProps) => {
     const [quizType, setQuizType] = useState<"날짜 별"|"유형 별">("날짜 별");
 
     const topicGroup = QuizProblems.reduce((acc, cur) => {
@@ -49,7 +50,7 @@ const LogSideCard = ({className="", QuizProblems} :LogSideCardProps) => {
                         {topicGroups[topicId] && (
                             <div className="ml-2 mt-1 space-y-1">
                                 {problems.sort((a, b) => a.id - b.id).map((p) => (
-                                        <ProblemItem key={p.id} id={p.id} title={p.title} />
+                                        <ProblemItem key={p.id} id={p.id} title={p.title} choose={() => onSelect(p)}/>
                                 ))}
                             </div>
                         )}
