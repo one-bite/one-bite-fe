@@ -2,12 +2,12 @@
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL; // 환경변수 관리
 
-export interface UserStreakFromServer {
+export interface UserStreakFromServer { //백엔드 api보고 수정 필요 (05/02)
     streak_id: number;
     activeDates: string[];   // 달성한 날짜 문자열 배열
     update_at: string;
     max_streak_count: number;
-    min_streak_count: number;
+    now_streak_count: number;
     user: number;
 }
 // 스트릭 정보 가져오기

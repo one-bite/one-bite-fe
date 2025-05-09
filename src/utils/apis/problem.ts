@@ -4,7 +4,7 @@ export const fetchProblems = async () : Promise<QuizProblem[]> => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await fetch(`${apiUrl}/db/problems`, {
-        method: "POST",
+        method: "GET",
         headers: {
             "Content-Type": "application/json",
         },

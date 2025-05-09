@@ -7,10 +7,14 @@ export interface ProblemDescription {
 }
 
 export interface QuizProblem {
+  id: number;
+  category: string;
+  user: number;
   title: string;
   description: ProblemDescription;
   answer: string;
   score: number;
+  topics: string;
   questionType: questionType;
   difficulty: difficulty;
 }
