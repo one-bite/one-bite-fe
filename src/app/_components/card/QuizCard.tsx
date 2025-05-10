@@ -7,7 +7,8 @@ import AnswerOptions from "app/_components/options/AnswerOptions";
 
 interface QuizCardProps {
   leftStreak?: number;  // 남은 문제 수
-  subject: string;     // 문제 제목
+  subject: string;     // 문제 토픽
+  title: string;
   question: string;    // 문제 내용
   options: string[];   // 객관식 선택지
   selected: string | null;  // 선택된 답
@@ -15,7 +16,7 @@ interface QuizCardProps {
   className?: string
 }
 
-const QuizCard: React.FC<QuizCardProps> = ({leftStreak, subject, question, options, selected, className="", onSelect}) => {
+const QuizCard: React.FC<QuizCardProps> = ({leftStreak, subject,title , question, options, selected, className="", onSelect}) => {
   return (
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
       <CardBody>
@@ -29,6 +30,7 @@ const QuizCard: React.FC<QuizCardProps> = ({leftStreak, subject, question, optio
         <p className="text-xs text-gray-400 mb-1">
           한입코딩 {">"} 코스 {">"} {subject}
         </p>
+        <h1 className="text-2xl font-linebold my-1">{title}</h1>
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
 
         <AnswerOptions options={options} onSelect={onSelect} selected={selected} />

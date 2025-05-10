@@ -24,14 +24,18 @@ const LogCard = ({className = "", problem}:BigCardProps) => {
     }
 
     return(
-        <QuizCard
-            subject={`토픽 ${problem.topicId}`}
-            question={problem.description}
-            options={problem.options}
-            selected={selected}
-            onSelect={setSelected}
-            className={`w-[600] h-3/4 m-1 bg-white ${className}`}
-        />
+        <div className={"w-full h-full"}>
+            <QuizCard
+                subject={`${problem.topicId}`}
+                title={problem.title}
+                question={problem.description}
+                options={problem.options}
+                selected={selected}
+                onSelect={setSelected}
+                className={`w-[600] h-3/4 m-1 bg-white ${className}`}
+            />
+            <BigCard className={""}/>
+        </div>
     );
 };
 
