@@ -30,7 +30,7 @@ const QuizCard: React.FC<QuizCardProps> = ({leftStreak, subject,title , question
         <p className="text-xs text-gray-400 mb-1">
           한입코딩 {">"} 코스 {">"} {subject}
         </p>
-        <h1 className="text-2xl font-linebold my-1">{title}</h1>
+        <h1 className="text-2xl font-linebold my-2">{title}</h1>
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
 
         <AnswerOptions options={options} onSelect={onSelect} selected={selected} />

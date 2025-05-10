@@ -7,7 +7,7 @@ import QuizCard from "app/_components/card/QuizCard";
 
 interface BigCardProps{
     className?: string;
-    problem: QuizProblem | null;
+    problem: QuizProblem | null; // 통신 연결 시 LogSideCard 증 ProblemItem에서 id 불러오도록 해서 그 id로 정보 받아올 생각인데 잘 모르겠다.
 }
 
 const LogCard = ({className = "", problem}:BigCardProps) => {
