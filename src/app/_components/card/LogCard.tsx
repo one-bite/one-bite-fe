@@ -2,7 +2,7 @@
 
 import BigCard from "app/_components/base_components/BigCard";
 import {QuizProblem} from "app/_mocks/quizProblems";
-import React, {useState} from "react";
+//import React, {useState} from "react";
 import QuizCard from "app/_components/card/QuizCard";
 
 interface BigCardProps{
@@ -11,8 +11,6 @@ interface BigCardProps{
 }
 
 const LogCard = ({className = "", problem}:BigCardProps) => {
-    const [selected, setSelected] = useState<string | null>(null);
-
     if (!problem) {
         return (
             <BigCard className={`w-[600] h-3/4 m-1 bg-white ${className}`}>
@@ -30,11 +28,13 @@ const LogCard = ({className = "", problem}:BigCardProps) => {
                 title={problem.title}
                 question={problem.description}
                 options={problem.options}
-                selected={selected}
-                onSelect={setSelected}
+                selected={problem.answer}
+                onSelect={()=>{}}
                 className={`w-[600] h-3/4 m-1 bg-white ${className}`}
             />
-            <BigCard className={""}/>
+            <BigCard className={"border-1 border-gray-400"}>
+                이 카드는 해설 출력에 사용될 예정입니다.
+            </BigCard>
         </div>
     );
 };
