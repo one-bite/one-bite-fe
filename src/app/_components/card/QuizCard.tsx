@@ -13,14 +13,14 @@ interface QuizCardProps {
   options: string[];   // 객관식 선택지
   selected: string | null;  // 선택된 답
   onSelect: (selected: string) => void;  // 선택지 선택 함수
-  isCorrect?: boolean | null; // 정답 여부 CS-114
-  correctAnswer?: string; // 정답 CS-114
+  isCorrect: boolean | null; // 정답 여부 CS-114
+  correctAnswer: string; // 정답 CS-114
   className?: string;
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
   leftStreak,
-  subject,
+  //subject, //CS-114에선 사용하지 않았어서 주석처리
   title,
   question,
   options,
