@@ -12,6 +12,8 @@ interface QuizCardProps {
   options: string[];   // 객관식 선택지
   selected: string | null;  // 선택된 답
   onSelect: (selected: string) => void;  // 선택지 선택 함수
+  isCorrect: boolean | null; // 정답 여부
+  correctAnswer: string; // 정답
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
@@ -20,7 +22,9 @@ const QuizCard: React.FC<QuizCardProps> = ({
   question,
   options,
   selected,
-  onSelect
+  onSelect,
+  isCorrect,
+  correctAnswer,
 }) => {
   return (
     <Card className="w-full max-w-xl p-4 min-w-[800px]">
@@ -36,7 +40,13 @@ const QuizCard: React.FC<QuizCardProps> = ({
         </p>
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
 
-        <AnswerOptions options={options} onSelect={onSelect} selected={selected} />
+        <AnswerOptions
+        options={options}
+        onSelect={onSelect}
+        selected={selected}
+        isCorrect={isCorrect}
+        correctAnswer={correctAnswer} // 정답
+        />
       </CardBody>
     </Card>
   );
