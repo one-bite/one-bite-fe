@@ -7,7 +7,7 @@ import AnswerOptions from "app/_components/options/AnswerOptions";
 
 interface QuizCardProps {
   leftStreak?: number;  // 남은 문제 수
-  subject?: string;     // 문제 토픽 CS-114
+  subject?: string;     // 문제 토픽 CS-100
   title: string;
   question: string;    // 문제 내용
   options: string[];   // 객관식 선택지
