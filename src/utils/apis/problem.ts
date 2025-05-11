@@ -1,6 +1,6 @@
 import {TodayQuizResponse} from "app/_configs/types/quiz";
 
-export const fetchTodayProblems = async () : Promise<TodayQuizResponse> => {
+export const fetchTodayProblems = async () : Promise<TodayQuizResponse> => { // CS-114
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await fetch(`${apiUrl}/users/today`, {

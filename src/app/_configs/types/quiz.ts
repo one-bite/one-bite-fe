@@ -16,6 +16,7 @@ export interface QuizProblem {
   point: number;
   userId: number;
   topicCodes: string[];
+  difficulty?: Difficulty; // CS-100
 }
 
 export interface TodayQuizProblem {
