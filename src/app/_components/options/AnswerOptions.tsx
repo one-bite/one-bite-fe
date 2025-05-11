@@ -23,6 +23,9 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
                 if (isCorrect === true && isSelected) {
                     color = "primary"; // 정답 선택
                 }
+                if (isCorrect === null && isSelected) {
+                    color = "primary";
+                }
 
                 if (isCorrect === false) {
                     if (isSelected && !isAnwer) {
