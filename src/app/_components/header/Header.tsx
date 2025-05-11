@@ -7,9 +7,13 @@ import UserStats from "./UserStats";
 import ProfileMenu from "./ProfileMenu"; // 추가!
 import { getStreak, getPoint, getRank } from "@/utils/user";
 import { useState, useEffect } from "react";
+import { initStreak, initPoint, initRank } from "@/utils/user"; // 초기화 함수들
 
 export default function App() {
     //const pathname = usePathname();
+    initStreak();
+    initPoint();
+    initRank();
 
     const [streak, setStreak] = useState(getStreak());
     const [point, setPoint] = useState(getPoint());

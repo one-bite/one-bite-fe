@@ -7,16 +7,29 @@ import AnswerOptions from "app/_components/options/AnswerOptions";
 
 interface QuizCardProps {
   leftStreak?: number;  // 남은 문제 수
-  subject: string;     // 문제 토픽
+  subject?: string;     // 문제 토픽 CS-114
   title: string;
   question: string;    // 문제 내용
   options: string[];   // 객관식 선택지
   selected: string | null;  // 선택된 답
   onSelect: (selected: string) => void;  // 선택지 선택 함수
-  className?: string
+  isCorrect?: boolean | null; // 정답 여부 CS-114
+  correctAnswer?: string; // 정답 CS-114
+  className?: string;
 }
 
-const QuizCard: React.FC<QuizCardProps> = ({leftStreak, subject,title , question, options, selected, className="", onSelect}) => {
+const QuizCard: React.FC<QuizCardProps> = ({
+  leftStreak,
+  subject,
+  title,
+  question,
+  options,
+  selected,
+  className,
+  onSelect,
+  isCorrect,
+  correctAnswer,
+}) => {
   return (
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
       <CardBody>
@@ -28,12 +41,18 @@ const QuizCard: React.FC<QuizCardProps> = ({leftStreak, subject,title , question
             </div>)}
 
         <p className="text-xs text-gray-400 mb-1">
-          한입코딩 {">"} 코스 {">"} {subject}
+          한입코딩 {">"} 코스 {">"} {title}
         </p>
         <h1 className="text-2xl font-linebold my-2">{title}</h1>
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
 
-        <AnswerOptions options={options} onSelect={onSelect} selected={selected} />
+        <AnswerOptions
+        options={options}
+        onSelect={onSelect}
+        selected={selected}
+        isCorrect={isCorrect}
+        correctAnswer={correctAnswer} // 정답
+        />
       </CardBody>
     </Card>
   );
