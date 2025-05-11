@@ -21,7 +21,7 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
                     onPress={() => onSelect(option)}
                     className="justify-start bg-gray-100"
                 >
-                    <div className="py-1 w-8 h-8 rounded-[6px] -ml-2 text-xl bg-white">{index+1}</div>
+                    <div className="py-1 w-8 h-8 rounded-[6px] -ml-2 text-xl bg-white" color={selected === option ? "primary" : "white"}>{index+1}</div>
                     {option}
                 </Button>
             ))}

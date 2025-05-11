@@ -15,7 +15,7 @@ const Log = () => {
                 <div className="flex-1 min-w-64 w-1/4 mr-0">
                     <LogSideCard QuizProblems={quizProblems} onSelect={setSelected}/>
                 </div>
-                <div className="flex-[3] min-w-[660px] w-3/4">
+                <div className="flex-[3] w-3/4">
                     <LogCard problem={selected}/>
                 </div>
             </div>
