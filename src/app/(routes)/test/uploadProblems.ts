@@ -1,4 +1,4 @@
-import { quizProblems } from "@/app/_mocks/quizProblems_converted";
+import { quizProblems } from "@/app/_mocks/quizProblems_upload";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
