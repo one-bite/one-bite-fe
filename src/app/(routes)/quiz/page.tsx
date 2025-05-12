@@ -32,6 +32,13 @@ const QuizPage = () => {
     loadProblems();
   }, []);
   */
+ /*
+  useEffect(() => {
+    if (quizData) {
+      setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
+    }
+  }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
+*/
   const router = useRouter();
 
   const quizData = quizProblems; //mock 데이터 사용
@@ -54,7 +61,6 @@ const QuizPage = () => {
 
   const currentProblem = quizData/*.problemList*/[currentIndex];
   const isLast = currentIndex === (quizData/*.problemList*/.length - 1);
-  //setIsSolved(quizData.problemStatus[currentIndex]); // 문제 풀었는지 여부 불러옴
 
   const correctScore = currentProblem.point;  // 정답일 때 점수
   const wrongScore = 7; // 오답일 때 점수
@@ -74,7 +80,7 @@ const QuizPage = () => {
     const userId = 2; // 현재 로그인한 유저의 ID를 가져와야 함..
 
     try {
-      const response = await fetch(`${apiUrl}/problem/${problemId}/submit`, {
+      const response = await fetch(`${apiUrl}/submit/${problemId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +94,8 @@ const QuizPage = () => {
     });
 
     if(!response.ok) {
-      throw new Error("문제 제출 실패");
+      const errorText = await response.text();
+      console.error("문제 제출 실패", errorText);
     }
     const result = await response.json();
     setIsCorrect(result.correct); // 정답 여부 저장
@@ -103,6 +110,7 @@ const QuizPage = () => {
     }
     setLatestScore(result.score); // 최근 점수 저장
 */
+    //mock 데이터 사용
     const answerNum = parseInt(currentProblem.answer);
     const correct = selected === currentProblem.description.options[answerNum - 1]; // 정답 여부 확인
     setIsCorrect(correct);
