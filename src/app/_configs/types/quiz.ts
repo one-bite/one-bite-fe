@@ -14,7 +14,6 @@ export interface QuizProblem {
   hint: string;
   answer: string;
   point: number;
-  userId: number;
   topicCodes: string[];
   difficulty?: Difficulty; // CS-100
 }

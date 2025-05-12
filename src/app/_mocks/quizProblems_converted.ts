@@ -17,7 +17,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "리스트는 대괄호로 생성해요.",
     answer: "2",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -36,7 +35,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "문자열은 따옴표로 감싸져 있어요요",
     answer: "3",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -55,7 +53,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "if (조건): 형식으로 작성해요.",
     answer: "2",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -74,7 +71,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "for i in range(5): 형식으로 작성해요.",
     answer: "4",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -93,7 +89,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "함수 정의는 def 함수이름(): 형식으로 작성해요.",
     answer: "3",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -112,7 +107,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "배열 인덱스는 0부터 시작해요.",
     answer: "2",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -131,7 +125,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "{키: 값} 형식으로 작성해요.",
     answer: "3",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -150,7 +143,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "정수형을 문자열로 변환할 때는 str() 함수를 사용해요.",
     answer: "1",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -169,7 +161,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "리스트에 항목을 추가할 때는 append() 메서드를 사용해요.",
     answer: "3",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   },
   {
@@ -188,7 +179,6 @@ export const quizProblems: QuizProblem[] = [
     hint: "유효한 변수 이름은 문자, 숫자, 밑줄(_)로 시작해야 해요.",
     answer: "4",
     point: 20,
-    userId: 2,
     topicCodes: ["default-topic"]
   }
 ];
