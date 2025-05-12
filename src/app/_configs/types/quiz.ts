@@ -1,5 +1,4 @@
 export type QuestionType = "multiple_choice" | "short_answer" | "true_false";
-export type Difficulty = "초급" | "중급" | "고급";
 
 export interface ProblemDescription {
   question: string;
@@ -15,7 +14,6 @@ export interface QuizProblem {
   answer: string;
   point: number;
   topicCodes: string[];
-  difficulty?: Difficulty; // CS-100
 }
 
 export interface TodayQuizProblem {
