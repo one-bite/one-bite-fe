@@ -10,16 +10,20 @@ interface ResultModalProps {
     score: number; // 스코어 변화
     remaining: number; // 남은 문제 수. 정답일 때만 표시
     point: number; // 보상. 정답일 때만 표시
-    onNextAction: () => void; //닫기 or 다음 문제로 넘어가기
-    isLast: boolean; // 마지막 문제인지 여부
+    onClose: () => void; //닫기
 }
 
-export default function ResultModal({ isOpen, isCorrect, score, remaining, point, onNextAction, isLast }: ResultModalProps) {
+export default function ResultModal({ isOpen, isCorrect, score, remaining, point, onClose }: ResultModalProps) {
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-            <div className="bg-white rounded-[30px] w-[360px] px-6 py-8 shadow-xl text-center border-none">
+            <div className="relative bg-white rounded-[30px] w-[360px] px-6 py-8 shadow-xl text-center border-none">
+                {/* 닫기 버튼*/}
+                <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 font-semibold">
+                    X
+                </button>
+
                 <h2 className="text-2xl font-extrabold mb-6">
                     <span className={isCorrect ? "text-lime-500" : "text-red-500"}>{isCorrect ? "정답" : "오답"}</span>
                     {isCorrect ? "입니다!" : "입니다..."}
@@ -43,9 +47,8 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, point
                     </div>
                 )}
 
-                {/* 버튼 텍스트 조건에 따라 변경 */}
-                <MyButton onClick={onNextAction} className="w-full text-sm py-3">
-                    {isLast ? "결과 보기 →" : isCorrect ? "다음 문제로 이동" : "다시 풀어보기"}
+                <MyButton onClick={onClose} className="w-full text-sm py-3">
+                    닫기
                 </MyButton>
             </div>
         </div>
