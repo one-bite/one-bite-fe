@@ -6,16 +6,16 @@ import QuizTypeIndex from "app/_components/options/QuizTypeIndex";
 import {QuizProblem} from "app/_configs/types/quiz";
 import ProblemItem from "app/_components/sub_components/ProblemItem";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import {UserProblemHistory} from "app/_configs/types/userProblemHistory";
+import {SubmitHistory} from "app/_mocks/submitHistory";
 
 interface LogSideCardProps {
     className?: string
-    quizProblems?: QuizProblem[]
+    quizProblems: QuizProblem[]
     onSelect: (problem: QuizProblem) => void;
-    histories: UserProblemHistory[]
+    histories: SubmitHistory[]
 }
 
-const LogSideCard = ({className="", histories, onSelect} :LogSideCardProps) => {
+const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideCardProps) => {
     const [quizType, setQuizType] = useState<"날짜 별"|"유형 별">("날짜 별");
     const [topicGroups, setTopicGroups] = useState<Record<string, boolean>>({});
 
@@ -37,24 +37,28 @@ const LogSideCard = ({className="", histories, onSelect} :LogSideCardProps) => {
         return "그 이전";
     };
 
-    const groupByDateCategory = (histories: UserProblemHistory[]) => {
+    const groupByDateCategory = (histories: SubmitHistory[]) => {
         return histories.reduce((acc, h) => {
             const date = parseSubmittedAt(h.submittedAt);
             const group = getDateGroup(date);
             if (!acc[group]) acc[group] = [];
             acc[group].push(h);
             return acc;
-        }, {} as Record<string, UserProblemHistory[]>);
+        }, {} as Record<string, SubmitHistory[]>);
     };
 
-    const groupByTopic = (histories: UserProblemHistory[]) => {
-        const grouped: Record<string, UserProblemHistory[]> = {};
+    const groupByTopic = (histories: SubmitHistory[]) => {
+        const grouped: Record<string, SubmitHistory[]> = {};
         const seen = new Set<number>();
 
         histories.forEach((h) => {
-            const topic = h.problem.topicCodes[0] || "기타";
-            if (seen.has(h.problem.categoryId)) return; // 중복 제거
-            seen.add(h.problem.categoryId);
+            const problem = quizProblems[h.problemId - 1]; // ✅ index로 접근
+            if (!problem) return;
+
+            const topic = problem.topicCodes[0] || "기타";
+            if (seen.has(h.problemId)) return;
+            seen.add(h.problemId);
+
             if (!grouped[topic]) grouped[topic] = [];
             grouped[topic].push(h);
         });
@@ -87,9 +91,19 @@ const LogSideCard = ({className="", histories, onSelect} :LogSideCardProps) => {
                                     <div key={group} className="mb-4">
                                         <p className="text-sm font-bold text-gray-500">{group}</p>
                                         <div className="ml-2 space-y-1">
-                                            {groupedByDate[group].map((h) => (
-                                                <ProblemItem key={h.historyId} id={h.historyId} title={h.problem.title} choose={() => onSelect(h.problem)}/>
-                                            ))}
+                                            {groupedByDate[group].map((h) => {
+                                                const problem = quizProblems[h.problemId - 1]; // ✅ 핵심
+                                                if (!problem) return null;
+
+                                                return (
+                                                    <ProblemItem
+                                                        key={h.historyId}
+                                                        id={h.historyId}
+                                                        title={problem.title}
+                                                        choose={() => onSelect(problem)}
+                                                    />
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 )
@@ -104,9 +118,19 @@ const LogSideCard = ({className="", histories, onSelect} :LogSideCardProps) => {
                             </div>
                             {topicGroups[topicId] && (
                                 <div className="ml-2 mt-1 space-y-1">
-                                    {histories.map((h) => (
-                                        <ProblemItem key={h.problemId} id={h.problemId} title={h.problem.title} choose={() => onSelect(h.problem)}/>
-                                    ))}
+                                    {histories.map((h) => {
+                                        const problem = quizProblems[h.problemId - 1];
+                                        if (!problem) return null;
+
+                                        return (
+                                            <ProblemItem
+                                                key={h.historyId}
+                                                id={h.historyId}
+                                                title={problem.title}
+                                                choose={() => onSelect(problem)}
+                                            />
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>
