@@ -6,7 +6,7 @@ import { useState, /*useEffect*/ } from "react";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
-import { quizProblems } from "@/app/_mocks/quizProblems_converted"; //mock 데이터 사용
+import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 const QuizPage = () => {
