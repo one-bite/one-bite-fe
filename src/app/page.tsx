@@ -19,12 +19,10 @@ export default function Page() {
             <div>
                 <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory} />
                 <div className="flex gap-2 justify-start mt-2 max-w-4xl mx-auto">
-                    <CourseButton iconType="algorithm" label="알고리즘" bgColor="bg-purple-200" />
-                    <CourseButton iconType="javascript" label="자바스크립트" bgColor="bg-yellow-200" />
                     <CourseButton iconType="python" label="파이썬 기초" bgColor="bg-blue-200" />
                 </div>
             </div>
-            <div className="flex">
+            <div className="flex mx-auto">
                 <ResumeCourseButton courseName={"Python"}/>
                 <BigCard className="flex m-4 w-[560px] h-[232px] bg-white">
                     <h2>(내용 고민 중)</h2>

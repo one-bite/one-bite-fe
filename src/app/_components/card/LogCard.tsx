@@ -24,7 +24,7 @@ const LogCard = ({ className = "", problem }:BigCardProps) => {
     const correctAnswer = problem.description.options[parseInt(problem.answer) - 1];
 
     return (
-        <BigCard className={`flex flex-col items-start w-full h-full mt-1 mx-0 bg-white ${className} `}>
+        <BigCard className={`flex flex-col items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
                 <QuizCard
                     subject={`${problem.topicCodes}`}

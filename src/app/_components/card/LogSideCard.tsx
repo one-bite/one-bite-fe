@@ -49,18 +49,22 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
 
     const groupByTopic = (histories: SubmitHistory[]) => {
         const grouped: Record<string, SubmitHistory[]> = {};
-        const seen = new Set<number>();
 
         histories.forEach((h) => {
-            const problem = quizProblems[h.problemId - 1]; // ✅ index로 접근
+            const problem = quizProblems[h.problemId - 1];
             if (!problem) return;
 
-            const topic = problem.topicCodes[0] || "기타";
-            if (seen.has(h.problemId)) return;
-            seen.add(h.problemId);
+            const topics = problem.topicCodes.length ? problem.topicCodes : ["기타"];
 
-            if (!grouped[topic]) grouped[topic] = [];
-            grouped[topic].push(h);
+            topics.forEach((topic) => {
+                if (!grouped[topic]) grouped[topic] = [];
+
+                // 중복 추가 방지: 같은 문제 ID가 이 토픽 그룹에 이미 있는지 체크
+                const alreadyIncluded = grouped[topic].some((item) => item.problemId === h.problemId);
+                if (!alreadyIncluded) {
+                    grouped[topic].push(h);
+                }
+            });
         });
 
         return grouped;
@@ -74,7 +78,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
     const groupedByTopic = groupByTopic(histories);
 
     return(
-        <BigCard className={`w-60 h-3/4 m-1 p-6 justify-start bg-white ${className}`}>
+        <BigCard className={`w-60 h-[800px] m-1 p-6 justify-start bg-white ${className}`}>
             <div className="mt-1 flex flex-col items-center">
                 <p className="font-linebold text-3xl mb-4">문제 목록</p>
                 <div className="flex gap-4">
