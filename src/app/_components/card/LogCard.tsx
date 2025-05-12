@@ -1,13 +1,13 @@
 "use client"
 
 import BigCard from "app/_components/base_components/BigCard";
-import {QuizProblem} from "app/_mocks/quizProblems";
 import QuizCard from "app/_components/card/QuizCard";
 import ProblemExplainationButton from "app/_components/buttons/ProblemExplainationButton";
+import {QuizProblem} from "app/_configs/types/quiz";
 
-interface BigCardProps{
+interface BigCardProps {
     className?: string;
-    problem: QuizProblem | null; // 통신 연결 시 LogSideCard 증 ProblemItem에서 id 불러오도록 해서 그 id로 정보 받아올 생각인데 잘 모르겠다.
+    problem: QuizProblem | null;
 }
 
 const LogCard = ({ className = "", problem }:BigCardProps) => {
@@ -21,16 +21,20 @@ const LogCard = ({ className = "", problem }:BigCardProps) => {
         )
     }
 
+    const correctAnswer = problem.description.options[parseInt(problem.answer) - 1];
+
     return (
         <BigCard className={`flex flex-col items-start w-full h-full mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
                 <QuizCard
-                    subject={`${problem.topicId}`}
+                    subject={`${problem.topicCodes}`}
                     title={problem.title}
-                    question={problem.description}
-                    options={problem.options}
-                    selected={problem.answer}
+                    question={problem.description.question}
+                    options={problem.description.options}
+                    selected={correctAnswer} // 정답 고정
                     onSelect={() => {}}
+                    isCorrect={true}
+                    correctAnswer={correctAnswer}
                     className="w-full shadow-none m-0"
                 />
             </div>

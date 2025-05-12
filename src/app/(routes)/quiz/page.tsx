@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 const QuizPage = () => {
 
   const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
-
   
   //const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
@@ -138,7 +137,7 @@ const QuizPage = () => {
   const handleNext = () => {
     decreaseTodayQuizLeft();
     setTodayStreak(getStreak());
-    
+
     setSelected(null); // 답 초기화
     setIsCorrect(null); // 정답 여부 초기화
     setIsSolved(false); // 문제 풀었음 초기화
