@@ -20,7 +20,7 @@ const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQ
             alert("오늘의 퀴즈는 모두 풀었습니다.");
             return;
         }
-        router.push(`/quiz?subject=${subject}`)
+        router.push(`/quiz`)
     }
 
     return (
