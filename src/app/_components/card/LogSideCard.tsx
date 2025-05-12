@@ -11,7 +11,7 @@ import {SubmitHistory} from "app/_mocks/submitHistory";
 interface LogSideCardProps {
     className?: string
     quizProblems: QuizProblem[]
-    onSelect: (problem: QuizProblem) => void;
+    onSelect: (problem: QuizProblem, history: SubmitHistory) => void;
     histories: SubmitHistory[]
 }
 
@@ -104,7 +104,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                                         key={h.historyId}
                                                         id={h.historyId}
                                                         title={problem.title}
-                                                        choose={() => onSelect(problem)}
+                                                        choose={() => onSelect(problem, h)}
                                                     />
                                                 );
                                             })}
@@ -131,7 +131,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                                 key={h.historyId}
                                                 id={h.historyId}
                                                 title={problem.title}
-                                                choose={() => onSelect(problem)}
+                                                choose={() => onSelect(problem, h)}
                                             />
                                         );
                                     })}

@@ -4,13 +4,15 @@ import BigCard from "app/_components/base_components/BigCard";
 import QuizCard from "app/_components/card/QuizCard";
 import ProblemExplainationButton from "app/_components/buttons/ProblemExplainationButton";
 import {QuizProblem} from "app/_configs/types/quiz";
+import {SubmitHistory} from "app/_mocks/submitHistory";
 
 interface BigCardProps {
     className?: string;
     problem: QuizProblem | null;
+    history: SubmitHistory | null;
 }
 
-const LogCard = ({ className = "", problem }:BigCardProps) => {
+const LogCard = ({ className = "", problem, history }:BigCardProps) => {
     if (!problem) {
         return (
             <BigCard className={`w-[600px] h-3/4 m-1 bg-white ${className}`}>
@@ -31,9 +33,9 @@ const LogCard = ({ className = "", problem }:BigCardProps) => {
                     title={problem.title}
                     question={problem.description.question}
                     options={problem.description.options}
-                    selected={correctAnswer} // 정답 고정
+                    selected={history?.submittedAnswer ?? null}
                     onSelect={() => {}}
-                    isCorrect={true}
+                    isCorrect={history ? problem.answer === history.submittedAnswer : null}
                     correctAnswer={correctAnswer}
                     className="w-full shadow-none m-0"
                 />
