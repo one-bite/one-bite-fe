@@ -16,7 +16,7 @@ interface LogSideCardProps {
 }
 
 const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideCardProps) => {
-    const [quizType, setQuizType] = useState<"날짜 별"|"유형 별">("날짜 별");
+    const [quizType, setQuizType] = useState<"날짜 별"|"주제 별">("날짜 별");
     const [topicGroups, setTopicGroups] = useState<Record<string, boolean>>({});
 
     const parseSubmittedAt = (submittedAt: number[]): Date => {
@@ -37,7 +37,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         return "그 이전";
     };
 
-    const groupByDateCategory = (histories: SubmitHistory[]) => {
+    const groupByDate = (histories: SubmitHistory[]) => {
         return histories.reduce((acc, h) => {
             const date = parseSubmittedAt(h.submittedAt);
             const group = getDateGroup(date);
@@ -74,7 +74,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         setTopicGroups((prev) => ({ ...prev, [key]: !prev[key]}));
     };
 
-    const groupedByDate = groupByDateCategory(histories);
+    const groupedByDate = groupByDate(histories);
     const groupedByTopic = groupByTopic(histories);
 
     return(
@@ -87,36 +87,37 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                 </div>
             </div>
             <div className="mt-4 p-1 w-full overflow-y-scroll overflow-x-hidden scrollbar-hide">
-                {quizType === "날짜 별" ? (
-                    <>
-                        {["오늘", "어제", "일주일 이내", "한 달 이내", "그 이전"].map(
-                            (group) =>
-                                groupedByDate[group] && (
-                                    <div key={group} className="mb-4">
-                                        <p className="text-sm font-bold text-gray-500">{group}</p>
-                                        <div className="ml-2 space-y-1">
-                                            {groupedByDate[group].map((h) => {
-                                                const problem = quizProblems[h.problemId - 1]; // ✅ 핵심
-                                                if (!problem) return null;
-
-                                                return (
-                                                    <ProblemItem
-                                                        key={h.historyId}
-                                                        id={h.historyId}
-                                                        title={problem.title}
-                                                        choose={() => onSelect(problem, h)}
-                                                    />
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                )
-                        )}
-                    </>
-                    ) : (
+                {quizType === "날짜 별"
+                    ? Object.entries(groupedByDate).map(([group, entries]) => (
+                        <div key={group} className="mb-2">
+                            <div
+                                className="flex justify-between text-lg items-center cursor-pointer font-linebold"
+                                onClick={() => toggleGroup(group)}
+                            >
+                                <span>{group}</span>
+                                {topicGroups[group] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                            </div>
+                            {topicGroups[group] && (
+                                <div className="ml-2 mt-1 space-y-1">
+                                    {entries.map((h) => {
+                                        const problem = quizProblems[h.problemId - 1];
+                                        if (!problem) return null;
+                                        return (
+                                            <ProblemItem
+                                                key={h.historyId}
+                                                id={h.historyId}
+                                                title={problem.title}
+                                                choose={() => onSelect(problem, h)}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    )) : (
                     Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
-                            <div className="flex justify-between items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
+                            <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
                                 <span>{topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
                                 {topicGroups[topicId] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
