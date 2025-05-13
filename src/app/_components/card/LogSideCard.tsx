@@ -6,13 +6,13 @@ import QuizTypeIndex from "app/_components/options/QuizTypeIndex";
 import {QuizProblem} from "app/_configs/types/quiz";
 import ProblemItem from "app/_components/sub_components/ProblemItem";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import {SubmitHistory} from "app/_mocks/submitHistory";
+import {ProblemHistory} from "@/app/_configs/types/problemHistory";
 
 interface LogSideCardProps {
     className?: string
     quizProblems: QuizProblem[]
-    onSelect: (problem: QuizProblem, history: SubmitHistory) => void;
-    histories: SubmitHistory[]
+    onSelect: (problem: QuizProblem, history: ProblemHistory) => void;
+    histories: ProblemHistory[]
 }
 
 const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideCardProps) => {
@@ -37,24 +37,24 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         return "그 이전";
     };
 
-    const groupByDateCategory = (histories: SubmitHistory[]) => {
+    const groupByDateCategory = (histories: ProblemHistory[]) => {
         return histories.reduce((acc, h) => {
             const date = parseSubmittedAt(h.submittedAt);
             const group = getDateGroup(date);
             if (!acc[group]) acc[group] = [];
             acc[group].push(h);
             return acc;
-        }, {} as Record<string, SubmitHistory[]>);
+        }, {} as Record<string, ProblemHistory[]>);
     };
 
-    const groupByTopic = (histories: SubmitHistory[]) => {
-        const grouped: Record<string, SubmitHistory[]> = {};
+    const groupByTopic = (histories: ProblemHistory[]) => {
+        const grouped: Record<string, ProblemHistory[]> = {};
 
         histories.forEach((h) => {
-            const problem = quizProblems[h.problemId - 1];
+            const problem = quizProblems.find(p => p.problemId === h.problemId);
             if (!problem) return;
 
-            const topics = problem.topicCodes.length ? problem.topicCodes : ["기타"];
+            const topics = problem.topicNames.length ? problem.topicNames : ["기타"];
 
             topics.forEach((topic) => {
                 if (!grouped[topic]) grouped[topic] = [];
@@ -96,7 +96,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                         <p className="text-sm font-bold text-gray-500">{group}</p>
                                         <div className="ml-2 space-y-1">
                                             {groupedByDate[group].map((h) => {
-                                                const problem = quizProblems[h.problemId - 1]; // ✅ 핵심
+                                                const problem = quizProblems.find(p => p.problemId === h.problemId);
                                                 if (!problem) return null;
 
                                                 return (
@@ -123,7 +123,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                             {topicGroups[topicId] && (
                                 <div className="ml-2 mt-1 space-y-1">
                                     {histories.map((h) => {
-                                        const problem = quizProblems[h.problemId - 1];
+                                        const problem = quizProblems.find(p => p.problemId === h.problemId);
                                         if (!problem) return null;
 
                                         return (
