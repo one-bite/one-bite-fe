@@ -1,14 +1,13 @@
-"use client";
+"use client"
 
-import React from "react";
-import {Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
-interface Props {
-    onClick?: () => void;
+interface AIGenerateButtonProps {
+    onClick: () => void;
     className?: string;
 }
 
-const ProblemExplanationButton = ({ onClick, className = "" }: Props) => {
+const AIGenerateButton = ({ onClick, className = "" }: AIGenerateButtonProps) => {
     return (
         <Button
             onClick={onClick}
@@ -23,9 +22,9 @@ const ProblemExplanationButton = ({ onClick, className = "" }: Props) => {
                         transition-all duration-150 ease-in-out
                         ${className}`}
         >
-            개념 확인하기 (AI)
+            유사 문제 풀어보기 (AI)
         </Button>
     );
 };
 
-export default ProblemExplanationButton;
+export default AIGenerateButton;

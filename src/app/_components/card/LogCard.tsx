@@ -5,8 +5,10 @@ import QuizCard from "app/_components/card/QuizCard";
 import ProblemExplainationButton from "app/_components/buttons/ProblemExplainationButton";
 import {useEffect, useState} from "react";
 import ExplanationViewer from "app/_components/sub_components/ExplanationViewer";
+import AIGenerateProblemButton from "app/_components/buttons/AIGenerateProblemButton";
 import {QuizProblem} from "app/_configs/types/quiz";
 import {ProblemHistory} from "@/app/_configs/types/problemHistory";
+
 
 interface BigCardProps {
     className?: string;
@@ -52,15 +54,18 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
             </div>
             <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
                 <ExplanationViewer explanation={explanation} isLoading={isLoading}/>
-                <ProblemExplainationButton className={"justify-center items-center"} onClick={async ()=>{
-                    if(!problem) return;
-                    setIsLoading(true);
-                    //api호출 부분
-                    setTimeout(()=>{
-                        setExplanation("이 문제에 대한 AI의 개념 설명입니다."); //api로 받은 ai 설명 변수를 넣을 위치
-                        setIsLoading(false);
+                <div className={"flex flex-row"}>
+                    <ProblemExplainationButton className={"justify-center items-center"} onClick={async ()=>{
+                        if(!problem) return;
+                        setIsLoading(true);
+                        //api호출 부분
+                        setTimeout(()=>{
+                            setExplanation("이 문제에 대한 AI의 개념 설명입니다."); //api로 받은 ai 설명 변수를 넣을 위치
+                            setIsLoading(false);
                         }, 1200);
-                }}/>
+                    }}/>
+                    <AIGenerateProblemButton onClick={()=>{/*여기에 유사 유형 문제 생성하기 위해 전달할 api 변수나 함수*/}}/>
+                </div>
             </div>
         </BigCard>
     );
