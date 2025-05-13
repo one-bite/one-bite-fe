@@ -177,7 +177,7 @@ const QuizPage = () => {
 
       <div className="flex justify-center mt-8 gap-4">
         <MyButton
-          className="bg-gradient-to-r from-indigo-600 to-purple-500 shadow-purple-900 hover:bg-purple-600 active:shadow-purple-900"
+          className="bg-lime-500 shadow-purple-900 hover:bg-lime-600 active:shadow-lime-900"
           onClick={handleprev}
           disabled={currentIndex === 0} // 첫 번째 문제일 때 비활성화
         >
