@@ -22,7 +22,7 @@ const ProblemExplanationButton = ({ onClick, className = "" }: Props) => {
                         transition-all duration-150 ease-in-out
                         ${className}`}
         >
-            문제 풀이 해설 (AI)
+            개념 확인하기 (AI)
         </button>
     );
 };
