@@ -37,7 +37,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         return "그 이전";
     };
 
-    const groupByDateCategory = (histories: ProblemHistory[]) => {
+    const groupByDate = (histories: ProblemHistory[]) => {
         return histories.reduce((acc, h) => {
             const date = parseSubmittedAt(h.submittedAt);
             const group = getDateGroup(date);
@@ -74,7 +74,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         setTopicGroups((prev) => ({ ...prev, [key]: !prev[key]}));
     };
 
-    const groupedByDate = groupByDateCategory(histories);
+    const groupedByDate = groupByDate(histories);
     const groupedByTopic = groupByTopic(histories);
 
     return(
