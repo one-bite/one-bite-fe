@@ -74,7 +74,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         setTopicGroups((prev) => ({ ...prev, [key]: !prev[key]}));
     };
 
-    const groupedByDate = groupByDate(histories);
+    const groupedByDate = groupByDateCategory(histories);
     const groupedByTopic = groupByTopic(histories);
 
     return(
