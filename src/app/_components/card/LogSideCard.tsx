@@ -16,7 +16,7 @@ interface LogSideCardProps {
 }
 
 const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideCardProps) => {
-    const [quizType, setQuizType] = useState<"날짜 별"|"유형 별">("날짜 별");
+    const [quizType, setQuizType] = useState<"날짜 별"|"주제 별">("날짜 별");
     const [topicGroups, setTopicGroups] = useState<Record<string, boolean>>({});
 
     const parseSubmittedAt = (submittedAt: number[]): Date => {
