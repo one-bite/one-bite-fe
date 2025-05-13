@@ -3,6 +3,7 @@
 import React from "react";
 import BigCard from "app/_components/base_components/BigCard";
 import {Spinner} from "@nextui-org/react";
+import {Logo} from "app/_components/icon/LogoIcon";
 
 interface ExplanationViewerProps {
     explanation: string | null;
@@ -17,8 +18,11 @@ const ExplanationViewer = ({ explanation, isLoading }: ExplanationViewerProps) =
                     <Spinner label="AI 해설 생성 중..." color="primary" />
                 </div>
             ) : explanation ? (
-                <div className="self-start w-full text-left text-sm font-line leading-relaxed whitespace-pre-wrap text-gray-900">
-                    {explanation}
+                <div className={"self-start w-full h-full m-1"}>
+                    <div className="flex items-center w-full text-left text-base font-line leading-relaxed whitespace-pre-wrap text-gray-900">
+                        <div className={"rounded-full bg-lime-500 w-9 h-9 mr-4"}><Logo/></div>
+                        <span>{explanation}</span>
+                    </div>
                 </div>
             ) : (
                 <p className="text-gray-500 text-lg text-center font-linebold">
