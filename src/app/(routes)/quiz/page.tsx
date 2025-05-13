@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, /*useEffect*/ } from "react";
-//import { fetchTodayProblems } from "@/utils/apis/problem";
-//import { TodayQuizResponse } from "app/_configs/types/quiz";
+import { useState, useEffect } from "react";
+import { fetchTodayProblems } from "@/utils/apis/todayProblem";
+import { TodayQuizResponse } from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
-import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
+//import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 const QuizPage = () => {
 
   const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
   
-  //const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
+  const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
   const [isSolved, setIsSolved] = useState(false); // 문제 풀었는지 여부
-  /*
+  
   useEffect(() => {
     const loadProblems = async () => {
       try {
@@ -30,17 +30,17 @@ const QuizPage = () => {
 
     loadProblems();
   }, []);
-  */
- /*
+  
+ 
   useEffect(() => {
     if (quizData) {
       setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
     }
   }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
-*/
+
   const router = useRouter();
 
-  const quizData = quizProblems; //mock 데이터 사용
+  //const quizData = quizProblems; //mock 데이터 사용
 
   
   const [selected, setSelected] = useState<string | null>(null); // 선택한 답
@@ -56,13 +56,13 @@ const QuizPage = () => {
     return <div className="text-center mt-10">문제를 불러오는 중입니다...</div>;
   }
 
-  //const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  const currentProblem = quizData/*.problemList*/[currentIndex];
-  const isLast = currentIndex === (quizData/*.problemList*/.length - 1);
+  const currentProblem = quizData.problemList[currentIndex];
+  const isLast = currentIndex === (quizData.problemList.length - 1);
 
-  const correctScore = currentProblem.point;  // 정답일 때 점수
-  const wrongScore = 7; // 오답일 때 점수
+  //const correctScore = currentProblem.point;  // 정답일 때 점수
+  //const wrongScore = 7; // 오답일 때 점수
   const rewardPoint = 10; // 정답일 때 포인트 **api 수정 요청**
 
   const handleAnswer = (answer: string) => {
@@ -74,7 +74,7 @@ const QuizPage = () => {
       alert("정답을 선택해주세요.");
       return;
     }
-/*
+
     const problemId = quizData.problemList[currentIndex].problemId;
     const userId = 2; // 현재 로그인한 유저의 ID를 가져와야 함..
 
@@ -108,7 +108,7 @@ const QuizPage = () => {
       subtractScore(result.score); // 유저 스코어에 반영
     }
     setLatestScore(result.score); // 최근 점수 저장
-*/
+/*
     //mock 데이터 사용
     const answerNum = parseInt(currentProblem.answer);
     const correct = selected === currentProblem.description.options[answerNum - 1]; // 정답 여부 확인
@@ -124,14 +124,14 @@ const QuizPage = () => {
       subtractScore(wrongScore); // 점수 감소
     }
     setLatestScore(correct ? correctScore : wrongScore); // 최근 점수 저장
-
+*/
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
-  /*
+  
   } catch (error) {
       console.error("채점 중 오류:", error);
     }
-      */
+      
   };
 
   const handleNext = () => {
@@ -164,14 +164,14 @@ const QuizPage = () => {
     <div className="m-12 min-h-screen p-4">
       <div className="flex justify-center">
         <QuizCard
-            leftStreak={todayStreak.todayStreakQuizLeft} // 스트릭까지 남은 문제 수
+            leftStreak={todayStreak.todayStreakQuizLeft}
             title={currentProblem.title}
             question={currentProblem.description.question}
             options={currentProblem.description.options}
             selected={selected}
             onSelect={handleAnswer}
             isCorrect={isCorrect}
-            correctAnswer={currentProblem.answer} //description.answer로
+            correctAnswer={currentProblem.answer}
         />
       </div>
 

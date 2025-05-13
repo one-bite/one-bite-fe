@@ -1,4 +1,6 @@
-export const quizProblems = [
+import { QuizProblem } from "@/app/_configs/types/quiz";
+
+export const quizProblems: QuizProblem[] = [
   {
     problemId: 1,
     categoryId: 1,
@@ -9,9 +11,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "리스트는 대괄호로 생성해요.",
-    answer: "2",
+    answer: "[1, 2, 3]",
     point: 20,
-    topicCodes: ["리스트", "자료구조"]
+    topicNames: ["리스트", "자료구조"],
+    userId: null,
   },
   {
     problemId: 2,
@@ -23,9 +26,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "문자열은 따옴표로 감싸져 있어요요",
-    answer: "3",
+    answer: "'hello'",
     point: 20,
-    topicCodes: ["자료형", "문자열"]
+    topicNames: ["자료형", "문자열"],
+    userId: null,
   },
   {
     problemId: 3,
@@ -37,9 +41,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "if (조건): 형식으로 작성해요.",
-    answer: "2",
+    answer: "if x > 0:",
     point: 20,
-    topicCodes: ["조건문", "제어문"]
+    topicNames: ["조건문", "제어문"],
+    userId: null,
   },
   {
     problemId: 4,
@@ -51,9 +56,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "for i in range(5): 형식으로 작성해요.",
-    answer: "4",
+    answer: "for i in range(5):",
     point: 20,
-    topicCodes: ["반복문", "제어문"]
+    topicNames: ["반복문", "제어문"],
+    userId: null,
   },
   {
     problemId: 5,
@@ -65,9 +71,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "함수 정의는 def 함수이름(): 형식으로 작성해요.",
-    answer: "3",
+    answer: "def func():",
     point: 20,
-    topicCodes: ["함수", "기초 문법"]
+    topicNames: ["함수", "기초 문법"],
+    userId: null,
   },
   {
     problemId: 6,
@@ -79,9 +86,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "배열 인덱스는 0부터 시작해요.",
-    answer: "2",
+    answer: "a[1]",
     point: 20,
-    topicCodes: ["리스트", "인덱싱"]
+    topicNames: ["리스트", "인덱싱"],
+    userId: null,
   },
   {
     problemId: 7,
@@ -93,9 +101,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "{키: 값} 형식으로 작성해요.",
-    answer: "3",
+    answer: "{'a': 1, 'b': 2}",
     point: 20,
-    topicCodes: ["딕셔너리", "자료구조"]
+    topicNames: ["딕셔너리", "자료구조"],
+    userId: null,
   },
   {
     problemId: 8,
@@ -107,9 +116,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "정수형을 문자열로 변환할 때는 str() 함수를 사용해요.",
-    answer: "1",
+    answer: "str(10)",
     point: 20,
-    topicCodes: ["형변환", "자료형"]
+    topicNames: ["형변환", "자료형"],
+    userId: null,
   },
   {
     problemId: 9,
@@ -121,9 +131,10 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "리스트에 항목을 추가할 때는 append() 메서드를 사용해요.",
-    answer: "3",
+    answer: "append()",
     point: 20,
-    topicCodes: ["리스트", "메서드"]
+    topicNames: ["리스트", "메서드"],
+    userId: null,
   },
   {
     problemId: 10,
@@ -135,8 +146,9 @@ export const quizProblems = [
     },
     questionType: "multiple_choice",
     hint: "유효한 변수 이름은 문자, 숫자, 밑줄(_)로 시작해야 해요.",
-    answer: "4",
+    answer: "my_var",
     point: 20,
-    topicCodes: ["변수", "문법 규칙"]
+    topicNames: ["변수", "문법 규칙"],
+    userId: null,
   }
 ];

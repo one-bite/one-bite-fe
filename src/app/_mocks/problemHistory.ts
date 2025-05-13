@@ -1,14 +1,6 @@
-export interface SubmitHistory {
-  historyId: number;
-  userId: number;
-  problemId: number;
-  submittedAnswer: string;
-  isCorrect: boolean;
-  solveTime: number;
-  submittedAt: [number, number, number, number, number, number, number];
-}
+import { ProblemHistory } from "../_configs/types/problemHistory";
 
-export const submitHistory: SubmitHistory[] = [
+export const problemHistory: ProblemHistory[] = [
   {
     historyId: 1,
     userId: 2,

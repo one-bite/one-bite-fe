@@ -6,6 +6,7 @@ export interface ProblemDescription {
 }
 
 export interface QuizProblem {
+  problemId: number;
   categoryId: number;
   title: string;
   description: ProblemDescription;
@@ -13,12 +14,16 @@ export interface QuizProblem {
   hint: string;
   answer: string;
   point: number;
-  topicCodes: string[];
+  userId: number | null;
+  topicNames: string[];
 }
 
 export interface TodayQuizProblem {
   problemId: number;
+  type: QuestionType;
   title: string;
+  answer: string;
+  point: number;
   description: {
     question: string;
     options: string[];
