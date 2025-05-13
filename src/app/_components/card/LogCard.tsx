@@ -4,12 +4,12 @@ import BigCard from "app/_components/base_components/BigCard";
 import QuizCard from "app/_components/card/QuizCard";
 import ProblemExplainationButton from "app/_components/buttons/ProblemExplainationButton";
 import {QuizProblem} from "app/_configs/types/quiz";
-import {SubmitHistory} from "app/_mocks/submitHistory";
+import {ProblemHistory} from "@/app/_configs/types/problemHistory";
 
 interface BigCardProps {
     className?: string;
     problem: QuizProblem | null;
-    history: SubmitHistory | null;
+    history: ProblemHistory | null;
 }
 
 const LogCard = ({ className = "", problem, history }:BigCardProps) => {
@@ -23,13 +23,13 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
         )
     }
 
-    const correctAnswer = problem.description.options[parseInt(problem.answer) - 1];
+    const correctAnswer = problem.answer;
 
     return (
         <BigCard className={`flex flex-col items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
                 <QuizCard
-                    subject={`${problem.topicCodes}`}
+                    subject={`${problem.topicNames}`}
                     title={problem.title}
                     question={problem.description.question}
                     options={problem.description.options}
