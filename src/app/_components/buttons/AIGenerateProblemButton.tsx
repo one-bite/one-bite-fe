@@ -22,7 +22,7 @@ const AIGenerateButton = ({ onClick, className = "" }: AIGenerateButtonProps) =>
                         transition-all duration-150 ease-in-out
                         ${className}`}
         >
-            유사 유형 문제 풀어보기 (AI)
+            유사 문제 풀어보기 (AI)
         </Button>
     );
 };
