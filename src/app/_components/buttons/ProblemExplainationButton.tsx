@@ -11,8 +11,8 @@ const ProblemExplanationButton = ({ onClick, className = "" }: Props) => {
     return (
         <button
             onClick={onClick}
-            className={`flex justify-center items-center gap-2 mt-4
-                        w-full h-12 text-white text-base font-linebold
+            className={`flex justify-center items-center gap-2 my-8
+                        w-[240px] h-16 text-white text-lg font-linebold
                         bg-gradient-to-r from-indigo-500 to-purple-500
                         rounded-2xl
                         shadow-[0_3px_0_rgba(79,70,229,1)]  /* indigo-600 */

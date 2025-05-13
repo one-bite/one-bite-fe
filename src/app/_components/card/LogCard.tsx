@@ -40,7 +40,7 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
                     className="w-full shadow-none m-0"
                 />
             </div>
-            <div className="w-full h-full p-4 pb-0 justify-center items-center">
+            <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
                 <BigCard className="w-full h-4/5 mx-1 my-0 border border-gray-400 shadow-none">
                     <p>이 카드는 해설 출력에 사용될 예정입니다.</p>
                 </BigCard>
