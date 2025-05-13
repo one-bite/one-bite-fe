@@ -93,7 +93,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                             (group) =>
                                 groupedByDate[group] && (
                                     <div key={group} className="mb-4">
-                                        <p className="text-sm font-bold text-gray-500">{group}</p>
+                                        <p className="text-lg font-linebold">{group}</p>
                                         <div className="ml-2 space-y-1">
                                             {groupedByDate[group].map((h) => {
                                                 const problem = quizProblems[h.problemId - 1]; // ✅ 핵심
@@ -116,7 +116,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                     ) : (
                     Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
-                            <div className="flex justify-between items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
+                            <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
                                 <span>{topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
                                 {topicGroups[topicId] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
