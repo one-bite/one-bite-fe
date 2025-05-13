@@ -5,6 +5,8 @@ import QuizCard from "app/_components/card/QuizCard";
 import ProblemExplainationButton from "app/_components/buttons/ProblemExplainationButton";
 import {QuizProblem} from "app/_configs/types/quiz";
 import {SubmitHistory} from "app/_mocks/submitHistory";
+import {useEffect, useState} from "react";
+import ExplanationViewer from "app/_components/sub_components/ExplanationViewer";
 
 interface BigCardProps {
     className?: string;
@@ -13,6 +15,14 @@ interface BigCardProps {
 }
 
 const LogCard = ({ className = "", problem, history }:BigCardProps) => {
+    const [explanation, setExplanation] = useState<string|null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        setExplanation(null);
+        setIsLoading(false);
+    }, [problem]);
+
     if (!problem) {
         return (
             <BigCard className={`w-[600px] h-3/4 m-1 bg-white ${className}`}>
@@ -41,10 +51,16 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
                 />
             </div>
             <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
-                <BigCard className="w-full h-4/5 mx-1 my-0 border border-gray-400 shadow-none">
-                    <p>이 카드는 해설 출력에 사용될 예정입니다.</p>
-                </BigCard>
-                <ProblemExplainationButton onClick={()=>{}}/>
+                <ExplanationViewer explanation={explanation} isLoading={isLoading}/>
+                <ProblemExplainationButton className={"justify-center items-center"} onClick={async ()=>{
+                    if(!problem) return;
+                    setIsLoading(true);
+                    //api호출 부분
+                    setTimeout(()=>{
+                        setExplanation("이 문제에 대한 AI의 개념 설명입니다."); //api로 받은 ai 설명 변수를 넣을 위치
+                        setIsLoading(false);
+                        }, 1200);
+                }}/>
             </div>
         </BigCard>
     );
