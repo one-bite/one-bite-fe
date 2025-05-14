@@ -3,6 +3,7 @@
 import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import AnswerOptions from "app/_components/options/AnswerOptions";
+import {Logo} from "app/_components/icon/LogoIcon";
 
 
 interface QuizCardProps {
@@ -16,6 +17,7 @@ interface QuizCardProps {
   isCorrect: boolean | null; // 정답 여부 CS-114
   correctAnswer: string; // 정답 CS-114
   className?: string;
+  generatedByAI?:boolean;
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
@@ -29,16 +31,26 @@ const QuizCard: React.FC<QuizCardProps> = ({
   onSelect,
   isCorrect,
   correctAnswer,
+  generatedByAI,
 }) => {
   return (
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
       <CardBody>
         {typeof leftStreak === "number" && (
-            <div className="bg-lime-400 rounded-lg px-4 py-1 mb-4 w-64 h-[26px] text-white">
-              <p>
-                <b>{leftStreak}</b>문제만 더 풀면 스트릭을 쌓아요
-              </p>
-            </div>)}
+            <div className={"flex justify-between items-center"}>
+              <div className="bg-lime-400 rounded-lg px-4 py-1 mb-4 w-64 h-[26px] text-white font-line">
+                <p>
+                  <b>{leftStreak}</b>문제만 더 풀면 스트릭을 쌓아요
+                </p>
+              </div>
+              {generatedByAI && (
+                  <div className={"flex bg-gradient-to-r from-indigo-700 to-purple-700 w-20 h-9 rounded-lg px-1 mb-4 text-white text-xl font-line"}>
+                    <Logo/>
+                    <span className={"py-1.5 -mx-1"}>AI</span>
+                  </div>
+              )}
+            </div>
+        )}
 
         <p className="text-xs text-gray-400 mb-1">
           한입코딩 {">"} 코스 {">"} {title}
