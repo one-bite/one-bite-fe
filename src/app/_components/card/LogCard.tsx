@@ -41,7 +41,7 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
         <BigCard className={`flex flex-col items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
                 <QuizCard
-                    subject={`${problem.topicNames}`}
+                    topic={`${problem.topicNames}`}
                     title={problem.title}
                     question={problem.description.question}
                     options={problem.description.options}
@@ -50,6 +50,7 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
                     isCorrect={history ? problem.answer === history.submittedAnswer : null}
                     correctAnswer={correctAnswer}
                     className="w-full shadow-none m-0"
+                    generatedByAI={true}
                 />
             </div>
             <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">

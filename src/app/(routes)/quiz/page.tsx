@@ -172,6 +172,7 @@ const QuizPage = () => {
             onSelect={handleAnswer}
             isCorrect={isCorrect}
             correctAnswer={currentProblem.answer}
+            generatedByAI = {true}
         />
       </div>
 
