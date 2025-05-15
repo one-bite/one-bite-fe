@@ -8,21 +8,21 @@ import {Logo} from "app/_components/icon/LogoIcon";
 
 interface QuizCardProps {
   leftStreak?: number;  // 남은 문제 수
-  subject?: string;     // 문제 토픽 CS-100
+  topic?: string;     // 문제 토픽 CS-100
   title: string;
   question: string;    // 문제 내용
   options: string[];   // 객관식 선택지
   selected: string | null;  // 선택된 답
   onSelect: (selected: string) => void;  // 선택지 선택 함수
-  isCorrect: boolean | null; // 정답 여부 CS-114
-  correctAnswer: string; // 정답 CS-114
+  isCorrect: boolean | null;
+  correctAnswer: string;
   className?: string;
   generatedByAI?:boolean;
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
   leftStreak,
-  //subject, //CS-114에선 사용하지 않았어서 주석처리
+  topic,
   title,
   question,
   options,
@@ -36,24 +36,26 @@ const QuizCard: React.FC<QuizCardProps> = ({
   return (
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
       <CardBody>
-        {typeof leftStreak === "number" && (
-            <div className={"flex justify-between items-center"}>
+        <div className={"flex justify-between items-center"}>
+        {typeof leftStreak === "number" ? (
               <div className="bg-lime-400 rounded-lg px-4 py-1 mb-4 w-64 h-[26px] text-white font-line">
                 <p>
                   <b>{leftStreak}</b>문제만 더 풀면 스트릭을 쌓아요
                 </p>
               </div>
+        ) : (
+          <div />
+        )}
               {generatedByAI && (
                   <div className={"flex bg-gradient-to-r from-indigo-700 to-purple-700 w-20 h-9 rounded-lg px-1 mb-4 text-white text-xl font-line"}>
                     <Logo/>
                     <span className={"py-1.5 -mx-1"}>AI</span>
                   </div>
               )}
-            </div>
-        )}
+         </div>
 
         <p className="text-xs text-gray-400 mb-1">
-          한입코딩 {">"} 코스 {">"} {title}
+          한입코딩 {">"} 코스 {">"} {topic}
         </p>
         <h1 className="text-2xl font-linebold my-2">{title}</h1>
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
