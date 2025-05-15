@@ -2,9 +2,12 @@ import { ProblemHistory } from "@/app/_configs/types/problemHistory";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchProblemHistory = async (userId: number): Promise<ProblemHistory[]> => {
-  const response = await fetch(`${apiUrl}/db/history/user/${userId}`, {
+export const fetchProblemHistory = async (): Promise<ProblemHistory[]> => {
+  const response = await fetch(`${apiUrl}/users/history`, {
     method: "GET",
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+    },
   });
 
   if (!response.ok) {
