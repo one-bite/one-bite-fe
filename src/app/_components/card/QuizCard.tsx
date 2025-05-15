@@ -11,7 +11,8 @@ interface QuizCardProps {
   topic?: string;     // 문제 토픽 CS-100
   title: string;
   question: string;    // 문제 내용
-  options: string[];   // 객관식 선택지
+  options: string[];   // 객관식 또는 O/X 선택지
+  questionType: "multiple_choice" | "short_answer" | "true_false"; // 문제 유형
   selected: string | null;  // 선택된 답
   onSelect: (selected: string) => void;  // 선택지 선택 함수
   isCorrect: boolean | null;
@@ -26,6 +27,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
   title,
   question,
   options,
+  questionType,
   selected,
   className,
   onSelect,
@@ -61,6 +63,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
 
         <AnswerOptions
+        questionType={questionType}
         options={options}
         onSelect={onSelect}
         selected={selected}

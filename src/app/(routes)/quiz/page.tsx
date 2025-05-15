@@ -168,6 +168,7 @@ const QuizPage = () => {
             title={currentProblem.title}
             question={currentProblem.description.question}
             options={currentProblem.description.options}
+            questionType={currentProblem.type}
             selected={selected}
             onSelect={handleAnswer}
             isCorrect={isCorrect}

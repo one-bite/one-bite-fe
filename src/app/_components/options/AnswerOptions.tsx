@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 
 interface AnswerOptionsProps {
+    questionType: "multiple_choice" | "short_answer" | "true_false";
     options: string[];
     onSelect: (selected: string) => void;
     selected: string | null;
@@ -11,7 +12,7 @@ interface AnswerOptionsProps {
     correctAnswer: string;
 }
 
-const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
+const AnswerOptions: React.FC<AnswerOptionsProps> = ({ /*questionType,*/ options, onSelect, selected, isCorrect, correctAnswer }) => {
     return (
         <div className="flex flex-col space-y-3">
             {options.map((option, index) => {

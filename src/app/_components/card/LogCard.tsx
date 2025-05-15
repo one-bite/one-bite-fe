@@ -45,6 +45,7 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
                     title={problem.title}
                     question={problem.description.question}
                     options={problem.description.options}
+                    questionType={problem.questionType}
                     selected={history?.submittedAnswer ?? null}
                     onSelect={() => {}}
                     isCorrect={history ? problem.answer === history.submittedAnswer : null}
