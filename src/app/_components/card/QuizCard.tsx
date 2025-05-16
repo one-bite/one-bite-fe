@@ -84,7 +84,6 @@ const QuizCard: React.FC<QuizCardProps> = ({
         )}
         {questionType === "short_answer" && (
             <AnswerShortInput
-                options={options}
                 onSelect={onSelect}
                 selected={selected}
                 isCorrect={isCorrect}
