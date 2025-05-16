@@ -1,18 +1,18 @@
-import {QuizProblem} from "app/_configs/types/quiz";
+import { QuizProblem } from "@/app/_configs/types/quiz";
 
-export const fetchProblems = async () : Promise<QuizProblem[]> => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const response = await fetch(`${apiUrl}/db/problems`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+export const fetchProblem = async (problemId: number): Promise<QuizProblem> => {
+
+    const response = await fetch(`${apiUrl}/db/problems/${problemId}`, {
+        method: "GET",
     });
 
     if (!response.ok) {
-        throw new Error("문제 불러오기 실패");
+        const errorText = await response.text();
+        console.error(`[Problem Fetch Error] ${response.status}: ${errorText}`);
+        throw new Error("문제 정보를 가져오는데 실패했습니다.");
     }
 
-    return await response.json(); // 문제 리스트 반환
+    return await response.json();
 };

@@ -3,13 +3,15 @@ import {fetchUserStreak} from "@/utils/apis/streakApi";
 const STREAK_KEY = "userStreak";
 
 export interface UserStreakData {
-    totalStreak: number;       // 현재 총 스트릭 수
+    maxStreak: number;       // 최대 스트릭 수
+    totalStreak: number;  // 현재 스트릭 수 (서버에서 가져온 값)
     todayStreakQuizLeft: number;      // 오늘 남은 문제 수
     streakHistory: string[];    // 스트릭 달성한 날짜 리스트 (ex: ["2025-04-14", "2025-04-15"])
 }
 
 // 기본 초기값
 const defaultStreak: UserStreakData = {
+    maxStreak: 0,
     totalStreak: 0,
     todayStreakQuizLeft: 10,
     streakHistory: [],
@@ -47,8 +49,8 @@ export function setStreak(newStreak: Partial<UserStreakData>): void {
 
     const current = getStreak();
     const updated = { ...current, ...newStreak };
-    localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
 
+    localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
     window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
 
@@ -65,6 +67,16 @@ export function decreaseTodayQuizLeft(): void {
     if (updatedQuizLeft === 0) {
         // 오늘 스트릭 달성
         const today = new Date().toISOString().split("T")[0]; // "2025-04-27" 형식
+
+        if (streakData.maxStreak <= streakData.totalStreak) {
+            setStreak({
+                maxStreak: streakData.totalStreak + 1,
+                totalStreak: streakData.totalStreak + 1,
+                todayStreakQuizLeft: 0,
+                streakHistory: [...streakData.streakHistory, today],
+            });
+
+        };
 
         setStreak({
             totalStreak: streakData.totalStreak + 1,
@@ -90,9 +102,10 @@ export async function syncUserStreak(){
         const serverData = await fetchUserStreak();
 
         setStreak({
-            totalStreak: serverData.max_streak_count,
-            todayStreakQuizLeft: defaultStreak.todayStreakQuizLeft, // 서버가 따로 주지 않으면 기본 10
-            streakHistory: serverData.activeDates,
+            maxStreak: serverData.maxStreak,
+            totalStreak: serverData.nowStreak,
+            todayStreakQuizLeft: 10, // 서버가 따로 주지 않으면 기본 10
+            streakHistory: serverData.streakHistory,
         });
     } catch (e) {
         console.error("유저 스트릭 동기 실패:", e);
