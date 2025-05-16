@@ -9,6 +9,7 @@ import ResultModal from "app/_components/modals/ResultModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
+import {Spinner} from "@nextui-org/react";
 const QuizPage = () => {
 
   const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
@@ -16,15 +17,28 @@ const QuizPage = () => {
   const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
   const [isSolved, setIsSolved] = useState(false); // 문제 풀었는지 여부
-  
+
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const loadProblems = async () => {
       try {
+        setIsLoading(true);
         const data = await fetchTodayProblems();
         console.log("응답 형태:", data);
-        setQuizData(data);
+
+        // 문제가 없을 경우 처리
+        if (!data || !data.problemList || data.problemList.length === 0) {
+          setQuizData(null);
+        } else {
+          setQuizData(data);
+        }
       } catch (error) {
         console.error("문제 불러오기 오류:", error);
+        alert("문제를 불러오는 데 실패했습니다. 메인 화면으로 이동합니다.");
+        router.push("/");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -52,9 +66,23 @@ const QuizPage = () => {
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  if (!quizData) {
-    return <div className="text-center mt-10">문제를 불러오는 중입니다...</div>;
+  if (isLoading) {
+    return (
+        <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-jungM">
+          <Spinner color="primary" size="lg"/>
+          문제를 불러오는 중입니다...
+        </div>
+    );
   }
+
+  if (!quizData || quizData.problemList.length === 0) {
+    return (
+        <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-jungM">
+          문제가 존재하지 않습니다...
+        </div>
+    );
+  }
+
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
