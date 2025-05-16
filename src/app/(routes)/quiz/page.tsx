@@ -158,8 +158,6 @@ const QuizPage = () => {
     console.log("이전 문제로!");
   };
 
-  
-
   return (
     <div className="m-12 min-h-screen p-4">
       <div className="flex justify-center">
@@ -172,12 +170,13 @@ const QuizPage = () => {
             onSelect={handleAnswer}
             isCorrect={isCorrect}
             correctAnswer={currentProblem.answer}
+            generatedByAI = {true}
         />
       </div>
 
       <div className="flex justify-center mt-8 gap-4">
         <MyButton
-          className="bg-lime-500 shadow-purple-900 hover:bg-lime-600 active:shadow-lime-900"
+          className="bg-lime-500 shadow-lime-900 hover:bg-lime-600 active:shadow-lime-900"
           onClick={handleprev}
           disabled={currentIndex === 0} // 첫 번째 문제일 때 비활성화
         >

@@ -5,6 +5,8 @@ import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import BigCard from "app/_components/base_components/BigCard";
 import { getStreak } from "@/utils/user";
+import {Logo} from "app/_components/icon/LogoIcon";
+import React from "react";
 //import { useEffect } from "react";
 
 export default function Page() {
@@ -25,7 +27,10 @@ export default function Page() {
             <div className="flex mx-auto">
                 <ResumeCourseButton courseName={"Python"}/>
                 <BigCard className="flex m-4 w-[560px] h-[232px] bg-white">
-                    <h2>(내용 고민 중)</h2>
+                    <div
+                        className={"flex bg-gradient-to-r from-indigo-700 to-purple-700 w-20 h-9 rounded-lg px-1 mb-4 text-white text-xl font-line"}>
+                        <Logo/><span className={"py-1.5 -mx-1"}>AI</span>
+                    </div>
                 </BigCard>
             </div>
         </>

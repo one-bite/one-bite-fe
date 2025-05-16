@@ -18,11 +18,10 @@ const Log = () => {
     const [histories, setHistories] = useState<ProblemHistory[]>([]);
     const [problems, setProblems] = useState<QuizProblem[]>([]);
     
-    const userId = 2; // 추후 userId말고 다른 방법으로
     useEffect(() => {
         const loadHistories = async () => {
             try {
-                const data = await fetchProblemHistory(userId);
+                const data = await fetchProblemHistory();
                 setHistories(data);
             } catch (error) {
                 console.error("문제 이력 불러오기 실패:", error);
