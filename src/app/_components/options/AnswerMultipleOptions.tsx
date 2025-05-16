@@ -11,7 +11,7 @@ interface AnswerOptionsProps {
     correctAnswer: string;
 }
 
-const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
+const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
     return (
         <div className="flex flex-col space-y-3">
             {options.map((option, index) => {
@@ -53,4 +53,4 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
     );
 };
 
-export default AnswerOptions;
+export default AnswerMultipleOptions;

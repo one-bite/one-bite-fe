@@ -199,6 +199,7 @@ const QuizPage = () => {
             isCorrect={isCorrect}
             correctAnswer={currentProblem.answer}
             generatedByAI = {true}
+            questionType={currentProblem.type}
         />
       </div>
 
