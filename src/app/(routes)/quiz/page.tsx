@@ -68,7 +68,7 @@ const QuizPage = () => {
 
   if (isLoading) {
     return (
-        <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-jungM">
+        <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-line">
           <Spinner color="primary" size="lg"/>
           문제를 불러오는 중입니다...
         </div>
@@ -77,7 +77,7 @@ const QuizPage = () => {
 
   if (!quizData || quizData.problemList.length === 0) {
     return (
-        <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-jungM">
+        <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-line">
           문제가 존재하지 않습니다...
         </div>
     );
@@ -199,6 +199,7 @@ const QuizPage = () => {
             isCorrect={isCorrect}
             correctAnswer={currentProblem.answer}
             generatedByAI = {true}
+            questionType={currentProblem.type}
         />
       </div>
 

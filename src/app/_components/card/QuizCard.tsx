@@ -2,8 +2,10 @@
 
 import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
-import AnswerOptions from "app/_components/options/AnswerOptions";
+import AnswerMultipleOptions from "app/_components/options/AnswerMultipleOptions";
 import {Logo} from "app/_components/icon/LogoIcon";
+import AnswerTFOptions from "app/_components/options/AnswerTFOptions";
+import AnswerShortInput from "app/_components/sub_components/AnswerShortInput";
 
 
 interface QuizCardProps {
@@ -18,6 +20,7 @@ interface QuizCardProps {
   correctAnswer: string;
   className?: string;
   generatedByAI?:boolean;
+  questionType: "multiple_choice" | "short_answer" | "true_false";
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
@@ -32,6 +35,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
   isCorrect,
   correctAnswer,
   generatedByAI,
+  questionType,
 }) => {
   return (
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
@@ -60,13 +64,32 @@ const QuizCard: React.FC<QuizCardProps> = ({
         <h1 className="text-2xl font-linebold my-2">{title}</h1>
         <h2 className="text-lg font-semibold mb-4">{question}</h2>
 
-        <AnswerOptions
-        options={options}
-        onSelect={onSelect}
-        selected={selected}
-        isCorrect={isCorrect}
-        correctAnswer={correctAnswer} // 정답
-        />
+        {questionType === "multiple_choice" && (
+            <AnswerMultipleOptions
+                options={options}
+                onSelect={onSelect}
+                selected={selected}
+                isCorrect={isCorrect}
+                correctAnswer={correctAnswer} // 정답
+            />
+        )}
+        {questionType === "true_false" && (
+            <AnswerTFOptions
+                options={options}
+                onSelect={onSelect}
+                selected={selected}
+                isCorrect={isCorrect}
+                correctAnswer={correctAnswer}
+            />
+        )}
+        {questionType === "short_answer" && (
+            <AnswerShortInput
+                onSelect={onSelect}
+                selected={selected}
+                isCorrect={isCorrect}
+                correctAnswer={correctAnswer}
+            />
+        )}
       </CardBody>
     </Card>
   );

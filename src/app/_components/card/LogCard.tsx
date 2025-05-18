@@ -51,6 +51,7 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
                     correctAnswer={correctAnswer}
                     className="w-full shadow-none m-0"
                     generatedByAI={true}
+                    questionType={problem.questionType}
                 />
             </div>
             <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
