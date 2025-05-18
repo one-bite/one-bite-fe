@@ -16,17 +16,27 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ selected, onSelec
         onSelect(e.target.value); // 선택이 입력을 의미
     };
 
+    const textColor = isCorrect === true
+            ? "text-success"
+            : isCorrect === false
+                ? "text-danger"
+                : "text-black";
+
     return (
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col my-32 mx-16">
             <Input
-                label="정답을 입력하세요"
+                placeholder={"정답을 입력하세요"}
                 value={selected ?? ""}
                 onChange={handleChange}
                 disabled={isCorrect !== null}
-                className={"w-full h-full rounded-lg bg-gray-100 font-line text-black"}
+                className={"w-full placeholder:text-gray-500"}
+                classNames={{
+                    inputWrapper: `rounded-lg bg-gray-200 h-16 px-4`,
+                    input: `font-line text-lg ${textColor}`
+                }}
             />
             {isCorrect === false && (
-                <p className={"text-red-500 font-line"}>정답 : {correctAnswer}</p>
+                <p className={"mt-4 justify-start text-lg text-success font-line"}>정답 : {correctAnswer}</p>
             )}
         </div>
     );
