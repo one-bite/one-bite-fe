@@ -13,7 +13,7 @@ interface AnswerOptionsProps {
 
 const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
     return (
-        <div className="flex flex-row space-x-28">
+        <div className="flex flex-row justify-center space-x-14">
             {options.map((option, index) => {
                 const isSelected = selected === option;
                 const isAnwer = correctAnswer === option;
@@ -40,10 +40,10 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
                     variant="bordered"
                     color={color}
                     onPress={() => onSelect(option)}
-                    className="justify-start bg-gray-100 w-[300px] h-[200px]"
+                    className="my-10 ml-0 flex items-center justify-center bg-gray-100 w-[300px] h-[200px]"
                     isDisabled={isCorrect !== null} // 정답 제출 후 비활성화
                 >
-                    {option}
+                    <span className="text-9xl leading-none mt-6 font-linebold">{option}</span>
                 </Button>
                 );
             })}
