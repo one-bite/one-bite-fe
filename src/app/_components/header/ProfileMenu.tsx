@@ -20,6 +20,9 @@ export default function ProfileMenu() {
             case "log":
                 router.push("/log");
                 break;
+            case "login":
+                router.push("/login");
+                break;
             case "profile":
                 router.push("/my");
                 break;
@@ -34,30 +37,25 @@ export default function ProfileMenu() {
         }
     };
 
+    const menuItems = userEmail ? [
+        <DropdownItem key="profile" className="h-10 gap-2">
+            <p className="font-semibold">{userEmail}</p>
+        </DropdownItem>,
+        <DropdownItem key="log">문제 풀이 내역</DropdownItem>,
+        <DropdownItem key="course">코스 변경</DropdownItem>,
+        <DropdownItem key="clearLocal">로컬스토리지 초기화</DropdownItem>
+    ] : [
+        <DropdownItem key="login" className="h-10 gap-2">
+            <div className="flex items-center gap-2">
+                <GoogleIcon />
+                <p className="font-semibold">Google로 로그인</p>
+            </div>
+        </DropdownItem>
+    ];
+
     return (
         <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={handleAction}>
-            {userEmail ? (
-                <DropdownItem key="profile" className="h-10 gap-2">
-                    <p className="font-semibold">{userEmail}</p>
-                </DropdownItem>
-            ) : (
-                <DropdownItem key="profile" className="h-10 gap-2">
-                    <div className="flex items-center gap-2">
-                        <GoogleIcon />
-                        <p className="font-semibold">Google로 로그인</p>
-                    </div>
-                </DropdownItem>
-            )}
-
-            <DropdownItem key="log">문제 풀이 내역</DropdownItem>
-
-            <DropdownItem key="course">코스 변경</DropdownItem>
-
-            <DropdownItem key="clearLocal">로컬스토리지 초기화</DropdownItem>
-
-            {/* <DropdownItem key="theme-switcher">
-                <ThemeSwitcher />
-            </DropdownItem> */}
+            {menuItems}
         </DropdownMenu>
     );
 }
