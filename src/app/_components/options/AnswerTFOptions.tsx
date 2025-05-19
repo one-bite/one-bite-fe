@@ -15,8 +15,8 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
     return (
         <div className="flex flex-row justify-center space-x-14">
             {options.map((option, index) => {
-                const isSelected = selected === index.toString();
-                const isAnwer = correctAnswer === index.toString();
+                const isSelected = selected === (index+1).toString();
+                const isAnwer = correctAnswer === (index+1).toString();
 
                 let color: "default" | "primary" | "success" | "danger" = "default";
 
