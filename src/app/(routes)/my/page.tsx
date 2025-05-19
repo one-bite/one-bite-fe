@@ -8,6 +8,7 @@ import PageInfo from "@/app/_components/PageInfo";
 import { validateUserEmail, removeLocalUserData } from "@/utils/apis/login";
 import { Button, Spacer } from "@nextui-org/react";
 import {jwtDecode} from "jwt-decode";
+import { fetchLogoutFromGoogle } from "@/utils/apis/login";
 
 const MyPage = () => {
     const router = useRouter();
@@ -46,6 +47,7 @@ const MyPage = () => {
     }, [router]);
 
     const handleLogout = () => {
+        fetchLogoutFromGoogle();
         removeLocalUserData(); // 로컬 스토리지에서 사용자 정보 삭제
         router.push("/login"); // 로그인 페이지로 리다이렉트
     };
