@@ -18,13 +18,13 @@ export default function Page() {
     return (
 
         <>
-            <div>
-                <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory} />
-                <div className="flex gap-2 justify-start mt-2 max-w-4xl mx-auto">
-                    <CourseButton iconType="python" label="파이썬 기초" bgColor="bg-blue-200" />
-                </div>
+            <div className={"flex justify-center"}>
+                <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory}/>
             </div>
-            <div className="flex mx-auto">
+            <div className="flex gap-2 justify-start mt-2 max-w-4xl mx-auto">
+                <CourseButton iconType="python" label="파이썬 기초" bgColor="bg-blue-200"/>
+            </div>
+            <div className="flex justify-center mx-auto">
                 <ResumeCourseButton courseName={"Python"}/>
                 <BigCard className="flex m-4 w-[560px] h-[232px] bg-white">
                     <div
