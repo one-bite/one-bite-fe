@@ -11,6 +11,7 @@ import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, Use
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 const QuizPage = () => {
+    const router = useRouter();
 
   const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
   
@@ -43,7 +44,7 @@ const QuizPage = () => {
     };
 
     loadProblems();
-  }, []);
+  }, [router]);
   
  
   useEffect(() => {
@@ -52,7 +53,7 @@ const QuizPage = () => {
     }
   }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
 
-  const router = useRouter();
+
 
   //const quizData = quizProblems; //mock 데이터 사용
 

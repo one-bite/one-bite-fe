@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 // import { ThemeSwitcher } from "@/app/_components/ThemeSwitcher";
 import { useEffect, useState } from "react";
 import GoogleIcon from "../icon/GoogleIcon";
+import { fetchLogoutFromGoogle, removeLocalUserData } from "@/utils/apis/login";
 
 export default function ProfileMenu() {
     const router = useRouter();
@@ -26,6 +27,14 @@ export default function ProfileMenu() {
             case "profile":
                 router.push("/my");
                 break;
+            case "login":
+                router.push("/login");
+                break;
+            case "logout":
+                fetchLogoutFromGoogle();
+                removeLocalUserData(); 
+                router.push("/");
+                break;
             case "course":
                 router.push("/course");
                 break;
@@ -36,6 +45,7 @@ export default function ProfileMenu() {
                 break;
         }
     };
+    
 
     const menuItems = userEmail ? [
         <DropdownItem key="profile" className="h-10 gap-2">
