@@ -18,6 +18,7 @@ export default function App() {
     const [streak, setStreak] = useState(getStreak());
     const [point, setPoint] = useState(getPoint());
     const [rank, setRank] = useState(getRank());
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -32,6 +33,13 @@ export default function App() {
         };
     }, []);
 
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            setIsLogin(true);
+        }
+    }, []);
+
     return (
         <Navbar className="bg-lime-500">
             <NavbarBrand>
@@ -42,7 +50,9 @@ export default function App() {
             </NavbarBrand>
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
-                <UserStats streak={streak.totalStreak} point={point} rank={rank.rank}/> {/* ✅ 아바타 왼쪽에 삽입 */}
+                {isLogin && (
+                    <UserStats streak={streak.totalStreak} point={point} rank={rank.rank}/>
+                )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <Avatar

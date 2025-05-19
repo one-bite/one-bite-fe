@@ -3,9 +3,9 @@
 import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import AnswerMultipleOptions from "app/_components/options/AnswerMultipleOptions";
-import {Logo} from "app/_components/icon/LogoIcon";
 import AnswerTFOptions from "app/_components/options/AnswerTFOptions";
 import AnswerShortInput from "app/_components/sub_components/AnswerShortInput";
+import GeneratedByAiIcon from "app/_components/icon/GeneratedByAiIcon";
 
 
 interface QuizCardProps {
@@ -51,10 +51,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
           <div />
         )}
               {generatedByAI && (
-                  <div className={"flex bg-gradient-to-r from-indigo-700 to-purple-700 w-20 h-9 rounded-lg px-1 mb-4 text-white text-xl font-line"}>
-                    <Logo/>
-                    <span className={"py-1.5 -mx-1"}>AI</span>
-                  </div>
+                  <GeneratedByAiIcon/>
               )}
          </div>
 
