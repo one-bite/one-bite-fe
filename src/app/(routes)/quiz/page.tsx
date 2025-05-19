@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { fetchTodayProblems } from "@/utils/apis/todayProblem";
+import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
@@ -85,7 +86,6 @@ const QuizPage = () => {
   }
 
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const currentProblem = quizData.problemList[currentIndex];
   const isLast = currentIndex === (quizData.problemList.length - 1);
@@ -105,27 +105,8 @@ const QuizPage = () => {
     }
 
     const problemId = quizData.problemList[currentIndex].problemId;
-    const userId = 2; // 현재 로그인한 유저의 ID를 가져와야 함..
 
-    try {
-      const response = await fetch(`${apiUrl}/submit/${problemId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-        },
-        body: JSON.stringify({
-          userId: userId,
-          answer: selected, 
-          solveTime: 0, //임시
-      })
-    });
-
-    if(!response.ok) {
-      const errorText = await response.text();
-      console.error("문제 제출 실패", errorText);
-    }
-    const result = await response.json();
+    const result = await submitTodayProblem(problemId, selected);
     setIsCorrect(result.correct); // 정답 여부 저장
     setScore((prev) => (prev) + result.score); // 획득한 점수 합산
     if (isCorrect) {
@@ -156,10 +137,6 @@ const QuizPage = () => {
 */
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
-  
-  } catch (error) {
-      console.error("채점 중 오류:", error);
-    }
       
   };
 
@@ -201,6 +178,7 @@ const QuizPage = () => {
             correctAnswer={currentProblem.answer}
             generatedByAI = {true}
             questionType={currentProblem.type}
+            //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
         />
       </div>
 
