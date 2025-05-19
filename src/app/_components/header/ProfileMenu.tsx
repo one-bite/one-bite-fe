@@ -3,7 +3,7 @@
 import { DropdownItem, DropdownMenu } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 // import { ThemeSwitcher } from "@/app/_components/ThemeSwitcher";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import GoogleIcon from "../icon/GoogleIcon";
 import { fetchLogoutFromGoogle, removeLocalUserData } from "@/utils/apis/login";
 
@@ -45,16 +45,24 @@ export default function ProfileMenu() {
                 break;
         }
     };
-    
+
+    localStorage.setItem("user_email","test@gmail.com")
 
     const menuItems = userEmail ? [
-        <DropdownItem key="profile" className="h-10 gap-2">
-            <p className="font-semibold">{userEmail}</p>
+        <DropdownItem key="profile">
+            <p>마이페이지</p>
         </DropdownItem>,
         <DropdownItem key="log">문제 풀이 내역</DropdownItem>,
         <DropdownItem key="course">코스 변경</DropdownItem>,
-        <DropdownItem key="clearLocal">로컬스토리지 초기화</DropdownItem>
+        <DropdownItem key="clearLocal">로컬스토리지 초기화</DropdownItem>,
+        <DropdownItem key="logout">
+            <p>로그아웃</p>
+        </DropdownItem>,
     ] : [
+        // eslint-disable-next-line react/jsx-key
+        <DropdownItem isDisabled className="opacity-100 text-foreground cursor-default">
+            <p className="font-semibold">환영합니다!</p>
+        </DropdownItem>,
         <DropdownItem key="login" className="h-10 gap-2">
             <div className="flex items-center gap-2">
                 <GoogleIcon />
