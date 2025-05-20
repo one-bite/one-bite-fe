@@ -41,6 +41,9 @@ const GoogleCallback = () => {
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
 
+                        //유저 스탯 표시 상태 동기화
+                        window.dispatchEvent(new Event("loginSuccess"));
+
                         //유저 스트릭 동기화
                         syncUserStreak();
 
