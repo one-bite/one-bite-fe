@@ -92,7 +92,6 @@ const QuizPage = () => {
 
   //const correctScore = currentProblem.point;  // 정답일 때 점수
   //const wrongScore = 7; // 오답일 때 점수
-  const rewardPoint = 10; // 정답일 때 포인트 **api 수정 요청**
 
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
@@ -208,7 +207,6 @@ const QuizPage = () => {
         isCorrect={isCorrect ?? false}
         score={latestScore}
         remaining={todayStreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-        point={rewardPoint}  // 정답일 때 포인트
         onClose={() => setShowModal(false) }
       />
     </div>
