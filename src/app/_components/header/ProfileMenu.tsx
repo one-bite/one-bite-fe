@@ -6,15 +6,23 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import GoogleIcon from "../icon/GoogleIcon";
 import { fetchLogoutFromGoogle, removeLocalUserData } from "@/utils/apis/login";
+import { getUserEmail, USER_EMAIL_EVENT } from "@/utils/user/userEmail";
 
 export default function ProfileMenu() {
     const router = useRouter();
     const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [mounted, setmounted] = useState(false);
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-        setUserEmail(localStorage.getItem("user_email"));
+        const updateEmail = () => setUserEmail(getUserEmail());
+        updateEmail();
+
+        window.addEventListener(USER_EMAIL_EVENT, updateEmail);
+        setmounted(true);
+        return () => window.removeEventListener(USER_EMAIL_EVENT, updateEmail);
     }, []);
+
+    if (!mounted) return null;
 
     const handleAction = (key: React.Key) => {
         switch (key) {
@@ -26,9 +34,6 @@ export default function ProfileMenu() {
                 break;
             case "profile":
                 router.push("/my");
-                break;
-            case "login":
-                router.push("/login");
                 break;
             case "logout":
                 fetchLogoutFromGoogle();
@@ -58,7 +63,7 @@ export default function ProfileMenu() {
         </DropdownItem>,
     ] : [
         // eslint-disable-next-line react/jsx-key
-        <DropdownItem isDisabled className="opacity-100 text-foreground cursor-default">
+        <DropdownItem key ="welcome"isDisabled className="opacity-100 text-foreground cursor-default">
             <p className="font-semibold">환영합니다!</p>
         </DropdownItem>,
         <DropdownItem key="login" className="h-10 gap-2">

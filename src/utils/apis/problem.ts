@@ -4,7 +4,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchProblem = async (problemId: number): Promise<QuizProblem> => {
 
-    const response = await fetch(`${apiUrl}/db/problems/${problemId}`, {
+    const response = await fetch(`${apiUrl}/problem/${problemId}`, {
         method: "GET",
     });
 

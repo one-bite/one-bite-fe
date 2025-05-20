@@ -1,7 +1,19 @@
 export interface ProblemHistory {
   historyId: number;
   userId: number;
-  problemId: number;
+  problem: {
+    problemId: number;
+    title: string;
+    topics: [
+      {
+        topicId: number;
+        code: string;
+        name: string;
+        desciption: null;
+        total: number;
+      }
+    ]
+  };
   submittedAnswer: string;
   isCorrect: boolean;
   solveTime: number;

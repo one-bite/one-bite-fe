@@ -51,16 +51,17 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         const grouped: Record<string, ProblemHistory[]> = {};
 
         histories.forEach((h) => {
-            const problem = quizProblems.find(p => p.problemId === h.problemId);
+            const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
             if (!problem) return;
 
-            const topics = problem.topicNames.length ? problem.topicNames : ["기타"];
+            const topics = h.problem.topics.map((t) => t.name).length ? h.problem.topics.map((t) => t.name) : ["기타"];
+            //const topics = problem.topicNames.length ? problem.topicNames : ["기타"];
 
             topics.forEach((topic) => {
                 if (!grouped[topic]) grouped[topic] = [];
 
                 // 중복 추가 방지: 같은 문제 ID가 이 토픽 그룹에 이미 있는지 체크
-                const alreadyIncluded = grouped[topic].some((item) => item.problemId === h.problemId);
+                const alreadyIncluded = grouped[topic].some((item) => item.problem.problemId === h.problem.problemId);
                 if (!alreadyIncluded) {
                     grouped[topic].push(h);
                 }
@@ -100,7 +101,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                             {topicGroups[group] && (
                                 <div className="ml-2 mt-1 space-y-1">
                                     {entries.map((h) => {
-                                        const problem = quizProblems.find(p => p.problemId === h.problemId);
+                                        const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
                                         return (
                                             <ProblemItem
@@ -124,7 +125,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                             {topicGroups[topicId] && (
                                 <div className="ml-2 mt-1 space-y-1">
                                     {histories.map((h) => {
-                                        const problem = quizProblems.find(p => p.problemId === h.problemId);
+                                        const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
 
                                         return (
