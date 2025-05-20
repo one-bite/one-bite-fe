@@ -8,7 +8,7 @@ import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
-import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
+import {getStreak, decreaseTodayQuizLeft, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 const QuizPage = () => {
@@ -150,7 +150,6 @@ const QuizPage = () => {
 
     if(isSolved) {
       if (isCorrect) {
-        addPoint(rewardPoint); // 포인트 추가
       }
     }
     if (isLast) {
