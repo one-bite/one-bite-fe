@@ -1,3 +1,4 @@
+import { clearUserEmail } from "../user/userEmail";
 
 export interface LoginResponseProps {
     accessToken: string;
@@ -85,7 +86,7 @@ export const validateUserEmail = async (accessToken: string, user_email: string)
 
 export const removeLocalUserData = (): void => {
     if (typeof window === "undefined") return;
+    clearUserEmail();
     localStorage.clear();
-    // window.location.href = "/login";
-    // Router 사용
+    
 };
