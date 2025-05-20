@@ -31,14 +31,14 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        const accessToken = localStorage.getItem("access_token");
+        const accessToken = localStorage.getItem("accessToken");
         const userEmail = localStorage.getItem("user_email");
         if (accessToken && userEmail) {
             setIsLogin(true);
         }
 
         const handleLogin = () => {
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("accessToken");
             const email = localStorage.getItem("user_email");
             if (token && email) {
                 setIsLogin(true);
