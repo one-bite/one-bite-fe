@@ -15,8 +15,8 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
     return (
         <div className="flex flex-row justify-center space-x-14">
             {options.map((option, index) => {
-                const isSelected = selected === (index+1).toString();
-                const isAnwer = correctAnswer === (index+1).toString();
+                const isSelected = selected === (index).toString();
+                const isAnwer = correctAnswer === (index).toString();
 
                 let color: "default" | "primary" | "success" | "danger" = "default";
 
@@ -39,7 +39,7 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
                     key={index}
                     variant="bordered"
                     color={color}
-                    onPress={() => onSelect(index.toString())}
+                    onPress={() => onSelect((index + 1).toString())}
                     className="my-10 ml-0 flex items-center justify-center bg-gray-100 w-[300px] h-[200px]"
                     isDisabled={isCorrect !== null} // 정답 제출 후 비활성화
                 >
