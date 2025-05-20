@@ -1,27 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
-//import { fetchTodayProblems } from "@/utils/apis/todayProblem";
+import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
-//import { TodayQuizResponse } from "app/_configs/types/quiz";
+import { TodayQuizResponse } from "app/_configs/types/quiz";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
-import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
+//import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import EvaluationCard from "app/_components/card/EvaluationCard";
-import {QuizProblem} from "app/_configs/types/quiz";
+//import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
 const QuizPage = () => {
     const router = useRouter();
 
-    const [quizData, setQuizData] = useState<QuizProblem[] | null>(null);
+    const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
     const [isSolved, setIsSolved] = useState(false); // 문제 풀었는지 여부
 
     const [isLoading, setIsLoading] = useState(true);
-/*
+
     useEffect(() => {
         const loadProblems = async () => {
             try {
@@ -53,13 +53,13 @@ const QuizPage = () => {
             setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
         }
     }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
-*/
 
+/* mocks 용 코드
     useEffect(() => {
         setQuizData(quizProblems);
         setIsLoading(false);
     }, []);
-
+*/
     //const quizData = quizProblems; //mock 데이터 사용
 
 
@@ -81,7 +81,7 @@ const QuizPage = () => {
         );
     }
 
-    if (!quizData || quizData.length === 0) {
+    if (!quizData || quizData.problemList.length === 0) {
         return (
             <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-line">
                 문제가 존재하지 않습니다...
@@ -91,8 +91,8 @@ const QuizPage = () => {
 
 
 
-    const currentProblem = quizData[currentIndex];
-    const isLast = currentIndex === (quizData.length - 1);
+    const currentProblem = quizData.problemList[currentIndex];
+    const isLast = currentIndex === (quizData.problemList.length - 1);
 
     //const correctScore = currentProblem.point;  // 정답일 때 점수
     //const wrongScore = 7; // 오답일 때 점수
@@ -107,7 +107,7 @@ const QuizPage = () => {
             return;
         }
 
-        const problemId = quizData[currentIndex].problemId;
+        const problemId = quizData.problemList[currentIndex].problemId;
 
         const result = await submitTodayProblem(problemId, selected);
         setIsCorrect(result.correct); // 정답 여부 저장
@@ -175,7 +175,7 @@ const QuizPage = () => {
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
                     generatedByAI = {true}
-                    questionType={currentProblem.questionType}
+                    questionType={currentProblem.type}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
                 />
             </div>
