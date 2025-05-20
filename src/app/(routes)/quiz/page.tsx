@@ -7,7 +7,6 @@ import { TodayQuizResponse } from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
-//import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {getStreak, decreaseTodayQuizLeft, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
@@ -53,11 +52,6 @@ const QuizPage = () => {
       setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
     }
   }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
-
-
-
-  //const quizData = quizProblems; //mock 데이터 사용
-
   
   const [selected, setSelected] = useState<string | null>(null); // 선택한 답
   const [latestScore, setLatestScore] = useState(0); // 최근 점수
@@ -90,9 +84,6 @@ const QuizPage = () => {
   const currentProblem = quizData.problemList[currentIndex];
   const isLast = currentIndex === (quizData.problemList.length - 1);
 
-  //const correctScore = currentProblem.point;  // 정답일 때 점수
-  //const wrongScore = 7; // 오답일 때 점수
-
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
   };
@@ -117,23 +108,7 @@ const QuizPage = () => {
       subtractScore(result.score); // 유저 스코어에 반영
     }
     setLatestScore(result.score); // 최근 점수 저장
-/*
-    //mock 데이터 사용
-    const answerNum = parseInt(currentProblem.answer);
-    const correct = selected === currentProblem.description.options[answerNum - 1]; // 정답 여부 확인
-    setIsCorrect(correct);
-    if (correct) {
-      setCorrectCount((prev) => prev + 1);
-      setScore((prev) => prev + correctScore);  // 정답일때 
-      setReward((prev) => prev + rewardPoint); // 정답이면 10포인트
-      addScore(correctScore);
-    } else {
-      setWrongCount((prev) => prev + 1);
-      setScore((prev) => prev - wrongScore); // 오답일 때 -7점
-      subtractScore(wrongScore); // 점수 감소
-    }
-    setLatestScore(correct ? correctScore : wrongScore); // 최근 점수 저장
-*/
+
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
       
@@ -167,6 +142,7 @@ const QuizPage = () => {
       <div className="flex justify-center">
         <QuizCard
             leftStreak={todayStreak.todayStreakQuizLeft}
+            questionType={currentProblem.type}
             title={currentProblem.title}
             question={currentProblem.description.question}
             options={currentProblem.description.options}
@@ -174,9 +150,7 @@ const QuizPage = () => {
             onSelect={handleAnswer}
             isCorrect={isCorrect}
             correctAnswer={currentProblem.answer}
-            generatedByAI = {true}
-            questionType={currentProblem.type}
-            //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
+            generatedByAI = {currentProblem.ai}
         />
       </div>
 

@@ -7,30 +7,15 @@ export interface ProblemDescription {
 
 export interface QuizProblem {
   problemId: number;
-  categoryId: number;
-  title: string;
-  description: ProblemDescription;
-  questionType: QuestionType;
-  hint: string;
-  answer: string;
-  point: number;
-  userId: number | null;
-  topicNames: string[];
-}
-
-export interface TodayQuizProblem {
-  problemId: number;
   type: QuestionType;
   title: string;
+  description: ProblemDescription;
   answer: string;
   point: number;
-  description: {
-    question: string;
-    options: string[];
-  };
+  ai: boolean;
 }
 
 export interface TodayQuizResponse {
   problemStatus: boolean[];
-  problemList: TodayQuizProblem[];
+  problemList: QuizProblem[];
 }
