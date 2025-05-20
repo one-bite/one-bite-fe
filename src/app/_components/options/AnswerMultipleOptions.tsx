@@ -40,7 +40,7 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
                     fullWidth
                     variant="bordered"
                     color={color}
-                    onPress={() => onSelect(option)}
+                    onPress={() => onSelect((index+1).toString())}
                     className="justify-start bg-gray-100"
                     isDisabled={isCorrect !== null} // 정답 제출 후 비활성화
                 >
