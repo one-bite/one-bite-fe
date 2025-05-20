@@ -7,7 +7,7 @@ import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
 import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
-import {getStreak, decreaseTodayQuizLeft, addScore, subtractScore, UserStreakData} from "@/utils/user";
+import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import EvaluationCard from "app/_components/card/EvaluationCard";
@@ -15,8 +15,6 @@ import {QuizProblem} from "app/_configs/types/quiz";
 import {ArrowRight} from "lucide-react";
 const QuizPage = () => {
     const router = useRouter();
-
-    const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
 
     const [quizData, setQuizData] = useState<QuizProblem[] | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
@@ -146,9 +144,6 @@ const QuizPage = () => {
     };
 
     const handleNext = () => {
-        decreaseTodayQuizLeft();
-        setTodayStreak(getStreak());
-
         setSelected(null); // 답 초기화
         setIsCorrect(null); // 정답 여부 초기화
         setIsSolved(false); // 문제 풀었음 초기화
@@ -172,7 +167,6 @@ const QuizPage = () => {
         <div className="m-12 min-h-screen p-4">
             <div className="flex justify-center">
                 <EvaluationCard
-                    leftStreak={todayStreak.todayStreakQuizLeft}
                     title={currentProblem.title}
                     question={currentProblem.description.question}
                     options={currentProblem.description.options}
@@ -204,7 +198,7 @@ const QuizPage = () => {
                 isOpen={showModal}
                 isCorrect={isCorrect ?? false}
                 score={latestScore}
-                remaining={todayStreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
+                remaining={0} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
                 onClose={() => setShowModal(false) }
             />
         </div>
