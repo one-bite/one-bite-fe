@@ -46,8 +46,6 @@ export default function ProfileMenu() {
         }
     };
 
-    localStorage.setItem("user_email","test@gmail.com")
-
     const menuItems = userEmail ? [
         <DropdownItem key="profile">
             <p>마이페이지</p>
