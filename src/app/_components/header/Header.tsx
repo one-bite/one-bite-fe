@@ -5,25 +5,22 @@ import { Navbar, NavbarBrand, NavbarContent, Link, DropdownTrigger, Dropdown, Av
 import { Logo } from "../icon/LogoIcon";
 import UserStats from "./UserStats";
 import ProfileMenu from "./ProfileMenu"; // 추가!
-import { getStreak, getPoint, getRank } from "@/utils/user";
+import { getStreak, getRank } from "@/utils/user";
 import { useState, useEffect } from "react";
-import { initStreak, initPoint, initRank } from "@/utils/user"; // 초기화 함수들
+import { initStreak, initRank } from "@/utils/user"; // 초기화 함수들
 
 export default function App() {
     //const pathname = usePathname();
     initStreak();
-    initPoint();
     initRank();
 
     const [streak, setStreak] = useState(getStreak());
-    const [point, setPoint] = useState(getPoint());
     const [rank, setRank] = useState(getRank());
     const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const handleStorageChange = () => {
             setStreak(getStreak());
-            setPoint(getPoint());
             setRank(getRank());
         };
 
@@ -51,7 +48,7 @@ export default function App() {
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
                 {isLogin && (
-                    <UserStats streak={streak.totalStreak} point={point} rank={rank.rank}/>
+                    <UserStats streak={streak.totalStreak} rank={rank.rank}/>
                 )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
