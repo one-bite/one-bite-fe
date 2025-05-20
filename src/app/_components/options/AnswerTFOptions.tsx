@@ -11,12 +11,12 @@ interface AnswerOptionsProps {
     correctAnswer: string;
 }
 
-const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
+const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
     return (
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-row justify-center space-x-14">
             {options.map((option, index) => {
-                const isSelected = selected === option;
-                const isAnwer = correctAnswer === option;
+                const isSelected = selected === (index+1).toString();
+                const isAnwer = correctAnswer === (index+1).toString();
 
                 let color: "default" | "primary" | "success" | "danger" = "default";
 
@@ -37,15 +37,13 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
                 return(
                 <Button
                     key={index}
-                    fullWidth
                     variant="bordered"
                     color={color}
-                    onPress={() => onSelect(option)}
-                    className="justify-start bg-gray-100"
+                    onPress={() => onSelect(index.toString())}
+                    className="my-10 ml-0 flex items-center justify-center bg-gray-100 w-[300px] h-[200px]"
                     isDisabled={isCorrect !== null} // 정답 제출 후 비활성화
                 >
-                    <div className="py-1 w-8 h-8 rounded-[6px] -ml-2 text-xl bg-white" color={selected === option ? "primary" : "white"}>{index+1}</div>
-                    {option}
+                    <span className="text-9xl leading-none mt-6 font-linebold">{option}</span>
                 </Button>
                 );
             })}
@@ -53,4 +51,4 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
     );
 };
 
-export default AnswerOptions;
+export default AnswerMultipleOptions;

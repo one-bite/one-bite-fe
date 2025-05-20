@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { fetchTodayProblems } from "@/utils/apis/todayProblem";
+import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
-import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
+import {getStreak, decreaseTodayQuizLeft, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 const QuizPage = () => {
+    const router = useRouter();
 
   const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
   
@@ -43,7 +45,7 @@ const QuizPage = () => {
     };
 
     loadProblems();
-  }, []);
+  }, [router]);
   
  
   useEffect(() => {
@@ -52,7 +54,7 @@ const QuizPage = () => {
     }
   }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
 
-  const router = useRouter();
+
 
   //const quizData = quizProblems; //mock 데이터 사용
 
@@ -68,7 +70,7 @@ const QuizPage = () => {
 
   if (isLoading) {
     return (
-        <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-jungM">
+        <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-line">
           <Spinner color="primary" size="lg"/>
           문제를 불러오는 중입니다...
         </div>
@@ -77,21 +79,19 @@ const QuizPage = () => {
 
   if (!quizData || quizData.problemList.length === 0) {
     return (
-        <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-jungM">
+        <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-line">
           문제가 존재하지 않습니다...
         </div>
     );
   }
 
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const currentProblem = quizData.problemList[currentIndex];
   const isLast = currentIndex === (quizData.problemList.length - 1);
 
   //const correctScore = currentProblem.point;  // 정답일 때 점수
   //const wrongScore = 7; // 오답일 때 점수
-  const rewardPoint = 10; // 정답일 때 포인트 **api 수정 요청**
 
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
@@ -104,27 +104,8 @@ const QuizPage = () => {
     }
 
     const problemId = quizData.problemList[currentIndex].problemId;
-    const userId = 2; // 현재 로그인한 유저의 ID를 가져와야 함..
 
-    try {
-      const response = await fetch(`${apiUrl}/submit/${problemId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-        },
-        body: JSON.stringify({
-          userId: userId,
-          answer: selected, 
-          solveTime: 0, //임시
-      })
-    });
-
-    if(!response.ok) {
-      const errorText = await response.text();
-      console.error("문제 제출 실패", errorText);
-    }
-    const result = await response.json();
+    const result = await submitTodayProblem(problemId, selected);
     setIsCorrect(result.correct); // 정답 여부 저장
     setScore((prev) => (prev) + result.score); // 획득한 점수 합산
     if (isCorrect) {
@@ -155,10 +136,6 @@ const QuizPage = () => {
 */
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
-  
-  } catch (error) {
-      console.error("채점 중 오류:", error);
-    }
       
   };
 
@@ -172,7 +149,6 @@ const QuizPage = () => {
 
     if(isSolved) {
       if (isCorrect) {
-        addPoint(rewardPoint); // 포인트 추가
       }
     }
     if (isLast) {
@@ -199,6 +175,8 @@ const QuizPage = () => {
             isCorrect={isCorrect}
             correctAnswer={currentProblem.answer}
             generatedByAI = {true}
+            questionType={currentProblem.type}
+            //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
         />
       </div>
 
@@ -229,7 +207,6 @@ const QuizPage = () => {
         isCorrect={isCorrect ?? false}
         score={latestScore}
         remaining={todayStreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-        point={rewardPoint}  // 정답일 때 포인트
         onClose={() => setShowModal(false) }
       />
     </div>
