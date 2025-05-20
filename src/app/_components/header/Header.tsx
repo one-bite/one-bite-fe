@@ -45,8 +45,17 @@ export default function App() {
             }
         };
 
+        const handleLogout = () => {
+            setIsLogin(false);
+        };
+
         window.addEventListener("loginSuccess", handleLogin);
-        return () => window.removeEventListener("loginSuccess", handleLogin);
+        window.addEventListener("logout", handleLogout);
+
+        return () => {
+            window.removeEventListener("loginSuccess", handleLogin);
+            window.removeEventListener("logout", handleLogout);
+        }
     }, []);
 
     return (

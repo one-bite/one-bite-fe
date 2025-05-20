@@ -32,7 +32,8 @@ export default function ProfileMenu() {
                 break;
             case "logout":
                 fetchLogoutFromGoogle();
-                removeLocalUserData(); 
+                removeLocalUserData();
+                window.dispatchEvent(new Event("logout"));
                 router.push("/");
                 break;
             case "course":
