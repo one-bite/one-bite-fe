@@ -15,8 +15,8 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
     return (
         <div className="flex flex-col space-y-3">
             {options.map((option, index) => {
-                const isSelected = selected === option;
-                const isAnwer = correctAnswer === option;
+                const isSelected = selected === (index+1).toString();
+                const isAnwer = correctAnswer === (index+1).toString();
 
                 let color: "default" | "primary" | "success" | "danger" = "default";
 
@@ -36,7 +36,7 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
                 }
                 return(
                 <Button
-                    key={index}
+                    key={index+1}
                     fullWidth
                     variant="bordered"
                     color={color}
