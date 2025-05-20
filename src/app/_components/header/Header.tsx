@@ -32,7 +32,8 @@ export default function App() {
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
+        const userEmail = localStorage.getItem("user_email");
+        if (accessToken && userEmail) {
             setIsLogin(true);
         }
     }, []);
