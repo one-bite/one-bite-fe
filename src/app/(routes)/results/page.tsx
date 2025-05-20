@@ -12,7 +12,6 @@ function Results() {
   const streakQuizLeft = getStreak().todayStreakQuizLeft;
   //query string 읽어옴
   const score = Number(searchParams.get("score") || 0);
-  const reward = Number(searchParams.get("reward") || 0);
   const correctAnswers = Number(searchParams.get("correct") || 0);
   const wrongAnswers = Number(searchParams.get("wrong") || 0);
 
@@ -24,7 +23,6 @@ function Results() {
           correctAnswers={correctAnswers}
           wrongAnswers={wrongAnswers}
           score={score}
-          point={reward}
           todayStreakQuizLeft={streakQuizLeft}
         />
       </div>

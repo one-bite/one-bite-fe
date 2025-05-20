@@ -8,7 +8,7 @@ import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ResultModal from "app/_components/modals/ResultModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
-import {getStreak, decreaseTodayQuizLeft, addPoint, addScore, subtractScore, UserStreakData} from "@/utils/user";
+import {getStreak, decreaseTodayQuizLeft, addScore, subtractScore, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 const QuizPage = () => {
@@ -92,7 +92,6 @@ const QuizPage = () => {
 
   //const correctScore = currentProblem.point;  // 정답일 때 점수
   //const wrongScore = 7; // 오답일 때 점수
-  const rewardPoint = 10; // 정답일 때 포인트 **api 수정 요청**
 
   const handleAnswer = (answer: string) => {
     setSelected(answer); // 선택된 답 저장
@@ -150,7 +149,6 @@ const QuizPage = () => {
 
     if(isSolved) {
       if (isCorrect) {
-        addPoint(rewardPoint); // 포인트 추가
       }
     }
     if (isLast) {
@@ -209,7 +207,6 @@ const QuizPage = () => {
         isCorrect={isCorrect ?? false}
         score={latestScore}
         remaining={todayStreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-        point={rewardPoint}  // 정답일 때 포인트
         onClose={() => setShowModal(false) }
       />
     </div>

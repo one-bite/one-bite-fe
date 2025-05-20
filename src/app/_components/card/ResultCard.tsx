@@ -2,14 +2,12 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import PointIcon from "@/app/_components/icon/PointIcon";
 import MyButton from "app/_components/buttons/MyButton";
 
 interface ResultCardProps {
   correctAnswers: number;
   wrongAnswers: number;
   score: number;
-  point: number;
   todayStreakQuizLeft: number;
 }
 
@@ -23,7 +21,7 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
   );
 };
 
-const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, point, todayStreakQuizLeft }) => {
+const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft }) => {
 
   const router = useRouter();
 
@@ -45,11 +43,6 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
         <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
         <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />
         <ResultItem label="총 레이팅 포인트:" value={`+${score}`} color="text-orange-600" isScore={true} />
-      </div>
-
-      <div className="flex items-center justify-center space-x-4 text-3xl text-red-700 mb-6">
-        <span className="font-extrabold text-5xl">+{point} Point</span>
-        <PointIcon className="text-yellow-500 size-14" />
       </div>
 
       <MyButton onClick={handleGoHome} className="w-1/2 h-14 py-3">
