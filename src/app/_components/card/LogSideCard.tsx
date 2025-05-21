@@ -7,6 +7,7 @@ import {QuizProblem} from "app/_configs/types/quiz";
 import ProblemItem from "app/_components/sub_components/ProblemItem";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import {ProblemHistory} from "@/app/_configs/types/problemHistory";
+import {topicNameMap} from "app/constants/topicNameKoreanMap";
 
 interface LogSideCardProps {
     className?: string
@@ -119,7 +120,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                     Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
                             <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
-                                <span>{topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
+                                <span>{topicNameMap[topicId] ?? topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
                                 {topicGroups[topicId] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
                             {topicGroups[topicId] && (

@@ -10,9 +10,9 @@ interface ProblemItemProps {
 
 const ProblemItem = ({ id, title, choose }: ProblemItemProps) => {
     return (
-        <div className="px-1 py-1 hover:bg-gray-100 rounded-lg cursor-pointer" onClick={choose}>
-            <span className="font-line text-medium text-gray-500 mr-2">{id}. </span>
-            <span className="text-medium font-line text-ellipsis whitespace-nowrap">{title}</span>
+        <div className="flex px-1 py-1 hover:bg-gray-100 rounded-lg cursor-pointer" onClick={choose}>
+            <span className="font-line text-medium text-gray-500 mr-2 shrink-0">{id}. </span>
+            <span className="w-full text-medium font-line truncate">{title}</span>
         </div>
     );
 };
