@@ -95,6 +95,8 @@ const QuizPage = () => {
     const currentProblem = quizData.problemList[currentIndex];
     const isLast = currentIndex === (quizData.problemList.length - 1);
     //const isLast = currentIndex === (quizData.problemList.length - 1);
+    const outOfLives = lives <= 0;
+    const isEnd = isLast || outOfLives;
 
     const handleAnswer = (answer: string) => {
         setSelected(answer); // 선택된 답 저장
@@ -139,9 +141,10 @@ const QuizPage = () => {
         setIsCorrect(null); // 정답 여부 초기화
         setIsSolved(false); // 문제 풀었음 초기화
 
-        if (isLast) {
+        if (isEnd) {
             // 마지막 문제에서 결과 페이지로 이동
             router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
+            return;
         }
         setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
     };
@@ -177,7 +180,7 @@ const QuizPage = () => {
 
                 {isSolved && !showModal && (
                     <MyButton onClick={handleNext} className={"w-48 h-12 p-4 bg-purple-700 shadow-purple-900 hover:bg-purple-500 hover:shadow-purple-900 active:shadow-purple-900"}>
-                        {isLast ? "결과 확인하기" : "다음 문제로"}
+                        {isEnd ? "결과 확인하기" : "다음 문제로"}
                     </MyButton>
                 )}
             </div>
