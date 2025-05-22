@@ -10,7 +10,7 @@ import ResultModal from "app/_components/modals/ResultModal";
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
-import EvaluationCard from "app/_components/card/EvaluationCard";
+import EvaluationCard from "app/_components/card/ChallengeCard";
 //import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
 
