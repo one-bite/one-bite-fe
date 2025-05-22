@@ -2,8 +2,6 @@
 
 import StreakIcon from "app/_components/icon/StreakIcon";
 import TierIcon from "app/_components/icon/TierIcon";
-//import { getStreak, getPoint, getRank } from "@/utils/user";
-//import { useState, useEffect } from "react";
 
 interface userStatData {
     streak: number;
@@ -12,29 +10,6 @@ interface userStatData {
 
 
 export default function UserStats({ streak, rank } : userStatData) {
-    //const streak = getStreak();
-    //const point = getPoint();
-    //const rank = getRank();
-
-/*  //props로 유저 스탯 받아오기 **유저 스탯은 그냥 출려만 함**
-
-    const [streak, setStreak] = useState(getStreak());
-    const [point, setPoint] = useState(getPoint());
-    const [rank, setRank] = useState(getRank());
-
-    useEffect(() => {
-        const handleStorageChange = () => {
-            setStreak(getStreak());
-            setPoint(getPoint());
-            setRank(getRank());
-        };
-
-        window.addEventListener("userStatsUpdated", handleStorageChange);
-        return () => {
-            window.removeEventListener("userStatsUpdated", handleStorageChange);
-        };
-    }, []);
-*/
 
     return (
         <div className="flex items-center gap-2">
