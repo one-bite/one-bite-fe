@@ -5,7 +5,7 @@ import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import MyButton from "app/_components/buttons/MyButton";
-import ResultModal from "app/_components/modals/ResultModal";
+import ChallengeModal from "@/app/_components/modals/ChallengeModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
@@ -165,7 +165,7 @@ const QuizPage = () => {
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
                     generatedByAI = {true}
-                    questionType={currentProblem.type}
+                    questionType={currentProblem.questionType}
                     lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
                 />
@@ -185,7 +185,7 @@ const QuizPage = () => {
                 )}
             </div>
 
-            <ResultModal
+            <ChallengeModal
                 isOpen={showModal}
                 isCorrect={isCorrect ?? false}
                 score={latestScore}
