@@ -21,6 +21,7 @@ interface QuizCardProps {
   className?: string;
   generatedByAI?:boolean;
   questionType: "multiple_choice" | "short_answer" | "true_false";
+  lives: number;
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
@@ -33,6 +34,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
   isCorrect,
   correctAnswer,
   questionType,
+  lives,
 }) => {
   return (
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
@@ -44,9 +46,14 @@ const QuizCard: React.FC<QuizCardProps> = ({
             </p>
           </div>
           <div className="absolute top-4 right-4 flex gap-1">
-            {[...Array(3)].map((_, i) => (
-                <span key={i} className="text-red-500 text-xl"><HeartIcon className={"size-6 fill-red-500"}/></span>
-            ))}
+            {[...Array(3)].map((_, i) => {
+              const isFilled = i>= (3 - lives);
+              return(
+                <span key={i} className="text-red-500 text-xl">
+                  <HeartIcon className={`size-6 ${isFilled ? "fill-red-500" : "fill-none stroke-red-500"}`}/>
+                </span>
+            );
+            })}
           </div>
         </div>
 
