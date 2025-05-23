@@ -7,7 +7,7 @@ export interface ProblemDescription {
 
 export interface QuizProblem {
   problemId: number;
-  questionType: QuestionType;
+  type: QuestionType;
   title: string;
   description: ProblemDescription;
   answer: string;

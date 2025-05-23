@@ -123,7 +123,7 @@ const QuizPage = () => {
       <div className="flex justify-center">
         <QuizCard
             leftStreak={todayStreak.todayStreakQuizLeft}
-            questionType={currentProblem.questionType}
+            questionType={currentProblem.type}
             title={currentProblem.title}
             question={currentProblem.description.question}
             options={currentProblem.description.options}
