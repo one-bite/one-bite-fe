@@ -9,7 +9,6 @@ interface ProgressCardProps {
 
 const ProgressCard = ({total, solved}:ProgressCardProps) => {
     const percent = total === 0 ? 0 : Math.round((solved/total)*100);
-    const percent2 = Math.round(40);
 
     return (
         <BigCard className="flex m-4 w-full h-64 bg-white">
@@ -22,9 +21,8 @@ const ProgressCard = ({total, solved}:ProgressCardProps) => {
             <div className="w-3/4 bg-gray-200 rounded-full h-4 m-8">
                 <div
                     className="bg-lime-500 h-4 rounded-full transition-all duration-300"
-                    style={{width: `${percent2}%`}}
+                    style={{width: `${percent}%`}}
                 />
-                임의로 40% 설정함
             </div>
         </BigCard>
     )
