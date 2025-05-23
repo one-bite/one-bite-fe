@@ -1,11 +1,9 @@
-
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchTotalProblemNumber = async () => {
     const response = await fetch(`${apiUrl}/problem/stats`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
     });
