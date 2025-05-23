@@ -36,6 +36,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
     generatedByAI,
     questionType,
 }) => {
+
     return (
         <Card className={`w-full max-w-3xl p-4 ${className}`}>
             <CardBody>
