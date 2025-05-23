@@ -165,7 +165,7 @@ const QuizPage = () => {
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
                     generatedByAI = {true}
-                    questionType={currentProblem.questionType}
+                    questionType={currentProblem.type}
                     lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
                 />
