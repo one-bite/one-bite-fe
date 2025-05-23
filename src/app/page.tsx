@@ -44,7 +44,7 @@ export default function Page() {
             </div>
             <div className="flex justify-center mx-auto">
                 <ResumeCourseButton courseName={"Python"}/>
-                <ProgressCard totalProblems={problemStats.total} solvedProblems={problemStats.solved} />
+                <ProgressCard total={problemStats.total} solved={problemStats.solved} />
             </div>
         </>
     );
