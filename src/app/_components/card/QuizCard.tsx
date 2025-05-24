@@ -10,6 +10,7 @@ import GeneratedByAiIcon from "app/_components/icon/GeneratedByAiIcon";
 interface QuizCardProps {
     leftStreak?: number; // 남은 문제 수는 오늘의 문제에서만 사용
     topic?: string; // 문제 토픽은 history에서만 사용
+    questionType: "multiple_choice" | "short_answer" | "true_false";
     title: string;
     question: string; // 문제 내용
     options: string[]; // 객관식 선택지
@@ -19,7 +20,6 @@ interface QuizCardProps {
     correctAnswer: string;
     className?: string;
     generatedByAI: boolean;
-    questionType: "multiple_choice" | "short_answer" | "true_false";
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
@@ -36,6 +36,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
     generatedByAI,
     questionType,
 }) => {
+
     return (
         <Card className={`w-full max-w-3xl p-4 ${className}`}>
             <CardBody>

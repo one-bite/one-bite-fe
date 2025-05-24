@@ -66,7 +66,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
                     correctAnswer={correctAnswer}
                     className="w-full shadow-none m-0"
                     generatedByAI={problem.ai}
-                    questionType={problem.type}
+                    questionType={problem.questionType}
                 />
             </div>
 

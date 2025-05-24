@@ -5,7 +5,7 @@ import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import MyButton from "app/_components/buttons/MyButton";
-import ResultModal from "app/_components/modals/ResultModal";
+import ChallengeModal from "@/app/_components/modals/ChallengeModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
@@ -13,8 +13,11 @@ import {Spinner} from "@nextui-org/react";
 import EvaluationCard from "app/_components/card/EvaluationCard";
 //import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
+
 const QuizPage = () => {
     const router = useRouter();
+
+    const [lives, setLives] = useState(3);
 
     const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
@@ -60,8 +63,6 @@ const QuizPage = () => {
         setIsLoading(false);
     }, []);
 */
-    //const quizData = quizProblems; //mock 데이터 사용
-
 
     const [selected, setSelected] = useState<string | null>(null); // 선택한 답
     const [latestScore, setLatestScore] = useState(0); // 최근 점수
@@ -93,9 +94,9 @@ const QuizPage = () => {
 
     const currentProblem = quizData.problemList[currentIndex];
     const isLast = currentIndex === (quizData.problemList.length - 1);
-
-    //const correctScore = currentProblem.point;  // 정답일 때 점수
-    //const wrongScore = 7; // 오답일 때 점수
+    //const isLast = currentIndex === (quizData.problemList.length - 1);
+    const outOfLives = lives <= 0;
+    const isEnd = isLast || outOfLives;
 
     const handleAnswer = (answer: string) => {
         setSelected(answer); // 선택된 답 저장
@@ -108,7 +109,6 @@ const QuizPage = () => {
         }
 
         const problemId = quizData.problemList[currentIndex].problemId;
-
         const result = await submitTodayProblem(problemId, selected);
         setIsCorrect(result.correct); // 정답 여부 저장
         setScore((prev) => (prev) + result.score); // 획득한 점수 합산
@@ -119,27 +119,20 @@ const QuizPage = () => {
         } else {
             setWrongCount((prev) => prev + 1);
             subtractScore(result.score); // 유저 스코어에 반영
+            setLives((prev) => {
+                const nextLives = prev - 1;
+                if (nextLives <= 0) {
+                    router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
+                }
+                return nextLives;
+            });
+        }
+
+        if (result.correct || lives - 1 > 0) { // 정답이거나 목숨이 남았으면 다음 문제로 이동
+            setCurrentIndex((prev) => prev + 1);
+            setSelected(null);
         }
         setLatestScore(result.score); // 최근 점수 저장
-        /*
-            //mock 데이터 사용
-            const answerNum = parseInt(currentProblem.answer);
-            const correct = selected === currentProblem.description.options[answerNum - 1]; // 정답 여부 확인
-            setIsCorrect(correct);
-            if (correct) {
-              setCorrectCount((prev) => prev + 1);
-              setScore((prev) => prev + correctScore);  // 정답일때
-              setReward((prev) => prev + rewardPoint); // 정답이면 10포인트
-              addScore(correctScore);
-            } else {
-              setWrongCount((prev) => prev + 1);
-              setScore((prev) => prev - wrongScore); // 오답일 때 -7점
-              subtractScore(wrongScore); // 점수 감소
-            }
-            setLatestScore(correct ? correctScore : wrongScore); // 최근 점수 저장
-        */
-        setShowModal(true); // 모달 표시
-        setIsSolved(true); // 문제 풀었음 표시
 
     };
 
@@ -148,13 +141,10 @@ const QuizPage = () => {
         setIsCorrect(null); // 정답 여부 초기화
         setIsSolved(false); // 문제 풀었음 초기화
 
-        if(isSolved) {
-            if (isCorrect) {
-            }
-        }
-        if (isLast) {
+        if (isEnd) {
             // 마지막 문제에서 결과 페이지로 이동
             router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
+            return;
         }
         setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
     };
@@ -175,7 +165,8 @@ const QuizPage = () => {
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
                     generatedByAI = {true}
-                    questionType={currentProblem.type}
+                    questionType={currentProblem.questionType}
+                    lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
                 />
             </div>
@@ -188,13 +179,13 @@ const QuizPage = () => {
                 )}
 
                 {isSolved && !showModal && (
-                    <MyButton onClick={handleNext}>
-                        {isLast ? "결과 확인하기" : "다음 문제로"}
+                    <MyButton onClick={handleNext} className={"w-48 h-12 p-4 bg-purple-700 shadow-purple-900 hover:bg-purple-500 hover:shadow-purple-900 active:shadow-purple-900"}>
+                        {isEnd ? "결과 확인하기" : "다음 문제로"}
                     </MyButton>
                 )}
             </div>
 
-            <ResultModal
+            <ChallengeModal
                 isOpen={showModal}
                 isCorrect={isCorrect ?? false}
                 score={latestScore}

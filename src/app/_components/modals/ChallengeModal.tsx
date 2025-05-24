@@ -3,7 +3,7 @@
 import StreakIcon from "../icon/StreakIcon";
 import MyButton from "../buttons/MyButton";
 
-interface ResultModalProps {
+interface ChallengeModalProps {
     isOpen: boolean; //모달 열까 말까
     isCorrect: boolean; //정답 여부
     score: number; // 스코어 변화
@@ -11,7 +11,7 @@ interface ResultModalProps {
     onClose: () => void; //닫기
 }
 
-export default function ResultModal({ isOpen, isCorrect, score, remaining, onClose }: ResultModalProps) {
+export default function ChallengeModal({ isOpen, isCorrect, score, remaining, onClose }: ChallengeModalProps) {
     if (!isOpen) return null;
 
     return (
