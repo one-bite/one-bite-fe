@@ -45,7 +45,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
         주제: ${history.problem.topics ?.map(t => t.name).join(", ") || ""}
         질문: ${problem.description.question}
         선택지: ${problem.description.options?.map((opt, i) => `${i + 1}) ${opt}`).join(", ") || ""}
-        문제 유형: ${problem.type}
+        문제 유형: ${problem.questionType}
         정답: ${problem.answer} (${problem.description.options?.[parseInt(problem.answer) - 1] || ""})
         제출 답안: ${history?.submittedAnswer ? `${history.submittedAnswer} (${problem.description.options?.[parseInt(history.submittedAnswer) - 1] || ""})` : "미제출"}
         정답 여부: ${problem.answer === history?.submittedAnswer ? "정답" : "오답"}
