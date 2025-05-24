@@ -117,13 +117,13 @@ const QuizPage = () => {
   const handleprev = () => {
     console.log("이전 문제로!");
   };
-
+  
   return (
     <div className="m-12 min-h-screen p-4">
       <div className="flex justify-center">
         <QuizCard
             leftStreak={todayStreak.todayStreakQuizLeft}
-            questionType={currentProblem.type}
+            questionType={currentProblem.questionType}
             title={currentProblem.title}
             question={currentProblem.description.question}
             options={currentProblem.description.options}
