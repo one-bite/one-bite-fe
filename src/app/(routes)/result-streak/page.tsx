@@ -21,7 +21,7 @@ function Results() {
         <ResultCard
           correctAnswers={correctAnswers}
           wrongAnswers={wrongAnswers}
-          score={null}
+          score={null} //스트릭일 땐 score를 null로 줘야 함
           todayStreakQuizLeft={streakQuizLeft}
         />
       </div>
