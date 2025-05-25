@@ -39,7 +39,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
     const correctAnswer = problem.answer;
 
 // ai 해설 요청을 위한 문제 설명 description
-    function makeDescriptionForAI(problem: QuizProblem, history: ProblemHistory) {
+    /*function makeDescriptionForAI(problem: QuizProblem, history: ProblemHistory) {
         return `
         제목: ${history.problem.title}
         주제: ${history.problem.topics ?.map(t => t.name).join(", ") || ""}
@@ -50,7 +50,16 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
         제출 답안: ${history?.submittedAnswer ? `${history.submittedAnswer} (${problem.description.options?.[parseInt(history.submittedAnswer) - 1] || ""})` : "미제출"}
         정답 여부: ${problem.answer === history?.submittedAnswer ? "정답" : "오답"}
         `;
+    }*/
+
+    let AIproblemId: number;
+    if (problem.ai == true) {
+        AIproblemId = 0;
+    } else {
+        AIproblemId = problem.problemId;
     }
+
+         
 
     return (
         <BigCard className={`flex flex-col items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
@@ -78,8 +87,8 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
                         setIsLoading(true);
 
                         try {
-                            const description = makeDescriptionForAI(problem, history);
-                            const commentary = await fetchCommentary(description);
+                            //const description = makeDescriptionForAI(problem, history);
+                            const commentary = await fetchCommentary(AIproblemId, problem.description);
                             setExplanation(commentary);
                         } catch {
                             setExplanation("AI 해설을 불러올 수 없습니다.");
