@@ -54,6 +54,8 @@ const QuizPage = () => {
   }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
   
   const [selected, setSelected] = useState<string | null>(null); // 선택한 답
+  const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
+  const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
@@ -94,6 +96,12 @@ const QuizPage = () => {
     const result = await submitTodayProblem(problemId, selected);
     setIsCorrect(result.correct); // 정답 여부 저장
 
+    if (isCorrect) {
+      setCorrectCount((prev) => prev + 1); // 맞힌 문제 수 증가
+    } else {
+      setWrongCount((prev) => prev + 1); // 틀린 문제 수 증가
+    }
+
     decreaseTodayQuizLeft();
     setTodayStreak(getStreak());
     setShowModal(true); // 모달 표시
@@ -104,7 +112,7 @@ const QuizPage = () => {
   const handleNext = () => {
     if (isLast) {
       // 마지막 문제에서 결과 페이지로 이동
-      router.push(`/result-streak`);
+      router.push(`/result-streak?correct=${correctCount}&wrong=${wrongCount}`);
       return;
     }
     
