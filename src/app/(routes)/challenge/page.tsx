@@ -5,14 +5,14 @@ import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import MyButton from "app/_components/buttons/MyButton";
-import ResultModal from "app/_components/modals/ResultModal";
+//import ResultModal from "app/_components/modals/ResultModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
-import EvaluationCard from "app/_components/card/ChallengeCard";
 //import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
+import ChallengeCard from "app/_components/card/ChallengeCard";
 
 const QuizPage = () => {
     const router = useRouter();
@@ -65,12 +65,10 @@ const QuizPage = () => {
 */
 
     const [selected, setSelected] = useState<string | null>(null); // 선택한 답
-    const [latestScore, setLatestScore] = useState(0); // 최근 점수
     const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
     const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
-    const [score, setScore] = useState(0); // 총 레이팅 포인트 획득
+    const [rankPoint, setRankPoint] = useState(0); // 총 레이팅 포인트 획득
     const [reward, setReward] = useState(0); // 총 포인트 획득
-    const [showModal, setShowModal] = useState(false); // 모달 표시 여부
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
     if (isLoading) {
@@ -96,7 +94,7 @@ const QuizPage = () => {
     const isLast = currentIndex === (quizData.problemList.length - 1);
     //const isLast = currentIndex === (quizData.problemList.length - 1);
     const outOfLives = lives <= 0;
-    const isEnd = isLast || outOfLives;
+    const isEnd = (isLast && isSolved) || outOfLives;
 
     const handleAnswer = (answer: string) => {
         setSelected(answer); // 선택된 답 저장
@@ -109,20 +107,22 @@ const QuizPage = () => {
         }
 
         const problemId = quizData.problemList[currentIndex].problemId;
-        const result = await submitTodayProblem(problemId, selected);
+        const result = await submitTodayProblem(problemId, selected); // 이부분 역량평가 채점 api로 변경 필요
         setIsCorrect(result.correct); // 정답 여부 저장
-        setScore((prev) => (prev) + result.score); // 획득한 점수 합산
-        if (isCorrect) {
+        setRankPoint((prev) => (prev) + result.score); // 획득한 점수 합산
+
+        if (result.correct) {
             setCorrectCount((prev) => prev + 1);
             setReward((prev) => (prev) + 10); // 획득한 포인트 합산
             addScore(result.score); // 유저 스코어에 반영
-        } else {
+        }
+        else {
             setWrongCount((prev) => prev + 1);
             subtractScore(result.score); // 유저 스코어에 반영
             setLives((prev) => {
                 const nextLives = prev - 1;
                 if (nextLives <= 0) {
-                    router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
+                    router.push(`/results?type=challenge&score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
                 }
                 return nextLives;
             });
@@ -132,8 +132,8 @@ const QuizPage = () => {
             setCurrentIndex((prev) => prev + 1);
             setSelected(null);
         }
-        setLatestScore(result.score); // 최근 점수 저장
-
+        //setLatestScore(result.score); // 최근 점수 저장
+        setIsSolved(true);
     };
 
     const handleNext = () => {
@@ -143,7 +143,7 @@ const QuizPage = () => {
 
         if (isEnd) {
             // 마지막 문제에서 결과 페이지로 이동
-            router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
+            router.push(`/results?type=challenge&score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
             return;
         }
         setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
@@ -156,7 +156,7 @@ const QuizPage = () => {
     return (
         <div className="m-12 min-h-screen p-4">
             <div className="flex justify-center">
-                <EvaluationCard
+                <ChallengeCard
                     title={currentProblem.title}
                     question={currentProblem.description.question}
                     options={currentProblem.description.options}
@@ -164,7 +164,7 @@ const QuizPage = () => {
                     onSelect={handleAnswer}
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
-                    generatedByAI = {true}
+                    generatedByAI = {currentProblem.ai}
                     questionType={currentProblem.type}
                     lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
@@ -172,26 +172,18 @@ const QuizPage = () => {
             </div>
 
             <div className="flex justify-end mt-8 mr-16 gap-4">
-                {!isSolved && !showModal && (
+                {!isSolved && (
                     <MyButton onClick={handleSubmit} disabled={!selected} className={"w-48 h-12 p-4 bg-purple-700 shadow-purple-900 hover:bg-purple-500 hover:shadow-purple-900 active:shadow-purple-900"}>
                         정답 제출<ArrowRight/>
                     </MyButton>
                 )}
 
-                {isSolved && !showModal && (
+                {isSolved && (
                     <MyButton onClick={handleNext} className={"w-48 h-12 p-4 bg-purple-700 shadow-purple-900 hover:bg-purple-500 hover:shadow-purple-900 active:shadow-purple-900"}>
                         {isEnd ? "결과 확인하기" : "다음 문제로"}
                     </MyButton>
                 )}
             </div>
-
-            <ResultModal
-                isOpen={showModal}
-                isCorrect={isCorrect ?? false}
-                score={latestScore}
-                remaining={0} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-                onClose={() => setShowModal(false) }
-            />
         </div>
     );
 };

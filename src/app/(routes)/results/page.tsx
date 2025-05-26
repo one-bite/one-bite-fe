@@ -15,6 +15,8 @@ function Results() {
   const correctAnswers = Number(searchParams.get("correct") || 0);
   const wrongAnswers = Number(searchParams.get("wrong") || 0);
 
+  const isChallenge = searchParams.get("type") === "challenge";
+
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-4xl p-6">
@@ -24,6 +26,7 @@ function Results() {
           wrongAnswers={wrongAnswers}
           score={score}
           todayStreakQuizLeft={streakQuizLeft}
+          isChallenge = {isChallenge}
         />
       </div>
     </main>

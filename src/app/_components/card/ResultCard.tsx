@@ -9,6 +9,7 @@ interface ResultCardProps {
   wrongAnswers: number;
   score: number;
   todayStreakQuizLeft: number;
+  isChallenge?: boolean;
 }
 
 
@@ -21,7 +22,7 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
   );
 };
 
-const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft }) => {
+const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft, isChallenge = false }) => {
 
   const router = useRouter();
 
@@ -32,16 +33,20 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
   return (
     <div className="bg-white p-6 rounded-xl shadow-2xl border-2 border-gray-200 w-full max-w-4xl text-center">
       <h1 className="text-6xl font-extrabold text-lime-600 mb-6 mt-4">채점 결과</h1>
-        {todayStreakQuizLeft > 0 ? (
-            <p className="text-3xl font-extrabold text-gray-700 mb-8">스트릭 달성까지 <span className="text-red-500">{todayStreakQuizLeft}</span>문제 남았어요!</p>
-        ) : (
-            <p className="text-3xl font-extrabold text-gray-700 mb-8"> 오늘의 <span className="text-red-500">스트릭</span>을 달성했어요!</p>
+        {isChallenge ? (
+            <p className="text-3xl font-extrabold text-gray-700 mb-8">
+                <span className="text-red-500">역량평가</span>가 완료되었습니다!
+            </p>
+        ): todayStreakQuizLeft > 0 ? (
+                <p className="text-3xl font-extrabold text-gray-700 mb-8">스트릭 달성까지 <span className="text-red-500">{todayStreakQuizLeft}</span>문제 남았어요!</p>
+            ) : (
+                <p className="text-3xl font-extrabold text-gray-700 mb-8"> 오늘의 <span className="text-red-500">스트릭</span>을 달성했어요!</p>
         )}
-
-
       <div className="space-y-6 mb-6">
         <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
-        <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />
+          {!isChallenge && (
+              <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />
+          )}
         <ResultItem label="총 레이팅 포인트:" value={`+${score}`} color="text-orange-600" isScore={true} />
       </div>
 
