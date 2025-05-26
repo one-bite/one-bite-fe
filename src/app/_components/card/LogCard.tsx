@@ -6,9 +6,10 @@ import ProblemExplainationButton from "app/_components/buttons/ProblemExplainati
 import {useEffect, useState} from "react";
 import ExplanationViewer from "app/_components/sub_components/ExplanationViewer";
 import AIGenerateProblemButton from "app/_components/buttons/AIGenerateProblemButton";
-import {QuizProblem} from "app/_configs/types/quiz";
+import {QuizProblem, AiProblemRequest} from "app/_configs/types/quiz";
 import {ProblemHistory} from "@/app/_configs/types/problemHistory";
 import {fetchCommentary} from "@/utils/apis/commentary";
+import { useRouter } from "next/router";
 
 
 interface LogCardProps {
@@ -18,6 +19,7 @@ interface LogCardProps {
 }
 
 const LogCard = ({ className = "", problem, history }:LogCardProps) => {
+    const router = useRouter();
     const [explanation, setExplanation] = useState<string|null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -38,19 +40,22 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
 
     const correctAnswer = problem.answer;
 
-// ai 해설 요청을 위한 문제 설명 description
-    /*function makeDescriptionForAI(problem: QuizProblem, history: ProblemHistory) {
-        return `
-        제목: ${history.problem.title}
-        주제: ${history.problem.topics ?.map(t => t.name).join(", ") || ""}
-        질문: ${problem.description.question}
-        선택지: ${problem.description.options?.map((opt, i) => `${i + 1}) ${opt}`).join(", ") || ""}
-        문제 유형: ${problem.questionType}
-        정답: ${problem.answer} (${problem.description.options?.[parseInt(problem.answer) - 1] || ""})
-        제출 답안: ${history?.submittedAnswer ? `${history.submittedAnswer} (${problem.description.options?.[parseInt(history.submittedAnswer) - 1] || ""})` : "미제출"}
-        정답 여부: ${problem.answer === history?.submittedAnswer ? "정답" : "오답"}
-        `;
-    }*/
+    const handlegenerateAiProblem = async () => {
+        if (!problem || !history) return;
+
+
+        const payload: AiProblemRequest = {
+            parentProblemId: problem.problemId,
+            description: problem.description,
+            topics: history?.problem.topics.map(t => t.code) || [],
+            questionType: problem.questionType,
+        };
+
+        const encoded = encodeURIComponent(JSON.stringify(payload));
+        router.push(`/quiz-ai?payload=${encoded}`);
+    
+        
+    }
 
     let AIproblemId: number;
     if (problem.ai == true) {
@@ -87,7 +92,6 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
                         setIsLoading(true);
 
                         try {
-                            //const description = makeDescriptionForAI(problem, history);
                             const commentary = await fetchCommentary(AIproblemId, problem.description);
                             setExplanation(commentary);
                         } catch {
@@ -96,7 +100,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
                             setIsLoading(false);
                         }
                     }}/>
-                    <AIGenerateProblemButton onClick={()=>{/*여기에 유사 유형 문제 생성하기 위해 전달할 api 변수나 함수*/}}/>
+                    <AIGenerateProblemButton onClick={handlegenerateAiProblem}/>
                 </div>
             </div>
         </BigCard>
