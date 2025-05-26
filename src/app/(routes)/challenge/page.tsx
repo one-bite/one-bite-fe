@@ -13,6 +13,7 @@ import {Spinner} from "@nextui-org/react";
 import EvaluationCard from "app/_components/card/ChallengeCard";
 //import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
+import ChallengeCard from "app/_components/card/ChallengeCard";
 
 const QuizPage = () => {
     const router = useRouter();
@@ -156,7 +157,7 @@ const QuizPage = () => {
     return (
         <div className="m-12 min-h-screen p-4">
             <div className="flex justify-center">
-                <EvaluationCard
+                <ChallengeCard
                     title={currentProblem.title}
                     question={currentProblem.description.question}
                     options={currentProblem.description.options}
