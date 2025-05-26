@@ -5,24 +5,24 @@ import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import { getStreak } from "@/utils/user";
 import React, { useState, useEffect} from "react";
-import ProgressCard from "app/_components/card/ProgressCard";
-import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
+//import ProgressCard from "app/_components/card/ProgressCard";
+//import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
 
 export default function Page() {
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
-    const [problemStats, setProblemStats] = useState<{total:number, solved:number}>({total:1,solved:0});
+    //const [problemStats, setProblemStats] = useState<{total:number, solved:number}>({total:1,solved:0});
 
     useEffect(() => {
         const mystreak = getStreak();
         setTodayStreakLeft(mystreak.todayStreakQuizLeft);
         setWeeklyStreakHistory(mystreak.streakHistory);
 
-        const loadStats = async () => {
+        /*const loadStats = async () => {
             const data = await fetchTotalProblemNumber();
             setProblemStats({ total: data.total, solved: data.solved });
         };
-        loadStats();
+        loadStats();*/
 
     }, []);
     
@@ -44,7 +44,7 @@ export default function Page() {
             </div>
             <div className="flex justify-center mx-auto">
                 <ResumeCourseButton courseName={"Python"}/>
-                <ProgressCard total={problemStats.total} solved={problemStats.solved} />
+                {/*}<ProgressCard total={problemStats.total} solved={problemStats.solved} />{*/}
             </div>
         </>
     );

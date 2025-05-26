@@ -2,8 +2,9 @@
 
 import React from "react";
 import BigCard from "app/_components/base_components/BigCard";
-import {Spinner} from "@nextui-org/react";
-import {Logo} from "app/_components/icon/LogoIcon";
+import { Spinner } from "@nextui-org/react";
+import { Logo } from "app/_components/icon/LogoIcon";
+import ReactMarkdown from "react-markdown"
 
 interface ExplanationViewerProps {
     explanation: string | null;
@@ -12,16 +13,20 @@ interface ExplanationViewerProps {
 
 const ExplanationViewer = ({ explanation, isLoading }: ExplanationViewerProps) => {
     return (
-        <BigCard className="w-full h-4/5 mx-1 my-0 border border-gray-400 shadow-none p-4 overflow-y-auto">
+        <BigCard className="w-full max-h-[400px] mx-1 my-0 border border-gray-400 shadow-none p-4 overflow-y-auto">
             {isLoading ? (
                 <div className="flex justify-center items-center h-full">
                     <Spinner label="AI 해설 생성 중..." color="primary" />
                 </div>
             ) : explanation ? (
                 <div className={"self-start w-full h-full m-1"}>
-                    <div className="flex items-center w-full text-left text-base font-line leading-relaxed whitespace-pre-wrap text-gray-900">
-                        <div className={"rounded-full bg-lime-500 w-9 h-9 mr-4"}><Logo/></div>
-                        <span>{explanation}</span>
+                    <div className="flex items-start mb-4">
+                        <div className={"rounded-full bg-lime-500 w-9 h-9 mr-4"}>
+                            <Logo/>
+                        </div>
+                        <div className="prose prose-sm prose-slate max-w-none font-line leading-tight text-gray-900">
+                            <ReactMarkdown>{explanation}</ReactMarkdown>
+                        </div>
                     </div>
                 </div>
             ) : (
