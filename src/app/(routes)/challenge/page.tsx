@@ -10,7 +10,6 @@ import MyButton from "app/_components/buttons/MyButton";
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
-import EvaluationCard from "app/_components/card/ChallengeCard";
 //import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
 import ChallengeCard from "app/_components/card/ChallengeCard";
@@ -68,7 +67,7 @@ const QuizPage = () => {
     const [selected, setSelected] = useState<string | null>(null); // 선택한 답
     const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
     const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
-    const [score, setScore] = useState(0); // 총 레이팅 포인트 획득
+    const [rankPoint, setRankPoint] = useState(0); // 총 레이팅 포인트 획득
     const [reward, setReward] = useState(0); // 총 포인트 획득
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
@@ -108,9 +107,9 @@ const QuizPage = () => {
         }
 
         const problemId = quizData.problemList[currentIndex].problemId;
-        const result = await submitTodayProblem(problemId, selected);
+        const result = await submitTodayProblem(problemId, selected); // 이부분 역량평가 채점 api로 변경 필요
         setIsCorrect(result.correct); // 정답 여부 저장
-        setScore((prev) => (prev) + result.score); // 획득한 점수 합산
+        setRankPoint((prev) => (prev) + result.score); // 획득한 점수 합산
 
         if (result.correct) {
             setCorrectCount((prev) => prev + 1);
@@ -123,7 +122,7 @@ const QuizPage = () => {
             setLives((prev) => {
                 const nextLives = prev - 1;
                 if (nextLives <= 0) {
-                    router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
+                    router.push(`/results?type=challenge&score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
                 }
                 return nextLives;
             });
@@ -144,7 +143,7 @@ const QuizPage = () => {
 
         if (isEnd) {
             // 마지막 문제에서 결과 페이지로 이동
-            router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
+            router.push(`/results?type=challenge&score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
             return;
         }
         setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
@@ -165,7 +164,7 @@ const QuizPage = () => {
                     onSelect={handleAnswer}
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
-                    generatedByAI = {true}
+                    generatedByAI = {currentProblem.ai}
                     questionType={currentProblem.type}
                     lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
