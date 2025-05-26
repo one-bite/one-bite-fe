@@ -9,7 +9,7 @@ import AIGenerateProblemButton from "app/_components/buttons/AIGenerateProblemBu
 import {QuizProblem, AiProblemRequest} from "app/_configs/types/quiz";
 import {ProblemHistory} from "@/app/_configs/types/problemHistory";
 import {fetchCommentary} from "@/utils/apis/commentary";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 interface LogCardProps {
@@ -93,7 +93,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
 
                         try {
                             const commentary = await fetchCommentary(AIproblemId, problem.description);
-                            setExplanation(commentary);
+                            setExplanation(commentary.commentary);
                         } catch {
                             setExplanation("AI 해설을 불러올 수 없습니다.");
                         } finally {

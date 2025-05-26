@@ -24,6 +24,8 @@ const QuizAIPage = () => {
       try {
         setLoading(true);
         const payload: AiProblemRequest = JSON.parse(decodeURIComponent(payloadStr));
+        console.log("AI 문제 생성 요청:", payload);
+        alert(payloadStr);
         const data = await generateAiProblem(payload);
         setProblem(data);
       } catch (e) {
@@ -40,7 +42,7 @@ const QuizAIPage = () => {
     if (!selected || !problem) return;
 
     const isCorrect = selected === problem.answer;
-    setisCorrect(true);
+    setisCorrect(isCorrect);
 
     if (isCorrect) {
       alert("정답입니다! 이전 페이지로 돌아갑니다.");
@@ -48,6 +50,7 @@ const QuizAIPage = () => {
     } else {
       alert("오답입니다! 다시 시도하세요.");
       setSelected(null); // 선택 초기화
+      setisCorrect(null); // 정답 상태 초기화
     }
   };
 
@@ -64,7 +67,7 @@ const QuizAIPage = () => {
         onSelect={setSelected}
         isCorrect={isCorrect}
         correctAnswer={problem.answer}
-        generatedByAI
+        generatedByAI={true}
         questionType={problem.questionType}
       />
 

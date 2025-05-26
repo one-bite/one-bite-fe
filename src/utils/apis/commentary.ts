@@ -1,9 +1,14 @@
 import { ProblemDescription } from "@/app/_configs/types/quiz";
 
+type CommentaryResponse = {
+  commentary: string;
+};
+
+
 export const fetchCommentary = async (
     problemId: number,
     description: ProblemDescription
-): Promise<string> => {
+): Promise<CommentaryResponse> => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await fetch(`${apiUrl}/problem/commentary`, {
