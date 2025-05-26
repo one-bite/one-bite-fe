@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { generateAiProblem } from "@/utils/apis/problemAi";
@@ -7,7 +8,7 @@ import { AiProblemRequest, AiProblemResponse } from "@/app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "@/app/_components/buttons/MyButton";
 
-const QuizAIPage = () => {
+const QuizAI = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -78,4 +79,10 @@ const QuizAIPage = () => {
   );
 };
 
-export default QuizAIPage;
+export default function QuizAIPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <QuizAI />
+    </Suspense>
+  );
+}
