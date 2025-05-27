@@ -7,6 +7,7 @@ import BigCard from "app/_components/base_components/BigCard";
 import { getStreak } from "@/utils/user";
 import {Logo} from "app/_components/icon/LogoIcon";
 import React from "react";
+import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 //import { useEffect } from "react";
 
 export default function Page() {
@@ -20,6 +21,9 @@ export default function Page() {
         <>
             <div className={"flex justify-center"}>
                 <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory}/>
+            </div>
+            <div className={"flex justify-center"}>
+                <EnterChallengeCard currentRank={0} rankPoint={0}/>
             </div>
             <div className="flex gap-2 justify-start mt-2 max-w-4xl mx-auto">
                 <CourseButton iconType="python" label="파이썬 기초" bgColor="bg-blue-200"/>
