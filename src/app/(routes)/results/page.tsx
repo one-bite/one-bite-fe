@@ -18,7 +18,7 @@ function Results() {
   const isChallenge = searchParams.get("type") === "challenge";
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6">
+    <main className="min-w-screen flex items-center justify-center p-6">
       <div className="w-full max-w-4xl p-6">
         {/* 결과 카드 컴포넌트 사용 */}
         <ResultCard
