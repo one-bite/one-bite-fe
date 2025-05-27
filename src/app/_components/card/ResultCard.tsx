@@ -23,6 +23,10 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
 };
 
 const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft, isChallenge = false }) => {
+<<<<<<< Updated upstream
+=======
+    const router = useRouter();
+>>>>>>> Stashed changes
 
   const router = useRouter();
 
@@ -30,6 +34,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
     router.replace("/");
   };
 
+<<<<<<< Updated upstream
   return (
     <div className="bg-white p-6 rounded-xl shadow-2xl border-2 border-gray-200 w-full max-w-4xl text-center">
       <h1 className="text-6xl font-extrabold text-lime-600 mb-6 mt-4">채점 결과</h1>
@@ -55,6 +60,44 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
       </MyButton>
     </div>
   );
+=======
+    return (
+        <div className="bg-white p-6 rounded-xl shadow-2xl border-2 border-gray-200 w-full max-w-4xl text-center">
+            <h1 className="text-6xl font-extrabold text-lime-600 mb-6 mt-4">채점 결과</h1>
+            {todayStreakQuizLeft != null && ( //스트릭 결과라면 해당 값을 프롭으로 전달. 이 값이 존재하면 해당 문구 표시
+                <h1 className="text-6xl font-extrabold text-lime-600 mb-6 mt-4">
+                    오늘의 <span className="text-red-500">스트릭</span>을 달성했어요!
+                </h1>
+            )}
+            {isChallenge && (
+                    <p className="text-3xl font-extrabold text-gray-700 mb-8">
+                        <span className="text-red-500">역량평가</span>가 완료되었습니다!
+                    </p>
+            )}
+
+            <div className="space-y-6 mb-6">
+                <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500"/>
+                {!isChallenge && (
+                    <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500"/>
+                )}
+                {false && ( // 역량평가 관련은 나중에 추가할 예정이므로 일단 false로 설정
+                    <>
+                        <ResultItem label="획득한 점수:" value={`+${score}`} color="text-orange-600" isScore={true}/>
+                        {/*}<ResultItem label="등급:" value={`+${rank}`} color="text-orange-600" isScore={true} /> {*/}
+                    </>
+                )}
+            </div>
+
+            <MyButton onClick={handleGoLog} className="w-1/2 h-14 py-3">
+                풀이 기록 확인하기
+            </MyButton>
+
+            <MyButton onClick={handleGoHome} className="w-1/2 h-14 py-3">
+                메인 화면으로 돌아가기
+            </MyButton>
+        </div>
+    );
+>>>>>>> Stashed changes
 };
 
 export default ResultCard;

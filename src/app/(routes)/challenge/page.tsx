@@ -165,7 +165,11 @@ const QuizPage = () => {
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
                     generatedByAI = {currentProblem.ai}
+<<<<<<< Updated upstream
                     questionType={currentProblem.type}
+=======
+                    questionType={currentProblem.questionType}
+>>>>>>> Stashed changes
                     lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
                 />

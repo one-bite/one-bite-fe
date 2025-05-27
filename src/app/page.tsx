@@ -5,10 +5,17 @@ import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import BigCard from "app/_components/base_components/BigCard";
 import { getStreak } from "@/utils/user";
+<<<<<<< Updated upstream
 import {Logo} from "app/_components/icon/LogoIcon";
 import React from "react";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 //import { useEffect } from "react";
+=======
+import React, { useState, useEffect} from "react";
+import ProgressCard from "app/_components/card/ProgressCard";
+import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
+import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
+>>>>>>> Stashed changes
 
 export default function Page() {
 
