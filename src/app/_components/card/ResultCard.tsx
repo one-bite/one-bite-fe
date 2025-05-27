@@ -24,7 +24,10 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
 
 const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft, isChallenge = false }) => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     const router = useRouter();
 >>>>>>> Stashed changes
 

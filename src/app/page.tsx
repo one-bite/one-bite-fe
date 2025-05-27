@@ -15,6 +15,9 @@ import React, { useState, useEffect} from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 export default function Page() {

@@ -166,8 +166,11 @@ const QuizPage = () => {
                     correctAnswer={currentProblem.answer}
                     generatedByAI = {currentProblem.ai}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     questionType={currentProblem.type}
 =======
+=======
+>>>>>>> Stashed changes
                     questionType={currentProblem.questionType}
 >>>>>>> Stashed changes
                     lives={lives}
