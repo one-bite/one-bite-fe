@@ -8,6 +8,7 @@ import { getStreak } from "@/utils/user";
 import React, { useState, useEffect} from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
+import {fetchUserStreak} from "@/utils/apis/streakApi";
 
 export default function Page() {
     const router = useRouter();
@@ -25,16 +26,22 @@ export default function Page() {
             return;
         }
 
-        const mystreak = getStreak();
-        setTodayStreakLeft(mystreak.todayStreakQuizLeft);
-        setWeeklyStreakHistory(mystreak.streakHistory);
+        const syncStreak = async () => {
+            const userStreak = await fetchUserStreak();
+            localStorage.setItem("userStreak", JSON.stringify(userStreak));
+            const mystreak = getStreak();
+            setTodayStreakLeft(mystreak.todayStreakQuizLeft);
+            setWeeklyStreakHistory(mystreak.streakHistory);
+        }
 
         const loadStats = async () => {
             const data = await fetchTotalProblemNumber();
             setProblemStats({ total: data.total, solved: data.solved });
-            setIsReady(true);
         };
-        loadStats();
+
+        Promise.all([syncStreak(),loadStats()]).then(()=>{
+            setIsReady(true);
+        })
 
     }, [router]);
     
