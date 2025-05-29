@@ -7,6 +7,7 @@ import { getStreak } from "@/utils/user";
 import React, { useState, useEffect} from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
+import {router} from "next/client";
 
 export default function Page() {
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
@@ -14,6 +15,14 @@ export default function Page() {
     const [problemStats, setProblemStats] = useState<{total:number, solved:number}>({total:1,solved:0});
 
     useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        const email = localStorage.getItem("user_email");
+
+        if(!token || !email) {
+            router.push("/login");
+            return;
+        }
+
         const mystreak = getStreak();
         setTodayStreakLeft(mystreak.todayStreakQuizLeft);
         setWeeklyStreakHistory(mystreak.streakHistory);
