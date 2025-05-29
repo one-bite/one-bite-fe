@@ -6,17 +6,20 @@ import ProblemExplainationButton from "app/_components/buttons/ProblemExplainati
 import {useEffect, useState} from "react";
 import ExplanationViewer from "app/_components/sub_components/ExplanationViewer";
 import AIGenerateProblemButton from "app/_components/buttons/AIGenerateProblemButton";
-import {QuizProblem} from "app/_configs/types/quiz";
+import {QuizProblem, AiProblemRequest} from "app/_configs/types/quiz";
 import {ProblemHistory} from "@/app/_configs/types/problemHistory";
+import {fetchCommentary} from "@/utils/apis/commentary";
+import { useRouter } from "next/navigation";
 
 
-interface BigCardProps {
+interface LogCardProps {
     className?: string;
     problem: QuizProblem | null;
     history: ProblemHistory | null;
 }
 
-const LogCard = ({ className = "", problem, history }:BigCardProps) => {
+const LogCard = ({ className = "", problem, history }:LogCardProps) => {
+    const router = useRouter();
     const [explanation, setExplanation] = useState<string|null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -37,6 +40,32 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
 
     const correctAnswer = problem.answer;
 
+    const handlegenerateAiProblem = async () => {
+        if (!problem || !history) return;
+
+
+        const payload: AiProblemRequest = {
+            parentProblemId: problem.problemId,
+            description: problem.description,
+            topics: history?.problem.topics.map(t => t.code) || [],
+            questionType: problem.questionType,
+        };
+
+        const encoded = encodeURIComponent(JSON.stringify(payload));
+        router.push(`/quiz-ai?payload=${encoded}`);
+    
+        
+    }
+
+    let AIproblemId: number;
+    if (problem.ai == true) {
+        AIproblemId = 0;
+    } else {
+        AIproblemId = problem.problemId;
+    }
+
+         
+
     return (
         <BigCard className={`flex flex-col items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
@@ -51,22 +80,27 @@ const LogCard = ({ className = "", problem, history }:BigCardProps) => {
                     correctAnswer={correctAnswer}
                     className="w-full shadow-none m-0"
                     generatedByAI={problem.ai}
-                    questionType={problem.type}
+                    questionType={problem.questionType}
                 />
             </div>
+
             <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
                 <ExplanationViewer explanation={explanation} isLoading={isLoading}/>
                 <div className={"flex flex-row"}>
                     <ProblemExplainationButton className={"justify-center items-center"} onClick={async ()=>{
-                        if(!problem) return;
+                        if(!problem || !history) return;
                         setIsLoading(true);
-                        //api호출 부분
-                        setTimeout(()=>{
-                            setExplanation("이 문제에 대한 AI의 개념 설명입니다."); //api로 받은 ai 설명 변수를 넣을 위치
+
+                        try {
+                            const commentary = await fetchCommentary(AIproblemId, problem.description);
+                            setExplanation(commentary.commentary);
+                        } catch {
+                            setExplanation("AI 해설을 불러올 수 없습니다.");
+                        } finally {
                             setIsLoading(false);
-                        }, 1200);
+                        }
                     }}/>
-                    <AIGenerateProblemButton onClick={()=>{/*여기에 유사 유형 문제 생성하기 위해 전달할 api 변수나 함수*/}}/>
+                    <AIGenerateProblemButton onClick={handlegenerateAiProblem}/>
                 </div>
             </div>
         </BigCard>

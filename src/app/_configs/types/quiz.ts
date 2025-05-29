@@ -7,7 +7,7 @@ export interface ProblemDescription {
 
 export interface QuizProblem {
   problemId: number;
-  type: QuestionType;
+  questionType: QuestionType;
   title: string;
   description: ProblemDescription;
   answer: string;
@@ -18,4 +18,21 @@ export interface QuizProblem {
 export interface TodayQuizResponse {
   problemStatus: boolean[];
   problemList: QuizProblem[];
+}
+
+export interface AiProblemRequest {
+  parentProblemId: number;
+  description: ProblemDescription;
+  topics: string[];
+  questionType: QuestionType;
+}
+
+export interface AiProblemResponse {
+  title: string;
+  description: ProblemDescription;
+  questionType: QuestionType;
+  answer: string;
+  point: number;
+  ai: boolean;
+  commentary: string;
 }

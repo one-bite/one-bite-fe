@@ -5,7 +5,7 @@ import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import MyButton from "app/_components/buttons/MyButton";
-//import ResultModal from "app/_components/modals/ResultModal";
+import ChallengeModal from "@/app/_components/modals/ChallengeModal";
 //import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
@@ -164,7 +164,7 @@ const QuizPage = () => {
                     onSelect={handleAnswer}
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
-                    generatedByAI = {currentProblem.ai}
+                    generatedByAI = {true}
                     questionType={currentProblem.type}
                     lives={lives}
                     //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
@@ -184,6 +184,14 @@ const QuizPage = () => {
                     </MyButton>
                 )}
             </div>
+
+            <ResultModal
+                isOpen={showModal}
+                isCorrect={isCorrect ?? false}
+                score={latestScore}
+                remaining={0} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
+                onClose={() => setShowModal(false) }
+            />
         </div>
     );
 };

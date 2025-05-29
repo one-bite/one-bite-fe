@@ -63,7 +63,7 @@ const Log = () => {
                     }}/>
                 </div>
                 <div className="flex-[3] w-3/4">
-                    <LogCard problem={selectedProblem} history={selectedHistory}/>
+                    <LogCard problem={selectedProblem} history={selectedHistory} className="overflow-y-auto"/>
                 </div>
             </div>
         </div>

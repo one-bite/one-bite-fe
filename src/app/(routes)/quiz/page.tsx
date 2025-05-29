@@ -6,8 +6,8 @@ import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
-import ResultModal from "app/_components/modals/ResultModal";
-import {getStreak, decreaseTodayQuizLeft, addScore, subtractScore, UserStreakData} from "@/utils/user";
+import TodayModal from "@/app/_components/modals/TodayModal";
+import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 const QuizPage = () => {
@@ -17,7 +17,7 @@ const QuizPage = () => {
   
   const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
-  const [isSolved, setIsSolved] = useState(false); // 문제 풀었는지 여부
+  const [isSolved, setIsSolved] = useState<boolean | null>(null); // 문제 풀었는지 여부
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -54,11 +54,8 @@ const QuizPage = () => {
   }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
   
   const [selected, setSelected] = useState<string | null>(null); // 선택한 답
-  const [latestScore, setLatestScore] = useState(0); // 최근 점수
   const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
   const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
-  const [score, setScore] = useState(0); // 총 레이팅 포인트 획득
-  const [reward, setReward] = useState(0); // 총 포인트 획득
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
@@ -98,51 +95,43 @@ const QuizPage = () => {
 
     const result = await submitTodayProblem(problemId, selected);
     setIsCorrect(result.correct); // 정답 여부 저장
-    setScore((prev) => (prev) + result.score); // 획득한 점수 합산
-    if (isCorrect) {
-      setCorrectCount((prev) => prev + 1);
-      setReward((prev) => (prev) + 10); // 획득한 포인트 합산
-      addScore(result.score); // 유저 스코어에 반영
-    } else {
-      setWrongCount((prev) => prev + 1);
-      subtractScore(result.score); // 유저 스코어에 반영
-    }
-    setLatestScore(result.score); // 최근 점수 저장
 
+    if (isCorrect) {
+      setCorrectCount((prev) => prev + 1); // 맞힌 문제 수 증가
+    } else {
+      setWrongCount((prev) => prev + 1); // 틀린 문제 수 증가
+    }
+
+    decreaseTodayQuizLeft();
+    setTodayStreak(getStreak());
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
       
   };
 
   const handleNext = () => {
-    decreaseTodayQuizLeft();
-    setTodayStreak(getStreak());
-
-    setSelected(null); // 답 초기화
-    setIsCorrect(null); // 정답 여부 초기화
-    setIsSolved(false); // 문제 풀었음 초기화
-
-    if(isSolved) {
-      if (isCorrect) {
-      }
-    }
     if (isLast) {
       // 마지막 문제에서 결과 페이지로 이동
-      router.push(`/results?score=${score}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
+      router.push(`/result-streak?correct=${correctCount}&wrong=${wrongCount}`);
+      return;
     }
+    
+    setSelected(null); // 답 초기화
+    setIsCorrect(null); // 정답 여부 초기화
+    setIsSolved(null); // 문제 풀었음 초기화
     setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
   };
 
   const handleprev = () => {
     console.log("이전 문제로!");
   };
-
+  
   return (
     <div className="m-12 min-h-screen p-4">
       <div className="flex justify-center">
         <QuizCard
             leftStreak={todayStreak.todayStreakQuizLeft}
-            questionType={currentProblem.type}
+            questionType={currentProblem.questionType}
             title={currentProblem.title}
             question={currentProblem.description.question}
             options={currentProblem.description.options}
@@ -176,11 +165,10 @@ const QuizPage = () => {
         )}
       </div>
 
-      <ResultModal
+      <TodayModal
         isOpen={showModal}
         isCorrect={isCorrect ?? false}
-        score={latestScore}
-        remaining={todayStreak.todayStreakQuizLeft - 1} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
+        remaining={todayStreak.todayStreakQuizLeft} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
         onClose={() => setShowModal(false) }
       />
     </div>
