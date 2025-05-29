@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
@@ -9,11 +10,21 @@ import ProgressCard from "app/_components/card/ProgressCard";
 import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
 
 export default function Page() {
+    const router = useRouter();
+    const [isReady, setIsReady] = useState(false);
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
     const [problemStats, setProblemStats] = useState<{total:number, solved:number}>({total:1,solved:0});
 
     useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        const email = localStorage.getItem("user_email");
+
+        if(!token || !email) {
+            router.replace("/login");
+            return;
+        }
+
         const mystreak = getStreak();
         setTodayStreakLeft(mystreak.todayStreakQuizLeft);
         setWeeklyStreakHistory(mystreak.streakHistory);
@@ -21,17 +32,18 @@ export default function Page() {
         const loadStats = async () => {
             const data = await fetchTotalProblemNumber();
             setProblemStats({ total: data.total, solved: data.solved });
+            setIsReady(true);
         };
         loadStats();
 
-    }, []);
+    }, [router]);
     
     function handleClearLocalStorage() {
         localStorage.clear();
         alert("로컬 스토리지가 초기화되었습니다.");
     }
 
-
+    if (!isReady) return null;
 
     return (
 
