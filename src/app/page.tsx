@@ -3,17 +3,19 @@
 import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
-import {getStreak, syncUserStreak} from "@/utils/user";
-import React, { useState, useEffect} from "react";
+import { getStreak, syncUserStreak } from "@/utils/user";
+import React, { useState, useEffect } from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
-import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
+import { fetchTotalProblemNumber } from "@/utils/apis/problemStats";
+import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
+import BadgeCard from "@/app/_components/card/BadgeCard";
 
 export default function Page() {
     const router = useRouter();
     const [isReady, setIsReady] = useState(false);
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
-    const [problemStats, setProblemStats] = useState<{total:number, solved:number}>({total:1,solved:0});
+    const [problemStats, setProblemStats] = useState<{ total: number; solved: number }>({ total: 1, solved: 0 });
 
     useEffect(() => {
         if (!sessionStorage.getItem("alreadyBooted")) {
@@ -26,7 +28,7 @@ export default function Page() {
         const token = localStorage.getItem("accessToken");
         const email = localStorage.getItem("user_email");
 
-        if(!token || !email) {
+        if (!token || !email) {
             router.replace("/login");
             return;
         }
@@ -36,29 +38,34 @@ export default function Page() {
             const mystreak = getStreak();
             setTodayStreakLeft(mystreak.todayStreakQuizLeft);
             setWeeklyStreakHistory(mystreak.streakHistory);
-        }
+        };
 
         const loadStats = async () => {
             const data = await fetchTotalProblemNumber();
             setProblemStats({ total: data.total, solved: data.solved });
         };
 
-        Promise.all([syncStreak(),loadStats()]).then(()=>{
+        Promise.all([syncStreak(), loadStats()]).then(() => {
             setIsReady(true);
-        })
-
+        });
     }, [router]);
 
     if (!isReady) return null;
 
     return (
         <>
-            <div className={"flex justify-center"}>
-                <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory}/>
-            </div>
-            <div className="flex justify-center mx-auto">
-                <ResumeCourseButton courseName={"Python"}/>
-                <ProgressCard total={problemStats.total} solved={problemStats.solved} />
+            <div className="max-w-4xl mx-auto w-full px-4 md:px-0">
+                <div className="flex justify-center w-full">
+                    <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory} />
+                </div>
+                <div className="grid md:grid-cols-2 gap-6 mt-8">
+                    <ResumeCourseButton courseName={"Python"} />
+                    <ProgressCard total={problemStats.total} solved={problemStats.solved} />
+                </div>
+                <div className="grid md:grid-cols-2 gap-6 mt-8">
+                    <RecentActivityCard />
+                    <BadgeCard />
+                </div>
             </div>
         </>
     );
