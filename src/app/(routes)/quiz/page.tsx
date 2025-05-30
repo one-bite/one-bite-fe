@@ -121,10 +121,10 @@ const QuizPage = () => {
   };
 
   const handleprev = () => {
-    setSelected(null);
-    setIsCorrect(null);
-    setIsSolved(null);
     setCurrentIndex((prev) => prev - 1);
+    setSelected(selected);
+    setIsCorrect(isCorrect);
+    setIsSolved(isSolved);
   };
   
   return (
