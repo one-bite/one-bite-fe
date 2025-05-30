@@ -33,9 +33,7 @@ export default function Page() {
         }
 
         const syncStreak = async () => {
-            const userStreak = await syncUserStreak();
-            localStorage.setItem("userStreak", JSON.stringify(userStreak));
-            await Promise.resolve();
+            await syncUserStreak();
             const mystreak = getStreak();
             setTodayStreakLeft(mystreak.todayStreakQuizLeft);
             setWeeklyStreakHistory(mystreak.streakHistory);
