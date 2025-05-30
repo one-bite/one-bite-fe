@@ -17,8 +17,8 @@ export default function Page() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("alreadyBooted")) {
-            localStorage.clear(); // 무조건 초기화
             sessionStorage.setItem("alreadyBooted", "true");
+            localStorage.clear(); // 무조건 초기화
             router.push("/login");
             return;
         }
