@@ -34,7 +34,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Providers>{children}</Providers>
                 </div>
             </div>
-            <Footer />
+            <div className={"flex justify-center items-center overflow-x-hidden"}>
+                <Footer />
+            </div>
             </body>
         </html>
     );
