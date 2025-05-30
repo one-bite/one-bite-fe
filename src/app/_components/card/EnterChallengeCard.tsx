@@ -1,8 +1,8 @@
 "use client";
 
 import MainSectionCard from "./MainSectionCard";
-import PythonIcon from "app/_components/icon/PythonIcon";
 import {useRouter} from "next/navigation";
+import {Logo} from "app/_components/icon/LogoIcon";
 
 interface EnterChallengeCardProps {
     rank: string;
@@ -31,13 +31,13 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
         <MainSectionCard minHeight="240px">
             <div className="flex flex-col justify-between h-full gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="bg-blue-100 rounded-full p-2 flex items-center justify-center">
-                        <PythonIcon/>
+                    <div className="bg-lime-500 rounded-full p-2 flex items-center justify-center">
+                        <Logo size={36}/>
                     </div>
                     <div>
-                        <div className="text-xl font-bold text-purple-700">현재 랭크</div>
-                        <div className={`${colorClass} font-line text-sm`}>{rank}</div>
-                        <div className="text-xs text-gray-500 mt-1">점수: <span className="font-medium text-gray-700">{score}pt</span></div>
+                        <div className="text-xl font-linebold text-purple-700">현재 랭크</div>
+                        <div className={`${colorClass} font-linebold text-lg`}>{rank}</div>
+                        <div className="text-lg font-line text-gray-500 mt-1">점수: <span className="font-linebold text-gray-700">{score}pt</span></div>
                     </div>
                 </div>
                 <button
