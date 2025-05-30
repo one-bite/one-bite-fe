@@ -1,31 +1,41 @@
-"useclinet";
+"use client";
 
-import {useRouter} from "next/navigation";
-import BigButton from "app/_components/base_components/BigButton";
+import { useRouter } from "next/navigation";
+import PythonIcon from "app/_components/icon/PythonIcon";
+import MainSectionCard from "../card/MainSectionCard";
 
 interface ResumeCourseButtonProps {
     courseName?: string;
 }
 
-const ResumeCourseButton = ({courseName}: ResumeCourseButtonProps ) => {
-
+const ResumeCourseButton = ({ courseName = "Python" }: ResumeCourseButtonProps) => {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/quiz`)
-    }
+        router.push(`/quiz`);
+    };
 
     return (
-        <BigButton onClick={handleClick} className="m-8 mt-4 p-8 w-80 h-52 bg-blue-400 hover:bg-blue-400 text-white justify-start items-start shadow-[0_12px_0_#3B82F6] active:shadow-[0_8px_0_#3B82F6]">
-            <div className="text-left">
-                <h1 className="text-5xl font-jungM">{courseName}</h1>
-                <p className="text-lg font-linebold">문제 이어 풀기</p>
-                <div>
-                    여기에 코스 진척도 보여주는 UI
+        <MainSectionCard minHeight="160px">
+            <div className="flex flex-col justify-between h-full gap-4">
+                <div className="flex items-center gap-3">
+                    <div className="bg-blue-100 rounded-full p-2 flex items-center justify-center">
+                        <PythonIcon />
+                    </div>
+                    <div>
+                        <div className="text-xl font-bold text-blue-700">{courseName}</div>
+                        <div className="text-gray-500 text-sm">문제 이어 풀기</div>
+                    </div>
                 </div>
+                <button
+                    className="w-full py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition mt-2"
+                    onClick={handleClick}
+                >
+                    이어서 풀기
+                </button>
             </div>
-        </BigButton>
+        </MainSectionCard>
     );
-}
+};
 
 export default ResumeCourseButton;
