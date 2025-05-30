@@ -156,6 +156,7 @@ const QuizPage = () => {
 
   const handleprev = () => {
     setCurrentIndex((prev) => prev - 1);
+    setIsSolved(true);
   };
   
   return (
