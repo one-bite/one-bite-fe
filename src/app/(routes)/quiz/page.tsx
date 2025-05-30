@@ -10,48 +10,79 @@ import TodayModal from "@/app/_components/modals/TodayModal";
 import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
+import {fetchProblemHistory} from "@/utils/apis/problemHistory";
+import {ProblemHistory} from "app/_configs/types/problemHistory";
 const QuizPage = () => {
     const router = useRouter();
 
-  const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
-  
-  const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
-  const [isSolved, setIsSolved] = useState<boolean | null>(null); // 문제 풀었는지 여부
+    const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
 
-  const [isLoading, setIsLoading] = useState(true);
+    const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
+    const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
+    const [isSolved, setIsSolved] = useState<boolean | null>(null); // 문제 풀었는지 여부
+
+    const [isLoading, setIsLoading] = useState(true);
+
+  const [history, setHistory] = useState<ProblemHistory[]>([]);
+
+  const loadHistory = async () => {
+    try {
+      const data = await fetchProblemHistory();
+      setHistory(data);
+    } catch (err) {
+      console.error("히스토리 로드 실패:", err);
+    }
+  };
+
+  const restoreFromHistory = (index: number) => {
+    if (!quizData) return;
+    const pid = quizData.problemList[index].problemId;
+    const hist = history.find(h => h.problem.problemId === pid);
+
+    if (hist) {
+      setSelected(hist.submittedAnswer);
+      setIsCorrect(hist.isCorrect);
+      setIsSolved(true);
+    } else {
+      setSelected(null);
+      setIsCorrect(null);
+      setIsSolved(null);
+    }
+  };
 
   useEffect(() => {
-    const loadProblems = async () => {
-      try {
-        setIsLoading(true);
-        const data = await fetchTodayProblems();
-        console.log("응답 형태:", data);
+      const loadProblems = async () => {
+        try {
+          setIsLoading(true);
+          const data = await fetchTodayProblems();
+          console.log("응답 형태:", data);
+          loadHistory();
 
         // 문제가 없을 경우 처리
-        if (!data || !data.problemList || data.problemList.length === 0) {
-          setQuizData(null);
-        } else {
-          setQuizData(data);
+          if (!data || !data.problemList || data.problemList.length === 0) {
+            setQuizData(null);
+          } else {
+            setQuizData(data);
+          }
+        } catch (error) {
+          console.error("문제 불러오기 오류:", error);
+          alert("문제를 불러오는 데 실패했습니다. 메인 화면으로 이동합니다.");
+          router.push("/");
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("문제 불러오기 오류:", error);
-        alert("문제를 불러오는 데 실패했습니다. 메인 화면으로 이동합니다.");
-        router.push("/");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      };
 
-    loadProblems();
-  }, [router]);
+      loadProblems();
+      }, [router]);
   
  
   useEffect(() => {
     if (quizData) {
       setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
     }
-  }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
+    restoreFromHistory(currentIndex);
+  }, [quizData, currentIndex, history]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
   
   const [selected, setSelected] = useState<string | null>(null); // 선택한 답
   const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
@@ -102,6 +133,9 @@ const QuizPage = () => {
 
     decreaseTodayQuizLeft();
     setTodayStreak(getStreak());
+
+    await loadHistory();
+
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
       
@@ -122,9 +156,6 @@ const QuizPage = () => {
 
   const handleprev = () => {
     setCurrentIndex((prev) => prev - 1);
-    setSelected(selected);
-    setIsCorrect(isCorrect);
-    setIsSolved(isSolved);
   };
   
   return (
