@@ -12,7 +12,6 @@
         "@emotion/react": "^11.13.3",
         "@emotion/styled": "^11.13.0",
         "@nextui-org/react": "^2.4.8",
-        "@tailwindcss/typography": "^0.5.16",
         "canvas-confetti": "^1.9.3",
         "date-fns": "^4.1.0",
         "dotenv": "^16.4.5",
@@ -31,6 +30,7 @@
         "styled-components": "^6.1.13"
     },
     "devDependencies": {
+        "@tailwindcss/typography": "^0.5.16",
         "@types/js-cookie": "^3.0.6",
         "@types/node": "20.17.28",
         "@types/react": "18.3.20",
