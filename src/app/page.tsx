@@ -52,7 +52,6 @@ export default function Page() {
     if (!isReady) return null;
 
     return (
-
         <>
             <div className={"flex justify-center"}>
                 <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory}/>

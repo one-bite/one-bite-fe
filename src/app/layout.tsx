@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./_components/header/Header";
 import Footer from "./_components/Footer";
 import * as process from "process";
+import {Logo} from "@/app/_components/icon/LogoIcon";
 
 export const metadata: Metadata = {
     title: "한입코딩",
@@ -28,13 +29,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="ko">
             <body className="min-h-screen flex-col justify-center bg-gray-50">
-                <Header />
-                <div className="flex justify-center">
-                    <div className="max-w-[1024px] w-full">
-                        <Providers>{children}</Providers>
-                    </div>
+            <Header/>
+            <div className="flex justify-center">
+                <div className="max-w-screen-lg w-screen">
+                    <Providers>{children}</Providers>
                 </div>
-                <Footer />
+            </div>
+            <Footer />
             </body>
         </html>
     );
