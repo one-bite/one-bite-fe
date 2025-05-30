@@ -10,11 +10,11 @@ const Login = () => {
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=openid email profile&access_type=offline`;
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
+        <div className="min-h-full h-screen -m-4 flex flex-col justify-center items-center bg-gray-50">
             <LoginCard>
                 <div className="flex flex-col items-center w-full">
-                    <div className="bg-lime-500 rounded-full flex items-center justify-center w-20 h-20 mb-4 mx-auto">
-                        <Logo />
+                    <div className="bg-lime-500 rounded-full flex items-center justify-center w-20 h-20 mb-4 pt-1 mx-auto animate-spin-burst-6">
+                        <Logo size={80}/>
                     </div>
                     <h1 className="text-2xl font-bold text-gray-800 text-center w-full">한입코딩</h1>
                     <p className="text-gray-600 mt-2 text-center w-full">계속하려면 로그인하세요.</p>
