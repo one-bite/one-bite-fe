@@ -18,6 +18,13 @@ export default function Page() {
     const [problemStats, setProblemStats] = useState<{total:number, solved:number}>({total:1,solved:0});
 
     useEffect(() => {
+        if (!sessionStorage.getItem("alreadyBooted")) {
+            localStorage.clear(); // 무조건 초기화
+            sessionStorage.setItem("alreadyBooted", "true");
+            router.push("/login");
+            return;
+        }
+
         const token = localStorage.getItem("accessToken");
         const email = localStorage.getItem("user_email");
 
@@ -29,6 +36,7 @@ export default function Page() {
         const syncStreak = async () => {
             const userStreak = await fetchUserStreak();
             localStorage.setItem("userStreak", JSON.stringify(userStreak));
+            await Promise.resolve();
             const mystreak = getStreak();
             setTodayStreakLeft(mystreak.todayStreakQuizLeft);
             setWeeklyStreakHistory(mystreak.streakHistory);
@@ -44,7 +52,8 @@ export default function Page() {
         })
 
     }, [router]);
-    
+
+
     function handleClearLocalStorage() {
         localStorage.clear();
         alert("로컬 스토리지가 초기화되었습니다.");
