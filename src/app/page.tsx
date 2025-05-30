@@ -3,12 +3,13 @@
 import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
-import { getStreak, syncUserStreak } from "@/utils/user";
+import {getRank, getStreak, syncUserStreak, UserRankData} from "@/utils/user";
 import React, { useState, useEffect } from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import { fetchTotalProblemNumber } from "@/utils/apis/problemStats";
 import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
-import BadgeCard from "@/app/_components/card/BadgeCard";
+//import BadgeCard from "@/app/_components/card/BadgeCard";
+import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 
 export default function Page() {
     const router = useRouter();
@@ -16,6 +17,7 @@ export default function Page() {
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
     const [problemStats, setProblemStats] = useState<{ total: number; solved: number }>({ total: 1, solved: 0 });
+    const [userRank,setUserRank] = useState<UserRankData>({score:0,rank:"Iron"});
 
     useEffect(() => {
         if (!sessionStorage.getItem("alreadyBooted")) {
@@ -46,6 +48,9 @@ export default function Page() {
         };
 
         Promise.all([syncStreak(), loadStats()]).then(() => {
+            const rankData = getRank();
+            setUserRank(rankData);
+
             setIsReady(true);
         });
     }, [router]);
@@ -63,8 +68,8 @@ export default function Page() {
                     <ProgressCard total={problemStats.total} solved={problemStats.solved} />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
+                    <EnterChallengeCard rank={userRank.rank} score={userRank.score} />
                     <RecentActivityCard />
-                    <BadgeCard />
                 </div>
             </div>
         </>
