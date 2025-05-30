@@ -8,7 +8,7 @@ import AnswerShortInput from "app/_components/sub_components/AnswerShortInput";
 import {HeartIcon} from "lucide-react";
 
 
-interface QuizCardProps {
+interface ChallengeCardProps {
   leftStreak?: number;  // 남은 문제 수
   topic?: string;     // 문제 토픽 CS-100
   title: string;
@@ -24,7 +24,7 @@ interface QuizCardProps {
   lives: number;
 }
 
-const QuizCard: React.FC<QuizCardProps> = ({
+const QuizCard: React.FC<ChallengeCardProps> = ({
   title,
   question,
   options,
@@ -40,6 +40,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
     <Card className={`w-full max-w-3xl p-4 ${className}`}>
       <CardBody>
         <div className={"flex justify-between items-center"}>
+
           <div className="bg-purple-500 rounded-lg px-4 py-1 mb-4 w-52 h-[26px] text-white font-line">
             <p>
               최고의 점수를 획득하세요!
@@ -55,8 +56,9 @@ const QuizCard: React.FC<QuizCardProps> = ({
             );
             })}
           </div>
+          
         </div>
-
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
         <p className="text-xs text-gray-400 mb-1">
           한입코딩 {">"} 역량평가
         </p>

@@ -21,8 +21,8 @@ function Results() {
           correctAnswers={correctAnswers}
           wrongAnswers={wrongAnswers}
           score={score}
-          todayStreakQuizLeft={10
-          }
+          todayStreakQuizLeft={null} // 챌린지이므로 null
+          isChallenge={true} // 챌린지이므로 true
         />
       </div>
     </main>

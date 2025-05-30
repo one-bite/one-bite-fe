@@ -4,17 +4,15 @@ import { useState, useEffect } from "react";
 import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
+import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ChallengeModal from "@/app/_components/modals/ChallengeModal";
-//import { quizProblems } from "@/app/_mocks/quizProblems_local"; //mock 데이터 사용
 import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
-//import {QuizProblem} from "app/_configs/types/quiz"; //mocks 용
 import {ArrowRight} from "lucide-react";
-import ChallengeCard from "app/_components/card/ChallengeCard";
 
-const QuizPage = () => {
+const ChallengePage = () => {
     const router = useRouter();
 
     const [lives, setLives] = useState(3);
@@ -57,19 +55,14 @@ const QuizPage = () => {
         }
     }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
 
-/* mocks 용 코드
-    useEffect(() => {
-        setQuizData(quizProblems);
-        setIsLoading(false);
-    }, []);
-*/
-
     const [selected, setSelected] = useState<string | null>(null); // 선택한 답
     const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
     const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
     const [rankPoint, setRankPoint] = useState(0); // 총 레이팅 포인트 획득
     const [reward, setReward] = useState(0); // 총 포인트 획득
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [showModal, setShowModal] = useState(false); // 모달 표시 여부
+    const [latestScore, setLatestScore] = useState(0); // 최근 점수 저장
 
     if (isLoading) {
         return (
@@ -92,7 +85,6 @@ const QuizPage = () => {
 
     const currentProblem = quizData.problemList[currentIndex];
     const isLast = currentIndex === (quizData.problemList.length - 1);
-    //const isLast = currentIndex === (quizData.problemList.length - 1);
     const outOfLives = lives <= 0;
     const isEnd = (isLast && isSolved) || outOfLives;
 
@@ -122,7 +114,7 @@ const QuizPage = () => {
             setLives((prev) => {
                 const nextLives = prev - 1;
                 if (nextLives <= 0) {
-                    router.push(`/results?type=challenge&score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
+                    router.push(`/results-challenge?score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
                 }
                 return nextLives;
             });
@@ -132,7 +124,7 @@ const QuizPage = () => {
             setCurrentIndex((prev) => prev + 1);
             setSelected(null);
         }
-        //setLatestScore(result.score); // 최근 점수 저장
+        setLatestScore(result.score); // 최근 점수 저장
         setIsSolved(true);
     };
 
@@ -143,20 +135,16 @@ const QuizPage = () => {
 
         if (isEnd) {
             // 마지막 문제에서 결과 페이지로 이동
-            router.push(`/results?type=challenge&score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
+            router.push(`/results-challenge?score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
             return;
         }
         setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
     };
 
-/*    const handleprev = () => {
-        console.log("이전 문제로!");
-    };
-*/
     return (
         <div className="m-12 min-h-screen p-4">
             <div className="flex justify-center">
-                <ChallengeCard
+                <QuizCard
                     title={currentProblem.title}
                     question={currentProblem.description.question}
                     options={currentProblem.description.options}
@@ -164,10 +152,9 @@ const QuizPage = () => {
                     onSelect={handleAnswer}
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
-                    generatedByAI = {true}
-                    questionType={currentProblem.type}
+                    questionType={currentProblem.questionType}
+                    generatedByAI = {currentProblem.ai} // 안 줘도 될 지도
                     lives={lives}
-                    //topic={currentProblem.topic} //토픽도 주도록 api 수정 요청청
                 />
             </div>
 
@@ -185,7 +172,7 @@ const QuizPage = () => {
                 )}
             </div>
 
-            <ResultModal
+            <ChallengeModal
                 isOpen={showModal}
                 isCorrect={isCorrect ?? false}
                 score={latestScore}
@@ -196,4 +183,4 @@ const QuizPage = () => {
     );
 };
 
-export default QuizPage;
+export default ChallengePage;
