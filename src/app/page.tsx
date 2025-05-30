@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
-import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import {getStreak, syncUserStreak} from "@/utils/user";
 import React, { useState, useEffect} from "react";
