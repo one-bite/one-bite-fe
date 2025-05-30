@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "./_components/header/Header";
 import Footer from "./_components/Footer";
 import * as process from "process";
-import {Logo} from "@/app/_components/icon/LogoIcon";
 
 export const metadata: Metadata = {
     title: "한입코딩",
