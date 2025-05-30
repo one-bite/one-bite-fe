@@ -50,12 +50,6 @@ export default function Page() {
 
     }, [router]);
 
-
-    function handleClearLocalStorage() {
-        localStorage.clear();
-        alert("로컬 스토리지가 초기화되었습니다.");
-    }
-
     if (!isReady) return null;
 
     return (
@@ -63,9 +57,6 @@ export default function Page() {
         <>
             <div className={"flex justify-center"}>
                 <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory}/>
-            </div>
-            <div className="flex gap-2 justify-start mt-2 max-w-4xl mx-auto">
-                <CourseButton iconType="python" label="로컬초기화" bgColor="bg-blue-200" onClick={handleClearLocalStorage}/>  {/*로컬스토리지 초기화*/}
             </div>
             <div className="flex justify-center mx-auto">
                 <ResumeCourseButton courseName={"Python"}/>
