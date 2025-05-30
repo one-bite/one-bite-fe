@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
 import CourseButton from "./_components/buttons/CourseButton";
 import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
-import { getStreak } from "@/utils/user";
+import {getStreak, syncUserStreak} from "@/utils/user";
 import React, { useState, useEffect} from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import {fetchTotalProblemNumber} from "@/utils/apis/problemStats";
-import {fetchUserStreak} from "@/utils/apis/streakApi";
 
 export default function Page() {
     const router = useRouter();
@@ -34,9 +33,7 @@ export default function Page() {
         }
 
         const syncStreak = async () => {
-            const userStreak = await fetchUserStreak();
-            localStorage.setItem("userStreak", JSON.stringify(userStreak));
-            await Promise.resolve();
+            await syncUserStreak();
             const mystreak = getStreak();
             setTodayStreakLeft(mystreak.todayStreakQuizLeft);
             setWeeklyStreakHistory(mystreak.streakHistory);
