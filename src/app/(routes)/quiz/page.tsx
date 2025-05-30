@@ -76,8 +76,6 @@ const QuizPage = () => {
     );
   }
 
-
-
   const currentProblem = quizData.problemList[currentIndex];
   const isLast = currentIndex === (quizData.problemList.length - 1);
 
@@ -123,7 +121,10 @@ const QuizPage = () => {
   };
 
   const handleprev = () => {
-    console.log("이전 문제로!");
+    setSelected(null);
+    setIsCorrect(null);
+    setIsSolved(null);
+    setCurrentIndex((prev) => prev - 1);
   };
   
   return (
