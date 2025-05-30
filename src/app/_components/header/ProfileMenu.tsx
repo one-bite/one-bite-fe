@@ -39,7 +39,7 @@ export default function ProfileMenu() {
                 fetchLogoutFromGoogle();
                 removeLocalUserData();
                 window.dispatchEvent(new Event("logout"));
-                router.push("/");
+                router.push("/login");
                 break;
             case "course":
                 router.push("/course");
