@@ -10,6 +10,7 @@ import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
+import {fetchTodayProblems} from "@/utils/apis/todayProblem";
 
 export default function Page() {
     const router = useRouter();
@@ -18,8 +19,7 @@ export default function Page() {
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
     const [problemStats, setProblemStats] = useState<{ total: number; solved: number }>({ total: 1, solved: 0 });
     const [userRank,setUserRank] = useState<UserRankData>({score:0,rank:"Iron"});
-    const [correctStats, setCorrectStats] = useState({correct:0, recentCorrect:0});
-    const [recentTotal, setRecentTotal] = useState(0);
+    const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
 
     useEffect(() => {
         if (!sessionStorage.getItem("alreadyBooted")) {
@@ -53,14 +53,13 @@ export default function Page() {
 
             const totalCorrect = history.filter((h)=>h.isCorrect).length;
 
-            const recentMax = 30;
-            const recentCount = Math.min(data.solved, recentMax);
-            const recent = history.sort((a,b) => b.submittedAt[0] - a.submittedAt[0]).slice(0,recentCount);
-            const recentCorrect = recent.filter((h)=>h.isCorrect).length;
+            const todayProblems = await fetchTodayProblems();
+            const todayProblemsIds = todayProblems?.problemList?.map((p) => p.problemId) || [];
+
+            const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect === true).length;
 
             setProblemStats({ total: totalData, solved: solvedData });
-            setCorrectStats({correct: totalCorrect, recentCorrect: recentCorrect});
-            setRecentTotal(recentCount);
+            setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
         };
 
         Promise.all([syncStreak(), loadStats()]).then(() => {
@@ -81,7 +80,7 @@ export default function Page() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <EnterChallengeCard rank={userRank.rank} score={userRank.score} />
-                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} recentCorrect={correctStats.recentCorrect} recentTotal={recentTotal}/>
+                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={10 - todayStreakLeft}/>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <RecentActivityCard />
