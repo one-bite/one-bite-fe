@@ -35,7 +35,7 @@ const CircleGraph  = ({value, title, color, size, numerator, denominator} : Circ
                         pathColor:hexColor,
                         textColor:hexColor,
                         trailColor:"#e5e7eb",
-                        textSize:"28px",
+                        textSize:"20px",
                     })}
                 />
             </div>
