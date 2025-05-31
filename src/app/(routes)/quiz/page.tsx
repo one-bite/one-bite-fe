@@ -18,7 +18,10 @@ const QuizPage = () => {
     const [todayStreak, setTodayStreak] = useState<UserStreakData>(getStreak());
 
     const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
-    const [currentIndex, setCurrentIndex] = useState(Number(useSearchParams().get("resumeAt")) || 0); // 현재 문제 인덱스
+
+    const searchParams = useSearchParams();
+    const initialIndex = Number(searchParams.get("resumeAt") || "0");
+    const [currentIndex, setCurrentIndex] = useState(initialIndex); // 현재 문제 인덱스
     const [isSolved, setIsSolved] = useState<boolean | null>(null); // 문제 풀었는지 여부
 
     const [isLoading, setIsLoading] = useState(true);
