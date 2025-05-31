@@ -6,13 +6,16 @@ interface ProblemItemProps {
     id: number | string;
     title: string;
     choose?: () => void;
+    isCorrect?: boolean
 }
 
-const ProblemItem = ({ id, title, choose }: ProblemItemProps) => {
+const ProblemItem = ({ id, title, choose, isCorrect }: ProblemItemProps) => {
+    const titleColor = isCorrect == null ? "text-black" : isCorrect ? "text-success" : "text-danger";
+
     return (
         <div className="flex px-1 py-1 hover:bg-gray-100 rounded-lg cursor-pointer" onClick={choose}>
             <span className="font-line text-medium text-gray-500 mr-2 shrink-0">{id}. </span>
-            <span className="w-full text-medium font-line truncate">{title}</span>
+            <span className={`w-full text-medium font-line truncate ${titleColor}`}>{title}</span>
         </div>
     );
 };

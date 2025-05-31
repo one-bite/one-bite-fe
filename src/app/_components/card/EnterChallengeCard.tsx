@@ -31,8 +31,8 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
         <MainSectionCard minHeight="160px">
             <div className="flex flex-col justify-between h-full gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="bg-lime-500 rounded-full p-2 flex items-center justify-center">
-                        <Logo size={48}/>
+                    <div className="bg-lime-500 rounded-full p-1 flex items-center justify-center">
+                        <Logo size={56}/>
                     </div>
                     <div>
                         <div className="text-xl font-linebold text-purple-700">현재 랭크</div>
