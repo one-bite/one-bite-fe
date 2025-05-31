@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {useState, useEffect, Suspense} from "react";
 import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
@@ -163,51 +163,58 @@ const QuizPage = () => {
   };
   
   return (
-    <div className="m-12 min-h-screen p-4">
-      <div className="flex justify-center">
-        <QuizCard
-            leftStreak={todayStreak.todayStreakQuizLeft}
-            questionType={currentProblem.questionType}
-            title={currentProblem.title}
-            question={currentProblem.description.question}
-            options={currentProblem.description.options}
-            selected={selected}
-            onSelect={handleAnswer}
-            isCorrect={isCorrect}
-            correctAnswer={currentProblem.answer}
-            generatedByAI = {currentProblem.ai}
-        />
-      </div>
+      <Suspense fallback={
+        <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-line">
+          <Spinner color="primary" size="lg"/>
+          문제를 불러오는 중입니다...
+        </div>
+      }>
+        <div className="m-12 min-h-screen p-4">
+          <div className="flex justify-center">
+            <QuizCard
+                leftStreak={todayStreak.todayStreakQuizLeft}
+                questionType={currentProblem.questionType}
+                title={currentProblem.title}
+                question={currentProblem.description.question}
+                options={currentProblem.description.options}
+                selected={selected}
+                onSelect={handleAnswer}
+                isCorrect={isCorrect}
+                correctAnswer={currentProblem.answer}
+                generatedByAI={currentProblem.ai}
+            />
+          </div>
 
-      <div className="flex justify-center mt-8 gap-4">
-        <MyButton
-          className="bg-lime-500 shadow-lime-900 hover:bg-lime-600 active:shadow-lime-900"
-          onClick={handleprev}
-          disabled={currentIndex === 0} // 첫 번째 문제일 때 비활성화
-        >
-          이전 문제로
-        </MyButton>
+          <div className="flex justify-center mt-8 gap-4">
+            <MyButton
+                className="bg-lime-500 shadow-lime-900 hover:bg-lime-600 active:shadow-lime-900"
+                onClick={handleprev}
+                disabled={currentIndex === 0} // 첫 번째 문제일 때 비활성화
+            >
+              이전 문제로
+            </MyButton>
 
-        {!isSolved && !showModal && (
-        <MyButton onClick={handleSubmit} disabled={!selected}>
-          정답 제출
-        </MyButton>
-        )}
+            {!isSolved && !showModal && (
+                <MyButton onClick={handleSubmit} disabled={!selected}>
+                  정답 제출
+                </MyButton>
+            )}
 
-        {isSolved && !showModal && (
-        <MyButton onClick={handleNext}>
-          {isLast ? "결과 확인하기" : "다음 문제로"}
-        </MyButton>
-        )}
-      </div>
+            {isSolved && !showModal && (
+                <MyButton onClick={handleNext}>
+                  {isLast ? "결과 확인하기" : "다음 문제로"}
+                </MyButton>
+            )}
+          </div>
 
-      <TodayModal
-        isOpen={showModal}
-        isCorrect={isCorrect ?? false}
-        remaining={todayStreak.todayStreakQuizLeft} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-        onClose={() => setShowModal(false) }
-      />
-    </div>
+          <TodayModal
+              isOpen={showModal}
+              isCorrect={isCorrect ?? false}
+              remaining={todayStreak.todayStreakQuizLeft} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
+              onClose={() => setShowModal(false)}
+          />
+        </div>
+      </Suspense>
   );
 };
 
