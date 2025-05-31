@@ -25,8 +25,8 @@ const CircleGraph  = ({value, title, color, size, numerator, denominator} : Circ
     const hexColor = tailwindColorMap[color];
 
     return (
-        <div className={`flex flex-col items-center justify-center`}>
-            <p className={"text-xs font-medium font-linebold mb-1"} style={{color:hexColor}}> {numerator} / {denominator} </p>
+        <div className={`flex flex-col w-full items-center justify-center`}>
+            <p className={"text-2xl font-medium font-linebold mb-1"} style={{color:hexColor}}> {numerator} / {denominator} </p>
             <div style={{width:size, height:size}}>
                 <CircularProgressbar
                     value={value}
@@ -40,7 +40,7 @@ const CircleGraph  = ({value, title, color, size, numerator, denominator} : Circ
                 />
             </div>
             {!(!title) && (
-                <p className={"text-xs mt-1 text-center"} style={{color:hexColor}}>
+                <p className={"text-lg mt-2 text-center"} style={{color:hexColor}}>
                     {title}
                 </p>
             )}
