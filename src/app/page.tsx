@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
-import ResumeCourseButton from "app/_components/buttons/ResumeCourseButton";
 import {getRank, getStreak, syncUserStreak, UserRankData} from "@/utils/user";
 import React, { useState, useEffect } from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
@@ -10,6 +9,7 @@ import { fetchTotalProblemNumber } from "@/utils/apis/problemStats";
 import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 //import BadgeCard from "@/app/_components/card/BadgeCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
+import BadgeCard from "app/_components/card/BadgeCard";
 
 export default function Page() {
     const router = useRouter();
@@ -64,12 +64,12 @@ export default function Page() {
                     <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory} />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
-                    <ResumeCourseButton courseName={"Python"} />
+                    <EnterChallengeCard rank={userRank.rank} score={userRank.score} />
                     <ProgressCard total={problemStats.total} solved={problemStats.solved} />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
-                    <EnterChallengeCard rank={userRank.rank} score={userRank.score} />
                     <RecentActivityCard />
+                    <BadgeCard/>
                 </div>
             </div>
         </>

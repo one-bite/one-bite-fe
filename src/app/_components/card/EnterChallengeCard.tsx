@@ -28,7 +28,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
     const colorClass = rankColorMap[rank] ?? "text-gray-800";
 
     return (
-        <MainSectionCard minHeight="240px">
+        <MainSectionCard minHeight="160px">
             <div className="flex flex-col justify-between h-full gap-4">
                 <div className="flex items-center gap-3">
                     <div className="bg-lime-500 rounded-full p-2 flex items-center justify-center">
