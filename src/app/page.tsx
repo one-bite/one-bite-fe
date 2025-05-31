@@ -54,9 +54,9 @@ export default function Page() {
             const totalCorrect = history.filter((h)=>h.isCorrect).length;
 
             const todayProblems = await fetchTodayProblems();
-            const todayProblemsIds = todayProblems?.problemList?.map((p) => p.problemId) || [];
+            const todayProblemsIds = todayProblems?.problemList.map((p) => p.problemId) || [];
 
-            const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect === true).length;
+            const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
 
             setProblemStats({ total: totalData, solved: solvedData });
             setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
