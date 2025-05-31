@@ -11,7 +11,7 @@ interface ResumeCourseButtonProps {
 const ResumeCourseButton = ({ courseName = "Python" }: ResumeCourseButtonProps) => {
     const router = useRouter();
 
-    const handleClick = () => {
+    const handleClick = async () => {
         router.push(`/quiz`);
     };
 
