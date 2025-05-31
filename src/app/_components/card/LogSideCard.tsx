@@ -110,6 +110,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                                 id={h.historyId}
                                                 title={problem.title}
                                                 choose={() => onSelect(problem, h)}
+                                                isCorrect = {h.isCorrect}
                                             />
                                         );
                                     })}
@@ -135,6 +136,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                                 id={h.historyId}
                                                 title={problem.title}
                                                 choose={() => onSelect(problem, h)}
+                                                isCorrect = {h.isCorrect}
                                             />
                                         );
                                     })}
