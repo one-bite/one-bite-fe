@@ -21,7 +21,7 @@ const ProgressCard = ({ total, solved, correct, todayCorrect, todayTotal }: Prog
             <div className="flex flex-col h-full justify-center gap-1 items-center py-2">
                 <h2 className="text-xl font-linebold text-blue-800">진척도</h2>
 
-                <div className={"flex justify-center items-center gap-4"}>
+                <div className={"flex justify-center items-center gap-8"}>
                     <CircleGraph value={todayCorrectRate} title={"오늘의 문제 정답률"} color={"lime"} size={80} numerator={todayCorrect} denominator={todayTotal}/>
                     <CircleGraph value={correctRate} title={"누적 정답률"} color={"blue"} size={80} numerator={correct} denominator={solved}/>
                     <CircleGraph value={solvedPercent} title={"풀이 진척도"} color={"indigo"} size={80} numerator={solved} denominator={total}/>
