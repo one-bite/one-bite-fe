@@ -7,6 +7,8 @@ interface CircleGraphProps {
     title?: string;
     color: "blue" | "lime" | "orange" | "red" | "yellow" | "indigo" | "gray";
     size: number;
+    numerator:number;
+    denominator: number;
 }
 
 const tailwindColorMap: Record<CircleGraphProps["color"], string> = {
@@ -19,21 +21,24 @@ const tailwindColorMap: Record<CircleGraphProps["color"], string> = {
     gray: "#6b7280",
 };
 
-const CircleGraph  = ({value, title, color, size} : CircleGraphProps) => {
+const CircleGraph  = ({value, title, color, size, numerator, denominator} : CircleGraphProps) => {
     const hexColor = tailwindColorMap[color];
 
     return (
-        <div className={`flex flex-col items-center justify-center`} style={{width:size, height:size}}>
-            <CircularProgressbar
-                value={value}
-                text={`${value}%`}
-                styles={buildStyles({
-                    pathColor:hexColor,
-                    textColor:"#1f2937",
-                    trailColor:"#e5e7eb",
-                    textSize:"20px",
-                })}
-            />
+        <div className={`flex flex-col items-center justify-center`}>
+            <p className={"text-xs font-medium font-linebold mb-1"} style={{color:hexColor}}> {numerator} / {denominator} </p>
+            <div style={{width:size, height:size}}>
+                <CircularProgressbar
+                    value={value}
+                    text={`${value}%`}
+                    styles={buildStyles({
+                        pathColor:hexColor,
+                        textColor:hexColor,
+                        trailColor:"#e5e7eb",
+                        textSize:"28px",
+                    })}
+                />
+            </div>
             {!(!title) && (
                 <p className={"text-xs mt-1 text-center"} style={{color:hexColor}}>
                     {title}

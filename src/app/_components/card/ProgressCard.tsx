@@ -18,10 +18,14 @@ const ProgressCard = ({ total, solved, correct, recentCorrect, recentTotal }: Pr
 
     return (
         <MainSectionCard minHeight="160px">
-            <div className="flex h-full justify-center gap-6 items-center">
-                <CircleGraph value={solvedPercent} title={"풀이 진척도"} color={"indigo"} size={72}/>
-                <CircleGraph value={correctRate} title={"전체 정답률"} color={"blue"} size={72}/>
-                <CircleGraph value={recentCorrectRate} title={"최근 30문제 정답률"} color={"lime"} size={72}/>
+            <div className="flex flex-col h-full justify-center gap-6 items-center py-2">
+                <h2 className="text-lg font-linebold text-blue-800">진척도</h2>
+
+                <div className={"flex justify-center items-center gap-4"}>
+                    <CircleGraph value={solvedPercent} title={"풀이 진척도"} color={"indigo"} size={120} numerator={solved} denominator={total}/>
+                    <CircleGraph value={correctRate} title={"전체 정답률"} color={"blue"} size={120} numerator={correct} denominator={solved}/>
+                    <CircleGraph value={recentCorrectRate} title={"최근 30문제 정답률"} color={"lime"} size={120} numerator={recentCorrect} denominator={recentTotal}/>
+                </div>
             </div>
         </MainSectionCard>
     );
