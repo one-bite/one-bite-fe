@@ -18,7 +18,7 @@ const ProgressCard = ({ total, solved, correct, recentCorrect, recentTotal }: Pr
 
     return (
         <MainSectionCard minHeight="160px">
-            <div className="flex flex-col h-full justify-center gap-6 items-center py-2">
+            <div className="flex flex-col h-full justify-center gap-1 items-center py-2">
                 <h2 className="text-xl font-linebold text-blue-800">진척도</h2>
 
                 <div className={"flex justify-center items-center gap-4"}>
