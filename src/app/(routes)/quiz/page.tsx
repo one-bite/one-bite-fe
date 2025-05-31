@@ -8,7 +8,7 @@ import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import TodayModal from "@/app/_components/modals/TodayModal";
 import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
 import {ProblemHistory} from "app/_configs/types/problemHistory";
@@ -19,9 +19,7 @@ const QuizPage = () => {
 
     const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
 
-    const searchParams = useSearchParams();
-    const initialIndex = Number(searchParams.get("resumeAt") || "0");
-    const [currentIndex, setCurrentIndex] = useState(initialIndex); // 현재 문제 인덱스
+    const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
     const [isSolved, setIsSolved] = useState<boolean | null>(null); // 문제 풀었는지 여부
 
     const [isLoading, setIsLoading] = useState(true);
@@ -66,6 +64,8 @@ const QuizPage = () => {
             setQuizData(null);
           } else {
             setQuizData(data);
+            const initialIndex = data.problemStatus.findIndex((v) => !v);
+            setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
           }
         } catch (error) {
           console.error("문제 불러오기 오류:", error);
