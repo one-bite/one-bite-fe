@@ -104,11 +104,13 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                     {entries.map((h) => {
                                         const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
+                                        const rawTitle = problem.title?.trim();
+                                        const showTitle = rawTitle || topicNameMap[h.problem.topics[0].name];
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
                                                 id={h.historyId}
-                                                title={problem.title}
+                                                title={showTitle}
                                                 choose={() => onSelect(problem, h)}
                                                 isCorrect = {h.isCorrect}
                                             />
@@ -121,7 +123,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                     Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
                             <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
-                                <span>{topicNameMap[topicId] ?? topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
+                                <span>{topicNameMap[topicId] ?? topicId}</span>
                                 {topicGroups[topicId] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
                             {topicGroups[topicId] && (
