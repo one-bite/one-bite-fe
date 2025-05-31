@@ -105,7 +105,9 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                         const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
                                         const rawTitle = problem.title?.trim();
-                                        const showTitle = rawTitle || topicNameMap[h.problem.topics[0].name];
+                                        const replaceToTopic = (title: string) =>
+                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
