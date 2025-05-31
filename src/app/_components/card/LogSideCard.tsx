@@ -133,12 +133,15 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                     {histories.map((h) => {
                                         const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
-
+                                        const rawTitle = problem.title?.trim();
+                                        const replaceToTopic = (title: string) =>
+                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
                                                 id={h.historyId}
-                                                title={problem.title}
+                                                title={showTitle}
                                                 choose={() => onSelect(problem, h)}
                                                 isCorrect = {h.isCorrect}
                                             />
