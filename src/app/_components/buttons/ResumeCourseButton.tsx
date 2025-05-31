@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import PythonIcon from "app/_components/icon/PythonIcon";
 import MainSectionCard from "../card/MainSectionCard";
-import {fetchTodayProblems} from "@/utils/apis/todayProblem";
 
 interface ResumeCourseButtonProps {
     courseName?: string;
@@ -13,20 +12,7 @@ const ResumeCourseButton = ({ courseName = "Python" }: ResumeCourseButtonProps) 
     const router = useRouter();
 
     const handleClick = async () => {
-        try{
-            const data = await fetchTodayProblems();
-            if (!data || !data.problemStatus) {
-                throw new Error("이전 문제 풀이 기록을 불러올 수 없습니다.");
-            }
-
-            const resumeProblemIndex = data.problemStatus.findIndex(resume => !resume);
-            const indexToResume = resumeProblemIndex >= 0 ? resumeProblemIndex : 0;
-
-            router.push(`/quiz?resumeAt=${indexToResume}`);
-        } catch (error) {
-            console.error("이어 풀기 실패:", error);
-            router.push(`/quiz`);
-        }
+        router.push(`/quiz`);
     };
 
     return (
