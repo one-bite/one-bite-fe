@@ -29,7 +29,7 @@ const DailyStreakCard = ({ streakleftquiz, streakHistory }: DailyStreakCardProps
                 <div className="flex flex-col items-center justify-center w-full md:w-1/2 p-4 md:p-8 gap-2 md:gap-4">
                     <div className="w-full text-xs md:text-sm text-center font-line">이번주 나의 스트릭</div>
                     <WeeklyStreakCalendar streakDates={streakHistory} />
-                    <StartQuizButton className="self-center w-full h-10 text-base md:w-64 md:h-12 md:text-lg" subject="Python" />
+                    <StartQuizButton className="self-center w-full h-10 text-base md:w-64 md:h-12 md:text-lg"/>
                 </div>
             </div>
         </BigCard>

@@ -10,7 +10,7 @@ interface StartQuizButtonProps extends ButtonProps {
     subject?: string;
 }
 
-const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQuizButtonProps) => {
+const StartQuizButton = ({className = "", ...props }: StartQuizButtonProps) => {
 
     const router = useRouter();
     const todaystreak = getStreak();
@@ -22,6 +22,8 @@ const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQ
         }
         router.push(`/quiz`)
     }
+
+    const buttonText = todaystreak.todayStreakQuizLeft < 10 ? "오늘의 문제 이어서 풀기" : "오늘의 문제 풀러 가기";
 
     return (
         <Button
@@ -41,7 +43,7 @@ const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQ
             `}
             {...props}
         >
-            <span>바로 {subject} 문제 풀기</span>
+            <span>{buttonText}</span>
             <ArrowRight className="w-5 h-5 stroke-[2.5]"/>
         </Button>
     );
