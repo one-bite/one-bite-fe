@@ -10,7 +10,7 @@ import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {fetchTodayProblems} from "@/utils/apis/todayProblem";
+import {fetchTodayLog} from "@/utils/apis/todayProblem";
 
 export default function Page() {
     const router = useRouter();
@@ -53,7 +53,7 @@ export default function Page() {
 
             const totalCorrect = history.filter((h)=>h.isCorrect).length;
 
-            const todayProblems = await fetchTodayProblems();
+            const todayProblems = await fetchTodayLog();
             const todayProblemsIds = todayProblems?.problemList.map((p) => p.problemId) || [];
 
             const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
