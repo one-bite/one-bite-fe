@@ -9,13 +9,22 @@ interface EnterChallengeCardProps {
     score: number
 }
 
-const rankColorMap: Record<string, string> = {
-    Iron: "gray-500",
-    Bronze: "amber-700",
-    Silver: "gray-300",
-    Gold: "yellow-500",
-    Platinum: "teal-400",
-    Diamond: "blue-500",
+const rankTextColorMap: Record<string, string> = {
+    Iron: "text-gray-500",
+    Bronze: "text-amber-700",
+    Silver: "text-gray-300",
+    Gold: "text-yellow-500",
+    Platinum: "text-teal-400",
+    Diamond: "text-blue-500",
+};
+
+const rankBadgeColorMap: Record<string, string> = {
+    Iron: "bg-gray-500",
+    Bronze: "bg-amber-700",
+    Silver: "bg-gray-300",
+    Gold: "bg-yellow-500",
+    Platinum: "bg-teal-400",
+    Diamond: "bg-blue-500",
 };
 
 const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
@@ -25,7 +34,8 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
         router.push(`/challenge`);
     };
 
-    const colorClass = rankColorMap[rank] ?? "gray-800";
+    const colorClass = rankTextColorMap[rank] ?? "text-gray-800";
+    const badgeColor = rankBadgeColorMap[rank] ?? "bg-gray-800";
 
     return (
         <MainSectionCard minHeight="160px">
@@ -37,7 +47,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
                         </div>
                         <div className={"my-2 gap-1"}>
                             <div className="flex text-xl max-w-1/2 font-linebold text-purple-700">현재 랭크</div>
-                            <div className={`bg-${colorClass} mx-2 md:mx-5 rounded-full p-0 flex items-center justify-center my-2`}>
+                            <div className={`${badgeColor} mx-2 md:mx-5 rounded-full p-0 flex items-center justify-center my-2`}>
                                 <Logo size={80}/>
                             </div>
                         </div>
@@ -47,7 +57,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
                             <div className="text-xl font-linebold text-purple-800 mt-1">점수 :
                                 <span className="font-linebold text-gray-700"> {score}pt</span>
                             </div>
-                            <div className={`text-${colorClass} font-linebold text-3xl`}>{rank}</div>
+                            <div className={`${colorClass} font-linebold text-3xl`}>{rank}</div>
                         </div>
                     </div>
                 </div>
