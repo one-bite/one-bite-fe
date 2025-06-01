@@ -22,20 +22,20 @@ export default function Page() {
     const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
 
     useEffect(() => {
-        if (!sessionStorage.getItem("alreadyBooted")) {
-            sessionStorage.setItem("alreadyBooted", "true");
-            localStorage.clear(); // 무조건 초기화
-            router.push("/login");
-            return;
-        }
+//        if (!sessionStorage.getItem("alreadyBooted")) {
+//            sessionStorage.setItem("alreadyBooted", "true");
+//            localStorage.clear(); // 무조건 초기화
+//            router.push("/login");
+//            return;
+//        }
 
         const token = localStorage.getItem("accessToken");
         const email = localStorage.getItem("user_email");
 
-        if (!token || !email) {
-            router.replace("/login");
-            return;
-        }
+//        if (!token || !email) {
+//            router.replace("/login");
+//            return;
+//        }
 
         const syncStreak = async () => {
             await syncUserStreak();
@@ -62,15 +62,15 @@ export default function Page() {
             setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
         };
 
-        Promise.all([syncStreak(), loadStats()]).then(() => {
-            const rankData = getRank();
-            setUserRank(rankData);
-
-            setIsReady(true);
-        });
+//        Promise.all([syncStreak(), loadStats()]).then(() => {
+//            const rankData = getRank();
+//            setUserRank(rankData);
+//
+//            setIsReady(true);
+//        });
     }, [router]);
 
-    if (!isReady) return null;
+//    if (!isReady) return null;
 
     return (
         <>
