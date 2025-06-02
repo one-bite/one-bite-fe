@@ -16,7 +16,7 @@ const StartQuizButton = ({className = "", ...props }: StartQuizButtonProps) => {
     const todaystreak = getStreak();
 
     const handleClick = () => {
-        if (todaystreak.todayStreakQuizLeft === -1) {
+        if (todaystreak.todayStreakQuizLeft === 0) {
             alert("오늘의 퀴즈는 모두 풀었습니다.");
             return;
         }

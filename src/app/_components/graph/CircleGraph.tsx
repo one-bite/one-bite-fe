@@ -30,6 +30,7 @@ const CircleGraph  = ({value, title, color, size, numerator, denominator} : Circ
             <div style={{width:size, height:size}}>
                 <CircularProgressbar
                     value={value}
+                    strokeWidth={12}
                     text={`${value}%`}
                     styles={buildStyles({
                         pathColor:hexColor,
