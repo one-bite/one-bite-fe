@@ -33,7 +33,7 @@ body {
 }
 
 .CircularProgressbar-text {
-    transform: translate(-20%,10%);
+    transform: translate(-20%,5px);
 }
 
 /* :root {
