@@ -47,7 +47,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
                         </div>
                         <div className={"my-2 gap-1"}>
                             <div className="flex text-xl max-w-1/2 font-linebold text-purple-700">현재 랭크</div>
-                            <div className={`${badgeColor} mx-2 md:mx-5 rounded-full p-0 flex items-center justify-center my-2`}>
+                            <div className={`${badgeColor} mx-2 md:mx-5 rounded-full p-0 flex items-center justify-center mt-4 md:mt-5`}>
                                 <Logo size={80}/>
                             </div>
                         </div>
