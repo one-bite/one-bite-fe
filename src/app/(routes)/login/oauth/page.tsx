@@ -42,6 +42,7 @@ const GoogleCallback = () => {
                         setUserEmail(user_email);
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
+                        localStorage.setItem("lastActivity", Date.now().toString());
 
                         //유저 스탯 표시 상태 동기화
                         window.dispatchEvent(new Event("loginSuccess"));

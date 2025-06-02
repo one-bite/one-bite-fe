@@ -10,7 +10,7 @@ import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {fetchTodayProblems} from "@/utils/apis/todayProblem";
+import {fetchTodayLog} from "@/utils/apis/todayProblem";
 
 export default function Page() {
     const router = useRouter();
@@ -22,17 +22,8 @@ export default function Page() {
     const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
 
     useEffect(() => {
-        const alreadyBooted = sessionStorage.getItem("alreadyBooted");
         const token = localStorage.getItem("accessToken");
         const email = localStorage.getItem("user_email");
-
-        if (!alreadyBooted) {
-            sessionStorage.setItem("alreadyBooted", "true");
-            localStorage.clear(); // 무조건 초기화
-
-            router.push("/login");
-            return;
-        }
 
         if (!token || !email) {
             router.replace("/login");
@@ -55,7 +46,7 @@ export default function Page() {
 
             const totalCorrect = history.filter((h)=>h.isCorrect).length;
 
-            const todayProblems = await fetchTodayProblems();
+            const todayProblems = await fetchTodayLog();
             const todayProblemsIds = todayProblems?.problemList.map((p) => p.problemId) || [];
 
             const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
