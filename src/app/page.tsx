@@ -22,15 +22,17 @@ export default function Page() {
     const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
 
     useEffect(() => {
-        if (!sessionStorage.getItem("alreadyBooted")) {
+        const alreadyBooted = sessionStorage.getItem("alreadyBooted");
+        const token = localStorage.getItem("accessToken");
+        const email = localStorage.getItem("user_email");
+
+        if (!alreadyBooted) {
             sessionStorage.setItem("alreadyBooted", "true");
             localStorage.clear(); // 무조건 초기화
+
             router.push("/login");
             return;
         }
-
-        const token = localStorage.getItem("accessToken");
-        const email = localStorage.getItem("user_email");
 
         if (!token || !email) {
             router.replace("/login");
@@ -65,7 +67,6 @@ export default function Page() {
         Promise.all([syncStreak(), loadStats()]).then(() => {
             const rankData = getRank();
             setUserRank(rankData);
-
             setIsReady(true);
         });
     }, [router]);
