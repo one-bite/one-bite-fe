@@ -10,7 +10,7 @@ import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {fetchTodayProblems} from "@/utils/apis/todayProblem";
+import {fetchTodayLog, fetchTodayProblems} from "@/utils/apis/todayProblem";
 
 export default function Page() {
     const router = useRouter();
@@ -37,6 +37,22 @@ export default function Page() {
             setWeeklyStreakHistory(mystreak.streakHistory);
         };
 
+        const apiTest = async () => {
+            try {
+                const testFetch = await fetchTodayLog();
+
+                console.log("todayLog fetch result:", testFetch);
+
+                const result = (testFetch?.problemList?.length ?? 0) > 0;
+                console.log("problemList 존재 여부:", result);
+
+                return result;
+            } catch (err) {
+                console.error("todayLog API 호출 실패:", err);
+                return false;
+            }
+        }
+
         const loadStats = async () => {
             const data = await fetchTotalProblemNumber();
             const history = await fetchProblemHistory();
@@ -55,11 +71,14 @@ export default function Page() {
             setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
         };
 
+        apiTest();
+
         Promise.all([syncStreak(), loadStats()]).then(() => {
             const rankData = getRank();
             setUserRank(rankData);
             setIsReady(true);
         });
+
     }, [router]);
 
     if (!isReady) return null;
