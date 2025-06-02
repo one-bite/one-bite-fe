@@ -10,7 +10,7 @@ import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {fetchTodayLog, fetchTodayProblems} from "@/utils/apis/todayProblem";
+import {fetchTodayLog} from "@/utils/apis/todayProblem";
 
 export default function Page() {
     const router = useRouter();
@@ -37,22 +37,6 @@ export default function Page() {
             setWeeklyStreakHistory(mystreak.streakHistory);
         };
 
-        const apiTest = async () => {
-            try {
-                const testFetch = await fetchTodayLog();
-
-                console.log("todayLog fetch result:", testFetch);
-
-                const result = (testFetch?.problemList?.length ?? 0) > 0;
-                console.log("problemList 존재 여부:", result);
-
-                return result;
-            } catch (err) {
-                console.error("todayLog API 호출 실패:", err);
-                return false;
-            }
-        }
-
         const loadStats = async () => {
             const data = await fetchTotalProblemNumber();
             const history = await fetchProblemHistory();
@@ -62,7 +46,7 @@ export default function Page() {
 
             const totalCorrect = history.filter((h)=>h.isCorrect).length;
 
-            const todayProblems = await fetchTodayProblems();
+            const todayProblems = await fetchTodayLog();
             const todayProblemsIds = todayProblems?.problemList.map((p) => p.problemId) || [];
 
             const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
@@ -70,8 +54,6 @@ export default function Page() {
             setProblemStats({ total: totalData, solved: solvedData });
             setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
         };
-
-        apiTest();
 
         Promise.all([syncStreak(), loadStats()]).then(() => {
             const rankData = getRank();
