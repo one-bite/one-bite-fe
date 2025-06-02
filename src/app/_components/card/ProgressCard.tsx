@@ -2,6 +2,7 @@
 
 import MainSectionCard from "./MainSectionCard";
 import CircleGraph from "app/_components/graph/CircleGraph";
+import {ProgressIcon} from "app/_components/icon/ProgressIcon";
 
 interface ProgressCardProps {
     total: number;
@@ -18,8 +19,13 @@ const ProgressCard = ({ total, solved, correct, todayCorrect, todayTotal }: Prog
 
     return (
         <MainSectionCard minHeight="160px">
-            <div className="flex flex-col h-full justify-center gap-1 items-center py-2">
-                <h2 className="text-xl font-linebold text-blue-800">진척도</h2>
+            <div className="flex flex-col h-full justify-between gap-1 py-2">
+                <div className={"flex flex-row justify-start items-center gap-3"}>
+                    <div className={`bg-blue-700 rounded-full p-2.5 flex items-center justify-center`}>
+                        <ProgressIcon size={24}/>
+                    </div>
+                    <h2 className="text-xl font-linebold text-blue-700">진척도</h2>
+                </div>
 
                 <div className={"flex justify-center items-center gap-8"}>
                     <CircleGraph value={todayCorrectRate} title={"오늘의 정답률"} color={"lime"} size={80} numerator={todayCorrect} denominator={todayTotal}/>
