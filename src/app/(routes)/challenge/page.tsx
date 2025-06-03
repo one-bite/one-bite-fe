@@ -94,13 +94,14 @@ const ChallengePage = () => {
 
         const problemId = challengeData.problem.problemId;
         const result = await submitChallenge(problemId, selected);
-        console.log("문제 제출 결과:", result);
         setIsOver(result.gameOver); // 게임 오버 여부
         setIsCorrect(result.correct); // 정답 여부
         setScore(result.score); // 획득한 총 점수 갱신
 
-        if (isCorrect) {
+        if (result.correct) {
             setCorrectCount((prev) => prev + 1);
+        } else {
+            setLives((prev) => (prev - 1));
         }
 
         setShowModal(true);
@@ -156,7 +157,7 @@ const ChallengePage = () => {
                 isOpen={showModal}
                 isCorrect={isCorrect ?? false}
                 point={point}
-                lives={challengeData.leftChance}
+                lives={lives}
                 onClose={() => setShowModal(false) }
             />
         </div>

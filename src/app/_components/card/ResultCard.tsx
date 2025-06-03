@@ -42,7 +42,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
             {isChallenge && (
                 <>
                     <h1 className="text-6xl font-extrabold text-lime-600 mb-6 mt-4">
-                        <span className="text-red-500">역량평가</span>가 완료되었습니다!
+                        <span className="text-purple-500">역량평가</span>가 완료되었습니다!
                     </h1>
                     <p className="text-3xl font-extrabold text-gray-700 mb-8">채점 결과</p>
                 </>

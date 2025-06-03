@@ -33,7 +33,9 @@ export default function ChallengeModal({ isOpen, isCorrect, point, lives, onClos
                 ) : (
                     <div className="flex flex-col items-center text-sm text-gray-800 gap-2 mb-6">
                         <div className="flex items-center gap-2 text-red-500">
-                            <span className="font-semibold">남은 기회는 {lives}번이에요{"!"}</span>
+                            <span className="font-semibold">
+                                {lives === 0 ? "게임오버!" : `남은 기회는 ${lives}번이에요!`}
+                            </span>
                         </div>
                     </div>
                 )}

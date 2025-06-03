@@ -6,7 +6,7 @@ import AnswerMultipleOptions from "app/_components/options/AnswerMultipleOptions
 import AnswerTFOptions from "app/_components/options/AnswerTFOptions";
 import AnswerShortInput from "app/_components/sub_components/AnswerShortInput";
 import GeneratedByAiIcon from "app/_components/icon/GeneratedByAiIcon";
-import {HeartIcon} from "lucide-react";
+import { HeartIcon } from "lucide-react";
 
 interface QuizCardProps {
     leftStreak?: number; // 남은 문제 수는 오늘의 문제에서만 사용
@@ -37,19 +37,30 @@ const QuizCard: React.FC<QuizCardProps> = ({
     correctAnswer,
     className,
     generatedByAI,
-    lives
+    lives,
 }) => {
-
     return (
         <Card className={`w-full max-w-3xl p-4 ${className}`}>
             <CardBody>
-                <div className={"flex justify-between items-center"}>
-                    {typeof lives === "number" ? (
-                        <>
-                            <div className="bg-purple-500 rounded-lg px-4 py-1 mb-4 w-52 h-[26px] text-white font-line">
+                <div className={"relative w-full"}>
+                    <div className="mb-4">
+                        {typeof lives === "number" && (
+                            <div className="bg-purple-500 rounded-lg px-4 py-1 w-fit h-[26px] text-white font-line mb-2">
                                 <p>최고의 점수를 획득하세요!</p>
                             </div>
-                            <div className="absolute top-4 right-4 flex gap-1">
+                        )}
+                        {typeof leftStreak === "number" && (
+                            <div className="bg-lime-400 rounded-lg px-4 py-1 w-fit h-[26px] text-white font-line">
+                                <p>
+                                    <b>{leftStreak}</b>문제만 더 풀면 스트릭을 쌓아요
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="absolute top-0 right-0 flex flex-col items-end gap-2">
+                        {typeof lives === "number" && (
+                            <div className="flex gap-1">
                                 {[...Array(3)].map((_, i) => {
                                     const isFilled = i >= 3 - lives;
                                     return (
@@ -59,21 +70,9 @@ const QuizCard: React.FC<QuizCardProps> = ({
                                     );
                                 })}
                             </div>
-                        </>
-                    ) : (
-                        <div />
-                    )}
-
-                    {typeof leftStreak === "number" ? (
-                        <div className="bg-lime-400 rounded-lg px-4 py-1 mb-4 w-64 h-[26px] text-white font-line">
-                            <p>
-                                <b>{leftStreak}</b>문제만 더 풀면 스트릭을 쌓아요
-                            </p>
-                        </div>
-                    ) : (
-                        <div />
-                    )}
-                    {generatedByAI && <GeneratedByAiIcon />}
+                        )}
+                        {generatedByAI && <GeneratedByAiIcon />}
+                    </div>
                 </div>
 
                 {topic && (
