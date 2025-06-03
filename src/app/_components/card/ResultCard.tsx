@@ -6,7 +6,7 @@ import MyButton from "app/_components/buttons/MyButton";
 
 interface ResultCardProps {
     correctAnswers: number;
-    wrongAnswers: number;
+    wrongAnswers: number; // 챌린지 결과라면 0
     score: number | null; // 스트릭 결과라면 null
     todayStreakQuizLeft: number | null; // 챌린지 결과라면 null
     isChallenge: boolean;
@@ -52,11 +52,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
                 <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
                 {!isChallenge && <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />}
                 {isChallenge && (
-                    <>
                         <ResultItem label="획득한 점수:" value={`+${score}`} color="text-orange-600" isScore={true} />
-                        {/*}<ResultItem label="등급:" value={`+${rank}`} color="text-orange-600" isScore={true} /> {*/}
-                        <ResultItem label="총 레이팅 포인트:" value={`+${score}`} color="text-orange-600" isScore={true} />
-                    </>
                 )}
             </div>
 
