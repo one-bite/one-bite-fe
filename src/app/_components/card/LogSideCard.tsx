@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import BigCard from "app/_components/base_components/BigCard";
 import QuizTypeIndex from "app/_components/options/QuizTypeIndex";
 import {QuizProblem} from "app/_configs/types/quiz";
@@ -14,9 +14,10 @@ interface LogSideCardProps {
     quizProblems: QuizProblem[]
     onSelect: (problem: QuizProblem, history: ProblemHistory) => void;
     histories: ProblemHistory[]
+    selectedProblemId?: number
 }
 
-const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideCardProps) => {
+const LogSideCard = ({className="", histories, quizProblems, onSelect, selectedProblemId} :LogSideCardProps) => {
     const [quizType, setQuizType] = useState<"날짜 별"|"주제 별">("날짜 별");
     const [topicGroups, setTopicGroups] = useState<Record<string, boolean>>({});
 
@@ -78,6 +79,30 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
 
     const groupedByDate = groupByDate(histories);
     const groupedByTopic = groupByTopic(histories);
+
+    useEffect(() => {
+        if (!selectedProblemId || histories.length === 0) return;
+
+        if (quizType === "날짜 별") {
+            for (const h of histories) {
+                if (h.problem.problemId === selectedProblemId) {
+                    const groupKey = getDateGroup(parseSubmittedAt(h.submittedAt));
+                    setTopicGroups((prev) => ({ ...prev, [groupKey]: true }));
+                    break;
+                }
+            }
+        } else {
+            for (const h of histories) {
+                if (h.problem.problemId === selectedProblemId) {
+                    const topics = h.problem.topics.map((t) => t.name);
+                    topics.forEach((t) => {
+                        setTopicGroups((prev) => ({ ...prev, [t]: true }));
+                    });
+                    break;
+                }
+            }
+        }
+    }, [selectedProblemId, quizType, histories]);
 
     return(
         <BigCard className={`min-w-60 w-full max-w-screen md:h-[800px] my-1 mx-6 p-6 justify-start bg-white ${className}`}>
