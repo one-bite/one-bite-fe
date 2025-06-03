@@ -10,6 +10,7 @@ import ChallengeModal from "@/app/_components/modals/ChallengeModal";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {ArrowRight} from "lucide-react";
+import { useCallback } from "react";
 
 const ChallengePage = () => {
     const router = useRouter();
@@ -21,10 +22,14 @@ const ChallengePage = () => {
     const [point, setPoint] = useState(0); // 문제별 점수
     const [isSolved, setIsSolved] = useState(false);
 
+    const [selected, setSelected] = useState<string | null>(null); // 선택한 답
+    const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [showModal, setShowModal] = useState(false); // 모달 표시 여부
+
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const loadProblems = async () => {
+    const loadProblems = useCallback(async () => {
             try {
                 setIsLoading(true);
                 const data = await fetchChallengeProblems();
@@ -46,16 +51,15 @@ const ChallengePage = () => {
             } finally {
                 setIsLoading(false);
             }
-        };
+        }, [router]);
 
+
+    useEffect(() => {
         loadProblems();
-    }, [router]);
+    }, [loadProblems]);
 
 
-    const [selected, setSelected] = useState<string | null>(null); // 선택한 답
-    const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
-    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-    const [showModal, setShowModal] = useState(false); // 모달 표시 여부
+    
 
     if (isLoading) {
         return (
@@ -76,10 +80,10 @@ const ChallengePage = () => {
 
 
 
-    const currentProblem = quizData;
+    const currentProblem = challengeData.problem;
 
     const handleAnswer = (answer: string) => {
-        setSelected(answer); // 선택된 답 저장
+        setSelected(answer);
     };
 
     const handleSubmit = async() => {
@@ -88,7 +92,7 @@ const ChallengePage = () => {
             return;
         }
 
-        const problemId = quizData.problem.problemId;
+        const problemId = challengeData.problem.problemId;
         const result = await submitChallenge(problemId, selected);
         setIsOver(result.gameOver); // 게임 오버 여부
         setIsCorrect(result.correct); // 정답 여부
@@ -102,7 +106,7 @@ const ChallengePage = () => {
         setIsSolved(true);
     };
 
-    const handleNext = () => {
+    const handleNext = async() => {
         if (isOver) {
             // 게임 오버면 결과 페이지로.
             router.push(`/result-challenge?score=${score}&correct=${correctCount}`);
@@ -111,8 +115,9 @@ const ChallengePage = () => {
         setSelected(null); // 답 초기화
         setIsCorrect(null); // 정답 여부 초기화
         setIsSolved(false); // 문제 풀었음 초기화
+        setShowModal(false); // 모달 닫기
 
-        setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
+        await loadProblems(); // 다음 문제 불러오기
     };
 
     return (
@@ -127,7 +132,7 @@ const ChallengePage = () => {
                     isCorrect={isCorrect}
                     correctAnswer={currentProblem.answer}
                     questionType={currentProblem.questionType}
-                    generatedByAI = {currentProblem.ai} // 안 줘도 될 지도
+                    generatedByAI ={currentProblem.ai}
                     lives={lives}
                 />
             </div>
@@ -141,7 +146,7 @@ const ChallengePage = () => {
 
                 {isSolved && (
                     <MyButton onClick={handleNext} className={"w-48 h-12 p-4 bg-purple-700 shadow-purple-900 hover:bg-purple-500 hover:shadow-purple-900 active:shadow-purple-900"}>
-                        {isEnd ? "결과 확인하기" : "다음 문제로"}
+                        {isOver ? "결과 확인하기" : "다음 문제로"}
                     </MyButton>
                 )}
             </div>
@@ -149,8 +154,8 @@ const ChallengePage = () => {
             <ChallengeModal
                 isOpen={showModal}
                 isCorrect={isCorrect ?? false}
-                score={latestScore}
-                remaining={0} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
+                point={point}
+                lives={challengeData.leftChance}
                 onClose={() => setShowModal(false) }
             />
         </div>

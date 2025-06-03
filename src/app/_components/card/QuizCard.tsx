@@ -20,7 +20,7 @@ interface QuizCardProps {
     isCorrect: boolean | null;
     correctAnswer: string;
     className?: string;
-    generatedByAI?: boolean; // 챌린지에서는 안 줄수도?
+    generatedByAI?: boolean;
     lives?: number; // 목숨 수는 챌린지에서만
 }
 
