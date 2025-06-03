@@ -17,13 +17,13 @@ const StartQuizButton = ({className = "", ...props }: StartQuizButtonProps) => {
 
     const handleClick = () => {
         if (todaystreak.todayStreakQuizLeft === 0) {
-            alert("오늘의 퀴즈는 모두 풀었습니다.");
+            router.push('/log');
             return;
         }
-        router.push(`/quiz`)
+        router.push(`/quiz`);
     }
 
-    const buttonText = todaystreak.todayStreakQuizLeft < 10 ? "오늘의 문제 이어서 풀기" : "오늘의 문제 풀러 가기";
+    const buttonText =  todaystreak.todayStreakQuizLeft == 0 ? "오늘의 문제 풀이 내역 보기" : todaystreak.todayStreakQuizLeft < 10 ? "오늘의 문제 이어서 풀기" : "오늘의 문제 풀러 가기";
 
     return (
         <Button
@@ -31,7 +31,7 @@ const StartQuizButton = ({className = "", ...props }: StartQuizButtonProps) => {
             className={`
             flex items-center justify-center gap-2
             w-64 h-12
-            text-white text-base font-line font-bold
+            text-white text-base font-line font-linebold
             bg-lime-500
             rounded-2xl
             shadow-[0_3px_0_#65A30D] /* lime-600 */
