@@ -81,7 +81,8 @@ const Log = () => {
             <div className="flex flex-col md:flex-row m-0 gap-6">
                 <div className="flex justify-center min-w-64 w-screen md:w-1/4 h-screen">
                     <LogSideCard histories={histories}
-                    quizProblems={problems}
+                                 quizProblems={problems}
+                                 selectedProblemId={selectedProblem?.problemId}
                     onSelect={(problem, history) => {
                         setSelectedProblem(problem);
                         setSelectedHistory(history);
