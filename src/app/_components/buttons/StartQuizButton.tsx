@@ -10,18 +10,20 @@ interface StartQuizButtonProps extends ButtonProps {
     subject?: string;
 }
 
-const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQuizButtonProps) => {
+const StartQuizButton = ({className = "", ...props }: StartQuizButtonProps) => {
 
     const router = useRouter();
     const todaystreak = getStreak();
 
     const handleClick = () => {
-        if (todaystreak.todayStreakQuizLeft === -1) {
-            alert("오늘의 퀴즈는 모두 풀었습니다.");
+        if (todaystreak.todayStreakQuizLeft === 0) {
+            router.push('/log');
             return;
         }
-        router.push(`/quiz`)
+        router.push(`/quiz`);
     }
+
+    const buttonText =  todaystreak.todayStreakQuizLeft == 0 ? "문제 풀이 내역 보기" : todaystreak.todayStreakQuizLeft < 10 ? "오늘의 문제 이어서 풀기" : "오늘의 문제 풀러 가기";
 
     return (
         <Button
@@ -29,7 +31,7 @@ const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQ
             className={`
             flex items-center justify-center gap-2
             w-64 h-12
-            text-white text-base font-line font-bold
+            text-white text-base font-line font-linebold
             bg-lime-500
             rounded-2xl
             shadow-[0_3px_0_#65A30D] /* lime-600 */
@@ -41,7 +43,7 @@ const StartQuizButton = ({subject = "Python", className = "", ...props }: StartQ
             `}
             {...props}
         >
-            <span>바로 {subject} 문제 풀기</span>
+            <span>{buttonText}</span>
             <ArrowRight className="w-5 h-5 stroke-[2.5]"/>
         </Button>
     );

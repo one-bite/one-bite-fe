@@ -32,6 +32,10 @@ body {
     font-style: normal;
 }
 
+.CircularProgressbar-text {
+    transform: translate(-20%,5px);
+}
+
 /* :root {
   --font-pretendard: "Pretendard Variable", sans-serif;
   --background: #ffffff;

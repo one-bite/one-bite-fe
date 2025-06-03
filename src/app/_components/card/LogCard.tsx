@@ -30,7 +30,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
 
     if (!problem) {
         return (
-            <BigCard className={`w-[600px] h-3/4 m-1 bg-white ${className}`}>
+            <BigCard className={`w-full max-w-screen md:w-[600px] md:h-3/4 my-1 md:mx-1 mx-6 bg-white ${className}`}>
                 <div className={'m-4'}>
                     <p className="font-linebold text-2xl text-gray-400">문제를 선택해주세요.</p>
                 </div>
@@ -67,7 +67,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
          
 
     return (
-        <BigCard className={`flex flex-col items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
+        <BigCard className={`flex flex-col max-w-screen items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
                 <QuizCard
                     topic={`${history?.problem.topics.map((t) => t.name)}`}

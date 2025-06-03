@@ -41,9 +41,6 @@ export default function ProfileMenu() {
                 window.dispatchEvent(new Event("logout"));
                 router.push("/login");
                 break;
-            case "course":
-                router.push("/course");
-                break;
             default:
                 break;
         }
@@ -54,7 +51,6 @@ export default function ProfileMenu() {
             <p>마이페이지</p>
         </DropdownItem>,
         <DropdownItem key="log">문제 풀이 내역</DropdownItem>,
-        <DropdownItem key="course">코스 변경</DropdownItem>,
         <DropdownItem key="logout">
             <p>로그아웃</p>
         </DropdownItem>,

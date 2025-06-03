@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import BigCard from "app/_components/base_components/BigCard";
 import QuizTypeIndex from "app/_components/options/QuizTypeIndex";
 import {QuizProblem} from "app/_configs/types/quiz";
@@ -14,9 +14,10 @@ interface LogSideCardProps {
     quizProblems: QuizProblem[]
     onSelect: (problem: QuizProblem, history: ProblemHistory) => void;
     histories: ProblemHistory[]
+    selectedProblemId?: number
 }
 
-const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideCardProps) => {
+const LogSideCard = ({className="", histories, quizProblems, onSelect, selectedProblemId} :LogSideCardProps) => {
     const [quizType, setQuizType] = useState<"날짜 별"|"주제 별">("날짜 별");
     const [topicGroups, setTopicGroups] = useState<Record<string, boolean>>({});
 
@@ -79,8 +80,32 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
     const groupedByDate = groupByDate(histories);
     const groupedByTopic = groupByTopic(histories);
 
+    useEffect(() => {
+        if (!selectedProblemId || histories.length === 0) return;
+
+        if (quizType === "날짜 별") {
+            for (const h of histories) {
+                if (h.problem.problemId === selectedProblemId) {
+                    const groupKey = getDateGroup(parseSubmittedAt(h.submittedAt));
+                    setTopicGroups((prev) => ({ ...prev, [groupKey]: true }));
+                    break;
+                }
+            }
+        } else {
+            for (const h of histories) {
+                if (h.problem.problemId === selectedProblemId) {
+                    const topics = h.problem.topics.map((t) => t.name);
+                    topics.forEach((t) => {
+                        setTopicGroups((prev) => ({ ...prev, [t]: true }));
+                    });
+                    break;
+                }
+            }
+        }
+    }, [selectedProblemId, quizType, histories]);
+
     return(
-        <BigCard className={`w-60 h-[800px] m-1 p-6 justify-start bg-white ${className}`}>
+        <BigCard className={`min-w-60 w-full max-w-screen md:h-[800px] my-1 mx-6 p-6 justify-start bg-white ${className}`}>
             <div className="mt-1 flex flex-col items-center">
                 <p className="font-linebold text-3xl mb-4">문제 목록</p>
                 <div className="flex gap-4">
@@ -104,12 +129,17 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                     {entries.map((h) => {
                                         const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
+                                        const rawTitle = problem.title?.trim();
+                                        const replaceToTopic = (title: string) =>
+                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
                                                 id={h.historyId}
-                                                title={problem.title}
+                                                title={showTitle}
                                                 choose={() => onSelect(problem, h)}
+                                                isCorrect = {h.isCorrect}
                                             />
                                         );
                                     })}
@@ -120,7 +150,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                     Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
                             <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
-                                <span>{topicNameMap[topicId] ?? topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
+                                <span>{topicNameMap[topicId] ?? topicId}</span>
                                 {topicGroups[topicId] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
                             {topicGroups[topicId] && (
@@ -128,13 +158,17 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                                     {histories.map((h) => {
                                         const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
-
+                                        const rawTitle = problem.title?.trim();
+                                        const replaceToTopic = (title: string) =>
+                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
                                                 id={h.historyId}
-                                                title={problem.title}
+                                                title={showTitle}
                                                 choose={() => onSelect(problem, h)}
+                                                isCorrect = {h.isCorrect}
                                             />
                                         );
                                     })}

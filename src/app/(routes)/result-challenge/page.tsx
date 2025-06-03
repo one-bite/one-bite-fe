@@ -8,21 +8,18 @@ function Results() {
 
   const searchParams = useSearchParams();
 
-  //query string 읽어옴
   const score = Number(searchParams.get("score") || 0);
   const correctAnswers = Number(searchParams.get("correct") || 0);
-  const wrongAnswers = Number(searchParams.get("wrong") || 0);
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-4xl p-6">
-        {/* 결과 카드 컴포넌트 사용 */}
         <ResultCard
           correctAnswers={correctAnswers}
-          wrongAnswers={wrongAnswers}
+          wrongAnswers={0} // 챌린지에는 불필요
           score={score}
-          todayStreakQuizLeft={10
-          }
+          todayStreakQuizLeft={null} // 챌린지이므로 null
+          isChallenge={true} // 챌린지이므로 true
         />
       </div>
     </main>

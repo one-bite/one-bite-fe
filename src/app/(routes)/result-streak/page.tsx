@@ -23,6 +23,7 @@ function Results() {
           wrongAnswers={wrongAnswers}
           score={null} //스트릭일 땐 score를 null로 줘야 함
           todayStreakQuizLeft={streakQuizLeft}
+          isChallenge = {false} //스트릭 결과이므로 false
         />
       </div>
     </main>
