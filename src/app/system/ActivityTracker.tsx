@@ -11,9 +11,13 @@ const ActivityTracker = () => {
         const now = Date.now();
         const timeouts = 30 * 60 * 1000;
 
+        console.log("마지막 활동 시간: ",last);
+        console.log("현재 시간: ",now);
+        console.log("차: ",now-last);
+
         if (now - last > timeouts) {
             console.warn("30분 동안 활동이 없어 자동으로 로그아웃 되었습니다.");
-            router.replace("/login");
+            router.replace("/");
             localStorage.clear(); // 마지막 로그인 후 10분 지났으면 초기화
             return;
         }

@@ -52,29 +52,37 @@ const Log = () => {
     }, [histories]);
 
     useEffect(() => {
+        if (typeof window === "undefined" || histories.length === 0) return;
+
         const restoreSelection = async () => {
             const selectedProblemId = sessionStorage.getItem("selectedProblemId");
             const selectedHistoryId = sessionStorage.getItem("selectedHistoryId");
 
-            if (selectedProblemId && selectedHistoryId) {
+            if (!selectedProblemId || !selectedHistoryId) return;
+
                 const pid = parseInt(selectedProblemId,10);
                 const hid = parseInt(selectedProblemId,10);
 
-                const problem = await fetchProblem(pid);
+                const problem = problems.find(p => p.problemId === pid);
                 const history = histories.find(h => h.historyId === hid);
 
                 if (problem && history) {
                     setSelectedProblem(problem);
                     setSelectedHistory(history);
+                } else {
+                    fetchProblem(pid).then((p) => {
+                        if (p && history) {
+                            setSelectedProblem(p);
+                            setSelectedHistory(history);
+                        }
+                    })
                 }
-            }
+
         }
 
-        if (histories.length > 0) {
-            restoreSelection();
-        }
+        restoreSelection();
 
-    }, [histories]);
+    }, [histories, problems]);
 
     return (
         <div className="min-h-screen flex justify-center m-0 p-6">
