@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./_components/header/Header";
 import Footer from "./_components/Footer";
 import * as process from "process";
+import ActivityTracker from "app/system/ActivityTracker";
 
 export const metadata: Metadata = {
     title: "한입코딩",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Header/>
             <div className="flex justify-center">
                 <div className="max-w-screen-lg w-screen">
+                    <ActivityTracker />
                     <Providers>{children}</Providers>
                 </div>
             </div>
