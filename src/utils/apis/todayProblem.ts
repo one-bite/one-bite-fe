@@ -13,7 +13,7 @@ export const fetchTodayProblems = async () : Promise<TodayQuizResponse | null> =
     if (!response.ok) {
         const errorText = await response.text();
         console.error("Error fetching problems:", errorText);
-        throw new Error("문제 리스트를 가져오는 데 실패했습니다.");
+        throw new Error("오늘의 문제 리스트를 가져오는 데 실패했습니다.");
     }
 
     const contentLength = response.headers.get("Content-Length");

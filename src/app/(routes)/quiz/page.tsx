@@ -128,7 +128,7 @@ const QuizPage = () => {
     const result = await submitTodayProblem(problemId, selected);
     setIsCorrect(result.correct); // 정답 여부 저장
 
-    if (isCorrect) {
+    if (result.correct) {
       setCorrectCount((prev) => prev + 1); // 맞힌 문제 수 증가
     } else {
       setWrongCount((prev) => prev + 1); // 틀린 문제 수 증가
