@@ -62,7 +62,7 @@ const Log = () => {
                         setSelectedHistory(history);
                     }}/>
                 </div>
-                <div className={`${selectedProblem ? "block" : "block"} md:block flex justify-center w-full md:w-3/4`}>
+                <div className={`${selectedProblem ? "block" : "hidden"} md:block flex justify-center w-screen md:w-3/4`}>
                     <LogCard problem={selectedProblem} history={selectedHistory} className="overflow-y-auto"/>
                 </div>
             </div>
