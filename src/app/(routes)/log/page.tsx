@@ -52,9 +52,9 @@ const Log = () => {
   }, [histories]);
 
     return (
-        <div className="min-h-screen flex m-0 p-6">
-            <div className="flex m-0">
-                <div className="flex-1 min-w-64 w-1/4 mr-0">
+        <div className="min-h-screen flex justify-center m-0 p-6">
+            <div className="flex flex-col md:flex-row m-0 gap-6">
+                <div className="flex justify-center min-w-64 w-screen md:w-1/4 h-screen mr-0">
                     <LogSideCard histories={histories}
                     quizProblems={problems}
                     onSelect={(problem, history) => {
@@ -62,7 +62,7 @@ const Log = () => {
                         setSelectedHistory(history);
                     }}/>
                 </div>
-                <div className="flex-[3] w-3/4">
+                <div className={`${selectedProblem ? "block" : "block"} md:block flex justify-center w-full md:w-3/4`}>
                     <LogCard problem={selectedProblem} history={selectedHistory} className="overflow-y-auto"/>
                 </div>
             </div>
