@@ -36,3 +36,9 @@ export interface AiProblemResponse {
   ai: boolean;
   commentary: string;
 }
+
+export interface ChallengeResponse {
+  leftChance:number; // 남은 목숨
+  score: number; // 지금까지 획득한 총 점수
+  problem: QuizProblem;
+}

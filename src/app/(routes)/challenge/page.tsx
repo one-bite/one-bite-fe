@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchTodayProblems } from "@/utils/apis/todayProblem";
-import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
-import { TodayQuizResponse } from "app/_configs/types/quiz";
+import { fetchChallengeProblems } from "@/utils/apis/challengeProblem";
+import { submitChallenge } from "@/utils/apis/submitChallenge";
+import { ChallengeResponse } from "app/_configs/types/quiz";
 import QuizCard from "@/app/_components/card/QuizCard";
 import MyButton from "app/_components/buttons/MyButton";
 import ChallengeModal from "@/app/_components/modals/ChallengeModal";
-import {addScore, subtractScore} from "@/utils/user";
 import { useRouter } from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {ArrowRight} from "lucide-react";
@@ -15,11 +14,12 @@ import {ArrowRight} from "lucide-react";
 const ChallengePage = () => {
     const router = useRouter();
 
-    const [lives, setLives] = useState(3);
-
-    const [quizData, setQuizData] = useState<TodayQuizResponse | null>(null);
-    const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 인덱스
-    const [isSolved, setIsSolved] = useState(false); // 문제 풀었는지 여부
+    const [lives, setLives] = useState(3); // 남은 목숨
+    const [isOver, setIsOver] = useState(false); // 게임 오버 여부
+    const [score, setScore] = useState(0); // 총 점수 획득
+    const [challengeData, setChallengeData] = useState<ChallengeResponse | null>(null);
+    const [point, setPoint] = useState(0); // 문제별 점수
+    const [isSolved, setIsSolved] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -27,14 +27,17 @@ const ChallengePage = () => {
         const loadProblems = async () => {
             try {
                 setIsLoading(true);
-                const data = await fetchTodayProblems();
+                const data = await fetchChallengeProblems();
                 console.log("응답 형태:", data);
 
                 // 문제가 없을 경우 처리
-                if (!data || !data.problemList || data.problemList.length === 0) {
-                    setQuizData(null);
+                if (!data || !data.problem) {
+                    setChallengeData(null);
                 } else {
-                    setQuizData(data);
+                    setChallengeData(data);
+                    setLives(data.leftChance); // 남은 목숨 설정
+                    setScore(data.score); // 문제 불어올때마다 지금까지 얻은 점수 갱신
+                    setPoint(data.problem.point); // 문제별 점수
                 }
             } catch (error) {
                 console.error("문제 불러오기 오류:", error);
@@ -49,20 +52,10 @@ const ChallengePage = () => {
     }, [router]);
 
 
-    useEffect(() => {
-        if (quizData) {
-            setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
-        }
-    }, [quizData, currentIndex]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
-
     const [selected, setSelected] = useState<string | null>(null); // 선택한 답
     const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
-    const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
-    const [rankPoint, setRankPoint] = useState(0); // 총 레이팅 포인트 획득
-    const [reward, setReward] = useState(0); // 총 포인트 획득
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [showModal, setShowModal] = useState(false); // 모달 표시 여부
-    const [latestScore, setLatestScore] = useState(0); // 최근 점수 저장
 
     if (isLoading) {
         return (
@@ -73,7 +66,7 @@ const ChallengePage = () => {
         );
     }
 
-    if (!quizData || quizData.problemList.length === 0) {
+    if (!challengeData?.problem) {
         return (
             <div className="w-full h-[500px] flex items-center justify-center text-gray-500 font-line">
                 문제가 존재하지 않습니다...
@@ -83,10 +76,7 @@ const ChallengePage = () => {
 
 
 
-    const currentProblem = quizData.problemList[currentIndex];
-    const isLast = currentIndex === (quizData.problemList.length - 1);
-    const outOfLives = lives <= 0;
-    const isEnd = (isLast && isSolved) || outOfLives;
+    const currentProblem = quizData;
 
     const handleAnswer = (answer: string) => {
         setSelected(answer); // 선택된 답 저장
@@ -98,46 +88,30 @@ const ChallengePage = () => {
             return;
         }
 
-        const problemId = quizData.problemList[currentIndex].problemId;
-        const result = await submitTodayProblem(problemId, selected); // 이부분 역량평가 채점 api로 변경 필요
-        setIsCorrect(result.correct); // 정답 여부 저장
-        setRankPoint((prev) => (prev) + result.score); // 획득한 점수 합산
+        const problemId = quizData.problem.problemId;
+        const result = await submitChallenge(problemId, selected);
+        setIsOver(result.gameOver); // 게임 오버 여부
+        setIsCorrect(result.correct); // 정답 여부
+        setScore(result.score); // 획득한 총 점수 갱신
 
-        if (result.correct) {
+        if (isCorrect) {
             setCorrectCount((prev) => prev + 1);
-            setReward((prev) => (prev) + 10); // 획득한 포인트 합산
-            addScore(result.score); // 유저 스코어에 반영
-        }
-        else {
-            setWrongCount((prev) => prev + 1);
-            subtractScore(result.score); // 유저 스코어에 반영
-            setLives((prev) => {
-                const nextLives = prev - 1;
-                if (nextLives <= 0) {
-                    router.push(`/results-challenge?score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount + 1}`);
-                }
-                return nextLives;
-            });
         }
 
-        if (result.correct || lives - 1 > 0) { // 정답이거나 목숨이 남았으면 다음 문제로 이동
-            setCurrentIndex((prev) => prev + 1);
-            setSelected(null);
-        }
-        setLatestScore(result.score); // 최근 점수 저장
+        setShowModal(true);
         setIsSolved(true);
     };
 
     const handleNext = () => {
+        if (isOver) {
+            // 게임 오버면 결과 페이지로.
+            router.push(`/result-challenge?score=${score}&correct=${correctCount}`);
+            return;
+        }
         setSelected(null); // 답 초기화
         setIsCorrect(null); // 정답 여부 초기화
         setIsSolved(false); // 문제 풀었음 초기화
 
-        if (isEnd) {
-            // 마지막 문제에서 결과 페이지로 이동
-            router.push(`/results-challenge?score=${rankPoint}&reward=${reward}&correct=${correctCount}&wrong=${wrongCount}`);
-            return;
-        }
         setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
     };
 
