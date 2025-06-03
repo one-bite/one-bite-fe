@@ -31,7 +31,7 @@ const CircleGraph  = ({value, title, color, size, numerator, denominator} : Circ
                 <CircularProgressbar
                     value={value}
                     strokeWidth={12}
-                    text={`${value}%`}
+                    text={`${value}%` || `NaN`}
                     styles={buildStyles({
                         pathColor:hexColor,
                         textColor:hexColor,
