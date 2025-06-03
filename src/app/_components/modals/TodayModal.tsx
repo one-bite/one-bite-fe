@@ -1,19 +1,16 @@
 "use client";
 
 import StreakIcon from "../icon/StreakIcon";
-import PointIcon from "../icon/PointIcon";
 import MyButton from "../buttons/MyButton";
 
-interface ResultModalProps {
+interface TodayModalProps {
     isOpen: boolean; //모달 열까 말까
     isCorrect: boolean; //정답 여부
-    score: number; // 스코어 변화
     remaining: number; // 남은 문제 수. 정답일 때만 표시
-    point: number; // 보상. 정답일 때만 표시
     onClose: () => void; //닫기
 }
 
-export default function ResultModal({ isOpen, isCorrect, score, remaining, point, onClose }: ResultModalProps) {
+export default function TodayModal({ isOpen, isCorrect, remaining, onClose }: TodayModalProps) {
     if (!isOpen) return null;
 
     return (
@@ -29,20 +26,11 @@ export default function ResultModal({ isOpen, isCorrect, score, remaining, point
                     {isCorrect ? "입니다!" : "입니다..."}
                 </h2>
 
-                <div className={`flex justify-center items-baseline gap-2 text-6xl font-extrabold mb-1 ${isCorrect ? "text-blue-500" : "text-orange-400"}`}>
-                    {isCorrect ? `+ ${score}` : `- ${score}`}
-                    <div className="text-xs mb-6">레이팅 포인트</div>
-                </div>
-
                 {isCorrect && (
                     <div className="flex flex-col items-center text-sm text-gray-800 gap-2 mb-6">
                         <div className="flex items-center gap-2 text-red-500">
                             <StreakIcon className="w-4 h-4"/>
                             <span className="font-semibold">{remaining} Problems Left</span>
-                        </div>
-                        <div className="flex items-center gap-2  text-yellow-500">
-                            <PointIcon className="w-4 h-4"/>
-                            <span className="font-semibold">+ {point} Point</span>
                         </div>
                     </div>
                 )}

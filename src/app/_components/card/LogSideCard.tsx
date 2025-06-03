@@ -7,6 +7,7 @@ import {QuizProblem} from "app/_configs/types/quiz";
 import ProblemItem from "app/_components/sub_components/ProblemItem";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import {ProblemHistory} from "@/app/_configs/types/problemHistory";
+import {topicNameMap} from "app/constants/topicNameKoreanMap";
 
 interface LogSideCardProps {
     className?: string
@@ -51,16 +52,17 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
         const grouped: Record<string, ProblemHistory[]> = {};
 
         histories.forEach((h) => {
-            const problem = quizProblems.find(p => p.problemId === h.problemId);
+            const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
             if (!problem) return;
 
-            const topics = problem.topicNames.length ? problem.topicNames : ["기타"];
+            const topics = h.problem.topics.map((t) => t.name).length ? h.problem.topics.map((t) => t.name) : ["기타"];
+            //const topics = problem.topicNames.length ? problem.topicNames : ["기타"];
 
             topics.forEach((topic) => {
                 if (!grouped[topic]) grouped[topic] = [];
 
                 // 중복 추가 방지: 같은 문제 ID가 이 토픽 그룹에 이미 있는지 체크
-                const alreadyIncluded = grouped[topic].some((item) => item.problemId === h.problemId);
+                const alreadyIncluded = grouped[topic].some((item) => item.problem.problemId === h.problem.problemId);
                 if (!alreadyIncluded) {
                     grouped[topic].push(h);
                 }
@@ -78,7 +80,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
     const groupedByTopic = groupByTopic(histories);
 
     return(
-        <BigCard className={`w-60 h-[800px] m-1 p-6 justify-start bg-white ${className}`}>
+        <BigCard className={`min-w-60 w-full max-w-screen md:h-[800px] my-1 mx-6 p-6 justify-start bg-white ${className}`}>
             <div className="mt-1 flex flex-col items-center">
                 <p className="font-linebold text-3xl mb-4">문제 목록</p>
                 <div className="flex gap-4">
@@ -100,14 +102,19 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                             {topicGroups[group] && (
                                 <div className="ml-2 mt-1 space-y-1">
                                     {entries.map((h) => {
-                                        const problem = quizProblems.find(p => p.problemId === h.problemId);
+                                        const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
+                                        const rawTitle = problem.title?.trim();
+                                        const replaceToTopic = (title: string) =>
+                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
                                                 id={h.historyId}
-                                                title={problem.title}
+                                                title={showTitle}
                                                 choose={() => onSelect(problem, h)}
+                                                isCorrect = {h.isCorrect}
                                             />
                                         );
                                     })}
@@ -118,21 +125,25 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect} :LogSideC
                     Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
                             <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
-                                <span>{topicId}</span> {/* 이거 아이디에 따라서 맵핑해야 됨 */}
+                                <span>{topicNameMap[topicId] ?? topicId}</span>
                                 {topicGroups[topicId] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
                             {topicGroups[topicId] && (
                                 <div className="ml-2 mt-1 space-y-1">
                                     {histories.map((h) => {
-                                        const problem = quizProblems.find(p => p.problemId === h.problemId);
+                                        const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
                                         if (!problem) return null;
-
+                                        const rawTitle = problem.title?.trim();
+                                        const replaceToTopic = (title: string) =>
+                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
                                         return (
                                             <ProblemItem
                                                 key={h.historyId}
                                                 id={h.historyId}
-                                                title={problem.title}
+                                                title={showTitle}
                                                 choose={() => onSelect(problem, h)}
+                                                isCorrect = {h.isCorrect}
                                             />
                                         );
                                     })}

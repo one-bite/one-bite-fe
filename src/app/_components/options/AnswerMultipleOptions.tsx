@@ -11,12 +11,12 @@ interface AnswerOptionsProps {
     correctAnswer: string;
 }
 
-const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
+const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
     return (
         <div className="flex flex-col space-y-3">
             {options.map((option, index) => {
-                const isSelected = selected === option;
-                const isAnwer = correctAnswer === option;
+                const isSelected = selected === (index+1).toString();
+                const isAnwer = correctAnswer === (index+1).toString();
 
                 let color: "default" | "primary" | "success" | "danger" = "default";
 
@@ -36,11 +36,11 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
                 }
                 return(
                 <Button
-                    key={index}
+                    key={index+1}
                     fullWidth
                     variant="bordered"
                     color={color}
-                    onPress={() => onSelect(option)}
+                    onPress={() => onSelect((index+1).toString())}
                     className="justify-start bg-gray-100"
                     isDisabled={isCorrect !== null} // 정답 제출 후 비활성화
                 >
@@ -53,4 +53,4 @@ const AnswerOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, select
     );
 };
 
-export default AnswerOptions;
+export default AnswerMultipleOptions;

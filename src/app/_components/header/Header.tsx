@@ -5,24 +5,22 @@ import { Navbar, NavbarBrand, NavbarContent, Link, DropdownTrigger, Dropdown, Av
 import { Logo } from "../icon/LogoIcon";
 import UserStats from "./UserStats";
 import ProfileMenu from "./ProfileMenu"; // 추가!
-import { getStreak, getPoint, getRank } from "@/utils/user";
+import { getStreak, getRank } from "@/utils/user";
 import { useState, useEffect } from "react";
-import { initStreak, initPoint, initRank } from "@/utils/user"; // 초기화 함수들
+import { initStreak, initRank } from "@/utils/user"; // 초기화 함수들
 
 export default function App() {
     //const pathname = usePathname();
     initStreak();
-    initPoint();
     initRank();
 
     const [streak, setStreak] = useState(getStreak());
-    const [point, setPoint] = useState(getPoint());
     const [rank, setRank] = useState(getRank());
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const handleStorageChange = () => {
             setStreak(getStreak());
-            setPoint(getPoint());
             setRank(getRank());
         };
 
@@ -30,6 +28,34 @@ export default function App() {
         return () => {
             window.removeEventListener("userStatsUpdated", handleStorageChange);
         };
+    }, []);
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        const userEmail = localStorage.getItem("user_email");
+        if (accessToken && userEmail) {
+            setIsLogin(true);
+        }
+
+        const handleLogin = () => {
+            const token = localStorage.getItem("accessToken");
+            const email = localStorage.getItem("user_email");
+            if (token && email) {
+                setIsLogin(true);
+            }
+        };
+
+        const handleLogout = () => {
+            setIsLogin(false);
+        };
+
+        window.addEventListener("loginSuccess", handleLogin);
+        window.addEventListener("logout", handleLogout);
+
+        return () => {
+            window.removeEventListener("loginSuccess", handleLogin);
+            window.removeEventListener("logout", handleLogout);
+        }
     }, []);
 
     return (
@@ -42,7 +68,9 @@ export default function App() {
             </NavbarBrand>
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
-                <UserStats streak={streak.totalStreak} point={point} rank={rank.rank}/> {/* ✅ 아바타 왼쪽에 삽입 */}
+                {isLogin && (
+                    <UserStats streak={streak.nowStreak} rank={rank.rank}/>
+                )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <Avatar

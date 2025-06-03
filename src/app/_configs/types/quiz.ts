@@ -7,30 +7,38 @@ export interface ProblemDescription {
 
 export interface QuizProblem {
   problemId: number;
-  categoryId: number;
+  questionType: QuestionType;
   title: string;
   description: ProblemDescription;
-  questionType: QuestionType;
-  hint: string;
   answer: string;
   point: number;
-  userId: number | null;
-  topicNames: string[];
-}
-
-export interface TodayQuizProblem {
-  problemId: number;
-  type: QuestionType;
-  title: string;
-  answer: string;
-  point: number;
-  description: {
-    question: string;
-    options: string[];
-  };
+  ai: boolean;
 }
 
 export interface TodayQuizResponse {
   problemStatus: boolean[];
-  problemList: TodayQuizProblem[];
+  problemList: QuizProblem[];
+}
+
+export interface AiProblemRequest {
+  parentProblemId: number;
+  description: ProblemDescription;
+  topics: string[];
+  questionType: QuestionType;
+}
+
+export interface AiProblemResponse {
+  title: string;
+  description: ProblemDescription;
+  questionType: QuestionType;
+  answer: string;
+  point: number;
+  ai: boolean;
+  commentary: string;
+}
+
+export interface ChallengeResponse {
+  leftChance:number; // 남은 목숨
+  score: number; // 지금까지 획득한 총 점수
+  problem: QuizProblem;
 }

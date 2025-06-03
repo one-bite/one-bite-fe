@@ -1,5 +1,6 @@
 import { nextui } from "@nextui-org/react";
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 export default {
     content: [
@@ -21,9 +22,22 @@ export default {
                 linebold: ['LINESeedKR-B', 'sans-serif'],
                 jungM : ['Jungnajoch-M' , 'sans-serif']
             },
+            keyframes: {
+                "spin-burst-6" : {
+                    "0%": { transform: "rotate(0deg)" },
+                    "15%": {transform: "rotate(360deg)" },
+                    "100%": {transform: "rotate(360deg)" },
+                },
+            },
+            animation: {
+              "spin-burst-6" : "spin-burst-6 6s linear infinite",
+            },
         },
     },
-    plugins: [nextui()],
+    plugins: [
+        nextui(),
+        typography
+    ],
 } as Config;
 
 // nextui({

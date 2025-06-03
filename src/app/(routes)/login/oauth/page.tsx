@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
+import { setUserEmail } from "@/utils/user/userEmail";
 import { syncUserStreak } from "@/utils/user/streak"; // 스트릭 동기화 함수
 
 type Userinformation = {
@@ -37,9 +38,14 @@ const GoogleCallback = () => {
 
                         localStorage.setItem("accessToken", data.accessToken);
                         localStorage.setItem("refreshToken", data.refreshToken);
-                        localStorage.setItem("user_email", decoded.sub);
+                        const user_email = decoded.sub;
+                        setUserEmail(user_email);
                         localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
                         localStorage.setItem("token_exp", decoded.exp.toString());
+                        localStorage.setItem("lastActivity", Date.now().toString());
+
+                        //유저 스탯 표시 상태 동기화
+                        window.dispatchEvent(new Event("loginSuccess"));
 
                         //유저 스트릭 동기화
                         syncUserStreak();

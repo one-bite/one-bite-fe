@@ -3,29 +3,23 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ResultCard from "@/app/_components/card/ResultCard";
-import {getStreak} from "@/utils/user";
 
 function Results() {
 
   const searchParams = useSearchParams();
 
-  const streakQuizLeft = getStreak().todayStreakQuizLeft;
-  //query string 읽어옴
   const score = Number(searchParams.get("score") || 0);
-  const reward = Number(searchParams.get("reward") || 0);
   const correctAnswers = Number(searchParams.get("correct") || 0);
-  const wrongAnswers = Number(searchParams.get("wrong") || 0);
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-4xl p-6">
-        {/* 결과 카드 컴포넌트 사용 */}
         <ResultCard
           correctAnswers={correctAnswers}
-          wrongAnswers={wrongAnswers}
+          wrongAnswers={0} // 챌린지에는 불필요
           score={score}
-          point={reward}
-          todayStreakQuizLeft={streakQuizLeft}
+          todayStreakQuizLeft={null} // 챌린지이므로 null
+          isChallenge={true} // 챌린지이므로 true
         />
       </div>
     </main>

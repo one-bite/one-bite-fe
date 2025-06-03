@@ -1,154 +1,464 @@
-import { QuizProblem } from "@/app/_configs/types/quiz";
+// import { QuizProblem } from "@/app/_configs/types/quiz";
 
-export const quizProblems: QuizProblem[] = [
-  {
-    problemId: 1,
-    categoryId: 1,
-    title: "리스트 생성",
-    description: {
-      question: "다음 중 Python에서 리스트(List)를 생성하는 방법으로 올바른 것은?",
-      options: ["(1, 2, 3)", "[1, 2, 3]", "{1, 2, 3}", "set(1, 2, 3)"]
-    },
-    questionType: "multiple_choice",
-    hint: "리스트는 대괄호로 생성해요.",
-    answer: "[1, 2, 3]",
-    point: 20,
-    topicNames: ["리스트", "자료구조"],
-    userId: null,
-  },
-  {
-    problemId: 2,
-    categoryId: 1,
-    title: "자료형 판별",
-    description: {
-      question: "다음 중 문자열(String)인 값은 무엇인가요?",
-      options: ["True", "3.14", "'hello'", "None"]
-    },
-    questionType: "multiple_choice",
-    hint: "문자열은 따옴표로 감싸져 있어요요",
-    answer: "'hello'",
-    point: 20,
-    topicNames: ["자료형", "문자열"],
-    userId: null,
-  },
-  {
-    problemId: 3,
-    categoryId: 1,
-    title: "조건문 형식",
-    description: {
-      question: "Python의 조건문 형식 중 올바른 것은?",
-      options: ["if x > 0", "if x > 0:", "if (x > 0)", "x > 0 then"]
-    },
-    questionType: "multiple_choice",
-    hint: "if (조건): 형식으로 작성해요.",
-    answer: "if x > 0:",
-    point: 20,
-    topicNames: ["조건문", "제어문"],
-    userId: null,
-  },
-  {
-    problemId: 4,
-    categoryId: 1,
-    title: "반복문",
-    description: {
-      question: "다음 중 for문을 올바르게 사용한 예는?",
-      options: ["for(i=0; i<5; i++)", "foreach i in 5", "loop i from 0 to 5", "for i in range(5):"]
-    },
-    questionType: "multiple_choice",
-    hint: "for i in range(5): 형식으로 작성해요.",
-    answer: "for i in range(5):",
-    point: 20,
-    topicNames: ["반복문", "제어문"],
-    userId: null,
-  },
-  {
-    problemId: 5,
-    categoryId: 1,
-    title: "함수 정의",
-    description: {
-      question: "Python에서 함수 정의 방법으로 올바른 것은?",
-      options: ["function func()", "define func()", "def func():", "func -> ()"]
-    },
-    questionType: "multiple_choice",
-    hint: "함수 정의는 def 함수이름(): 형식으로 작성해요.",
-    answer: "def func():",
-    point: 20,
-    topicNames: ["함수", "기초 문법"],
-    userId: null,
-  },
-  {
-    problemId: 6,
-    categoryId: 1,
-    title: "리스트 인덱싱",
-    description: {
-      question: "다음 중 리스트 a = [10, 20, 30]에서 20을 가져오는 코드는?",
-      options: ["a[0]", "a[1]", "a(1)", "a{1}"]
-    },
-    questionType: "multiple_choice",
-    hint: "배열 인덱스는 0부터 시작해요.",
-    answer: "a[1]",
-    point: 20,
-    topicNames: ["리스트", "인덱싱"],
-    userId: null,
-  },
-  {
-    problemId: 7,
-    categoryId: 1,
-    title: "딕셔너리 생성",
-    description: {
-      question: "다음 중 Python의 딕셔너리를 생성하는 올바른 방법은?",
-      options: ["[a:1, b:2]", "{'a', 1, 'b', 2}", "{'a': 1, 'b': 2}", "dict = 'a':1,'b':2"]
-    },
-    questionType: "multiple_choice",
-    hint: "{키: 값} 형식으로 작성해요.",
-    answer: "{'a': 1, 'b': 2}",
-    point: 20,
-    topicNames: ["딕셔너리", "자료구조"],
-    userId: null,
-  },
-  {
-    problemId: 8,
-    categoryId: 1,
-    title: "자료형 변환",
-    description: {
-      question: "다음 중 정수형 10을 문자열로 변환하는 코드는?",
-      options: ["str(10)", "string(10)", "'10'", "convert(10)"]
-    },
-    questionType: "multiple_choice",
-    hint: "정수형을 문자열로 변환할 때는 str() 함수를 사용해요.",
-    answer: "str(10)",
-    point: 20,
-    topicNames: ["형변환", "자료형"],
-    userId: null,
-  },
-  {
-    problemId: 9,
-    categoryId: 1,
-    title: "리스트 메서드",
-    description: {
-      question: "다음 중 리스트에 항목을 추가하는 메서드는?",
-      options: ["add()", "insert()", "append()", "extend()"]
-    },
-    questionType: "multiple_choice",
-    hint: "리스트에 항목을 추가할 때는 append() 메서드를 사용해요.",
-    answer: "append()",
-    point: 20,
-    topicNames: ["리스트", "메서드"],
-    userId: null,
-  },
-  {
-    problemId: 10,
-    categoryId: 1,
-    title: "변수 이름 규칙",
-    description: {
-      question: "다음 중 Python에서 유효한 변수 이름은?",
-      options: ["2var", "my-var", "my var", "my_var"]
-    },
-    questionType: "multiple_choice",
-    hint: "유효한 변수 이름은 문자, 숫자, 밑줄(_)로 시작해야 해요.",
-    answer: "my_var",
-    point: 20,
-    topicNames: ["변수", "문법 규칙"],
-    userId: null,
-  }
-];
+// export const quizProblems: QuizProblem[] = [
+//   {
+//     problemId: 1,
+//     categoryId: 1,
+//     title: "Python Basics",
+//     description: {
+//       question: "다음 중 Python에서 올바른 변수 선언 방식은 무엇인가요?",
+//       options: [
+//         "1variable = 10",
+//         "variable@ = 10",
+//         "variable_1 = 10",
+//         "variable# = 10"
+//       ]
+//     },
+//     questionType: "multiple_choice",
+//     hint: "",
+//     answer: "3",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 2,
+//     categoryId: 1,
+//     title: "Print Function",
+//     description: {
+//       question: "파이썬에서 콘솔에 텍스트를 출력하는 함수는?",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "print",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 3,
+//     categoryId: 1,
+//     title: "Multi-line Comment Syntax",
+//     description: {
+//       question: "파이썬에서 여러 줄 주석은 \"\"\" 또는 '''로 작성한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 4,
+//     categoryId: 1,
+//     title: "Multi-line Comment Symbol",
+//     description: {
+//       question: "파이썬에서 여러 줄 주석을 작성할 때 사용하는 기호는?",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "\"\"\"",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 5,
+//     categoryId: 1,
+//     title: "File Extension",
+//     description: {
+//       question: "파이썬 파일은 .py 확장자를 사용한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 6,
+//     categoryId: 1,
+//     title: "Comment Symbol",
+//     description: {
+//       question: "파이썬에서 주석은 # 기호로 시작한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 7,
+//     categoryId: 1,
+//     title: "Indentation Requirement",
+//     description: {
+//       question: "파이썬 코드는 들여쓰기 없이도 실행된다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "2",
+//     point: 10,
+//     userId: null,
+//     topicNames: ["basic_syntax"],
+//   },
+//   {
+//     problemId: 8,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "여러 예외를 동시에 잡는 구문 예시를 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "except (ValueError, TypeError):",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "exceptions"
+//     ]
+//   },
+//   {
+//     problemId: 9,
+//     categoryId: 1,
+//     title: "Boolean Value",
+//     description: {
+//       question: "파이썬에서 `True`는 부울 값이다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "variables",
+//       "data_types"
+//     ]
+//   },
+//   {
+//     problemId: 10,
+//     categoryId: 1,
+//     title: "If Syntax",
+//     description: {
+//       question: "다음 중 올바른 `if` 문법은?",
+//       options: [
+//         "if x = 5:",
+//         "if x == 5:",
+//         "if (x == 5)",
+//         "if x == 5"
+//       ]
+//     },
+//     questionType: "multiple_choice",
+//     hint: "",
+//     answer: "2",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "conditionals"
+//     ]
+//   },
+//   {
+//     problemId: 11,
+//     categoryId: 1,
+//     title: "If-Else Output",
+//     description: {
+//       question: "다음 코드의 출력은? `x = 3; if x > 5: print(\"A\"); else: print(\"B\")`",
+//       options: [
+//         "A",
+//         "B",
+//         "A B",
+//         "None"
+//       ]
+//     },
+//     questionType: "multiple_choice",
+//     hint: "",
+//     answer: "2",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "conditionals"
+//     ]
+//   },
+//   {
+//     problemId: 12,
+//     categoryId: 1,
+//     title: "Else Usage",
+//     description: {
+//       question: "파이썬에서 `else`는 어떤 문과 함께 사용되나요?",
+//       options: [
+//         "for",
+//         "while",
+//         "if",
+//         "break"
+//       ]
+//     },
+//     questionType: "multiple_choice",
+//     hint: "",
+//     answer: "3",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "conditionals"
+//     ]
+//   },
+//   {
+//     problemId: 13,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "다중 조건 분기에 사용하는 키워드를 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "elif",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "control_flow",
+//       "loops"
+//     ]
+//   },
+//   {
+//     problemId: 14,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "무한 루프를 만들기 위해 사용하는 조건은?",
+//       options: [
+//         "1. False",
+//         "2. 0",
+//         "3. True",
+//         "4. None"
+//       ]
+//     },
+//     questionType: "multiple_choice",
+//     hint: "",
+//     answer: "3",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "control_flow",
+//       "loops"
+//     ]
+//   },
+//   {
+//     problemId: 15,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "정수 타입을 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "int",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "variables",
+//       "data_types"
+//     ]
+//   },
+//   {
+//     problemId: 16,
+//     categoryId: 1,
+//     title: "Variable Type Check",
+//     description: {
+//       question: "다음 코드의 출력은? `x = 5; print(type(x))`",
+//       options: [
+//         "<class 'str'>",
+//         "<class 'int'>",
+//         "<class 'float'>",
+//         "<class 'bool'>"
+//       ]
+//     },
+//     questionType: "multiple_choice",
+//     hint: "",
+//     answer: "2",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "variables",
+//       "data_types"
+//     ]
+//   },
+//   {
+//     problemId: 17,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "문자열 양쪽 공백을 제거하는 메서드명을 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "strip",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "strings",
+//       "string_methods"
+//     ]
+//   },
+//   {
+//     problemId: 18,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "f-string은 문자열 앞에 f를 붙여 사용한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "strings",
+//       "string_methods"
+//     ]
+//   },
+//   {
+//     problemId: 19,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "str.split()은 기본적으로 공백을 기준으로 분리한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "strings",
+//       "string_methods"
+//     ]
+//   },
+//   {
+//     problemId: 20,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "문자열을 소문자로 변환하는 메서드명을 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "lower",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "strings",
+//       "string_methods"
+//     ]
+//   },
+//   {
+//     problemId: 21,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "값을 더해 할당하는 연산자를 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "+=",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "operators"
+//     ]
+//   },
+//   {
+//     problemId: 22,
+//     categoryId: 1,
+//     title: "Division Return Type",
+//     description: {
+//       question: "파이썬에서 `/`는 항상 정수를 반환한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "2",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "operators"
+//     ]
+//   },
+//   {
+//     problemId: 23,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "정수 나눗셈 연산자를 입력하세요.",
+//       options: []
+//     },
+//     questionType: "short_answer",
+//     hint: "",
+//     answer: "//",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "operators"
+//     ]
+//   },
+//   {
+//     problemId: 24,
+//     categoryId: 1,
+//     title: "",
+//     description: {
+//       question: "Python 함수는 def 키워드로 정의한다.",
+//       options: [
+//         "O",
+//         "X"
+//       ]
+//     },
+//     questionType: "true_false",
+//     hint: "",
+//     answer: "1",
+//     point: 10,
+//     userId: null,
+//     topicNames: [
+//       "functions"
+//     ]
+//   }
+// ];

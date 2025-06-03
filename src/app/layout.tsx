@@ -27,14 +27,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="ko">
-            <body className="min-h-screen flex-col justify-center">
-                <Header />
-                <div className="flex justify-center">
-                    <div className="max-w-[1024px] w-full">
-                        <Providers>{children}</Providers>
-                    </div>
+            <body className="min-h-screen flex-col justify-center bg-gray-50">
+            <Header/>
+            <div className="flex justify-center">
+                <div className="max-w-screen-lg w-screen">
+                    <Providers>{children}</Providers>
                 </div>
+            </div>
+            <div className={"flex justify-center items-center overflow-x-hidden"}>
                 <Footer />
+            </div>
             </body>
         </html>
     );
