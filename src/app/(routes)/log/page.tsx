@@ -29,27 +29,52 @@ const Log = () => {
     }, []);
 
     useEffect(() => {
-    const loadProblems = async () => {
-      const loaded: QuizProblem[] = [];
-      const seen = new Set<number>();
+        const loadProblems = async () => {
+        const loaded: QuizProblem[] = [];
+        const seen = new Set<number>();
 
-      for (const h of histories) {
-        if (!seen.has(h.problem.problemId)) {
-          seen.add(h.problem.problemId);
-          try {
-            const p = await fetchProblem(h.problem.problemId);
-            loaded.push(p);
-          } catch (e) {
-            console.error(`문제 ${h.problem.problemId} 불러오기 실패`, e);
+          for (const h of histories) {
+            if (!seen.has(h.problem.problemId)) {
+                seen.add(h.problem.problemId);
+                try {
+                    const p = await fetchProblem(h.problem.problemId);
+                    loaded.push(p);
+                } catch (e) {
+                    console.error(`문제 ${h.problem.problemId} 불러오기 실패`, e);
+                }
+            }
           }
+
+          setProblems(loaded);
+        };
+
+        if (histories.length > 0) loadProblems();
+    }, [histories]);
+
+    useEffect(() => {
+        const restoreSelection = async () => {
+            const selectedProblemId = sessionStorage.getItem("selectedProblemId");
+            const selectedHistoryId = sessionStorage.getItem("selectedHistoryId");
+
+            if (selectedProblemId && selectedHistoryId) {
+                const pid = parseInt(selectedProblemId,10);
+                const hid = parseInt(selectedProblemId,10);
+
+                const problem = await fetchProblem(pid);
+                const history = histories.find(h => h.historyId === hid);
+
+                if (problem && history) {
+                    setSelectedProblem(problem);
+                    setSelectedHistory(history);
+                }
+            }
         }
-      }
 
-      setProblems(loaded);
-    };
+        if (histories.length > 0) {
+            restoreSelection();
+        }
 
-    if (histories.length > 0) loadProblems();
-  }, [histories]);
+    }, [histories]);
 
     return (
         <div className="min-h-screen flex justify-center m-0 p-6">
@@ -60,6 +85,9 @@ const Log = () => {
                     onSelect={(problem, history) => {
                         setSelectedProblem(problem);
                         setSelectedHistory(history);
+
+                        sessionStorage.setItem("selectedProblemId", problem.problemId.toString());
+                        sessionStorage.setItem("selectedHistoryId", history.historyId.toString());
                     }}/>
                 </div>
                 <div className={`${selectedProblem ? "block" : "hidden"} md:block flex justify-center w-screen md:mx-0 mx-0 md:w-3/4`}>
