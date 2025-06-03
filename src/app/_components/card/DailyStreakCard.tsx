@@ -13,7 +13,7 @@ interface DailyStreakCardProps {
 
 const DailyStreakCard = ({ streakleftquiz, streakHistory }: DailyStreakCardProps) => {
     return (
-        <MainSectionCard className="w-full max-w-full md:max-w-[880px] m-2 md:my-8 md:mx-1 p-0">
+        <MainSectionCard className="w-full max-w-full md:max-w-[880px] m-2 md:mt-8 md:mx-1 p-0">
             <div className="flex flex-col md:flex-row md:justify-between md:items-start w-full px-3 py-0 md:py-1 md:px-4">
                 <div className="flex flex-col justify-start w-full md:w-1/2 gap-2 md:p-0 md:gap-3 overflow-hidden">
                     <div className="flex items-center gap-2 mb-1">
