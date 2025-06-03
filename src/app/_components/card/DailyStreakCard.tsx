@@ -22,7 +22,7 @@ const DailyStreakCard = ({ streakleftquiz, streakHistory }: DailyStreakCardProps
                         </div>
                         <span className={`text-lg font-linebold ${streakleftquiz > 0 ? "text-orange-500" : "text-lime-500"} md:text-2xl`}>데일리 스트릭</span>
                     </div>
-                    <div className="flex flex-col gap-2 md:px-8 p-0 justify-center items-center md:items-start text-center md:text-left md:mt-4 mt-2">
+                    <div className="flex flex-col gap-2 md:pl-8 p-0 items-center text-center md:text-left md:mt-4 mt-2">
                         {streakleftquiz > 0 ? (
                             <>
                                 <h1 className="text-xl md:text-3xl font-linebold">
