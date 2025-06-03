@@ -30,7 +30,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
 
     if (!problem) {
         return (
-            <BigCard className={`w-[600px] h-3/4 m-1 bg-white ${className}`}>
+            <BigCard className={`w-full max-w-screen md:w-[600px] md:h-3/4 my-1 md:mx-1 mx-6 bg-white ${className}`}>
                 <div className={'m-4'}>
                     <p className="font-linebold text-2xl text-gray-400">문제를 선택해주세요.</p>
                 </div>
