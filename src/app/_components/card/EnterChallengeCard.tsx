@@ -15,7 +15,7 @@ const rankTextColorMap: Record<string, string> = {
     Silver: "text-gray-300",
     Gold: "text-yellow-500",
     Platinum: "text-teal-400",
-    Diamond: "text-blue-500",
+    Diamond: "text-cyan-400",
 };
 
 const rankBadgeColorMap: Record<string, string> = {
@@ -24,7 +24,7 @@ const rankBadgeColorMap: Record<string, string> = {
     Silver: "bg-gray-300",
     Gold: "bg-yellow-500",
     Platinum: "bg-teal-400",
-    Diamond: "bg-blue-500",
+    Diamond: "bg-cyan-400",
 };
 
 const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
