@@ -7,6 +7,36 @@ const defaultRank: userRankData = {
     point: 0
 };
 
+const rankTextColorMap: Record<string, string> = {
+    Iron: "text-gray-500",
+    Bronze: "text-amber-700",
+    Silver: "text-gray-300",
+    Gold: "text-yellow-500",
+    Platinum: "text-teal-400",
+    Diamond: "text-cyan-400",
+};
+
+const rankBadgeColorMap: Record<string, string> = {
+    Iron: "bg-gray-500",
+    Bronze: "bg-amber-700",
+    Silver: "bg-gray-300",
+    Gold: "bg-yellow-500",
+    Platinum: "bg-teal-400",
+    Diamond: "bg-cyan-400",
+};
+
+function getRankBaseName(rank: string): string {
+    return rank.split(" ")[0];
+};
+
+export function getRankColor(name: string): { textColor: string; badgeColor: string; } {
+    const base = getRankBaseName(name);
+    return {
+        textColor: rankTextColorMap[base] || "text-gray-800",
+        badgeColor: rankBadgeColorMap[base] || "bg-gray-800",
+    }
+};
+
 export function initRank(): void {
     if (typeof window === "undefined") return;
 
@@ -17,16 +47,6 @@ export function initRank(): void {
     }
 }
 
-const rankTable = [
-    {rank: "Unranked", minpoint: 0},
-    {rank: "Iron", minpoint: 1},
-    {rank: "Bronze", minpoint: 200},
-    {rank: "Silver", minpoint: 400},
-    {rank: "Gold", minpoint: 800},
-    {rank: "Platinum", minpoint: 1600},
-    {rank: "Diamond", minpoint: 3200},
-    
-];
 
 // 가져오기
 export function getRank(): userRankData {
@@ -52,40 +72,6 @@ export function setRank(newRank: userRankData): void {
     window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
 
-function calculateRank(score: number): string {
-    let currentRank = rankTable[0].rank;
-    for (const rankInfo of rankTable) {
-        if (score >= rankInfo.minpoint) {
-            currentRank = rankInfo.rank;
-        } else {
-            break;
-        }
-    }
-    return currentRank;
-}
-
-export function addScore(amount: number = 1): void {
-    const current = getRank();
-    const newScore = current.point + amount;
-    const newRank = calculateRank(newScore);
-
-    setRank({
-        name: newRank,
-        point: newScore
-    });
-}
-
-// 점수 감소
-export function subtractScore(amount: number = 1): void {
-    const current = getRank();
-    const newScore = Math.max(0, current.point - amount);
-    const newRank = calculateRank(newScore);
-
-    setRank({
-        name: newRank,
-        point: newScore
-    });
-}
 
 export async function syncUserRank(){
     try {
