@@ -69,7 +69,7 @@ export default function App() {
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
                 {isLogin && (
-                    <UserStats streak={streak.nowStreak} rank={rank.rank}/>
+                    <UserStats streak={streak.nowStreak} rank={rank.name}/>
                 )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>

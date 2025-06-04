@@ -47,6 +47,9 @@ export default function ProfileMenu() {
     };
 
     const menuItems = userEmail ? [
+        <DropdownItem key="userEmail" isDisabled className="opacity-100 text-foreground cursor-default">
+            <p className="font-semibold">{getUserEmail()}</p>
+        </DropdownItem>,
         <DropdownItem key="profile">
             <p>마이페이지</p>
         </DropdownItem>,

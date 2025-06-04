@@ -1,5 +1,4 @@
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL; // 환경변수 관리
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export interface UserStreakFromServer {
     maxStreak: number;  // 최대 스트릭 수
