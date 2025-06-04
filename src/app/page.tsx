@@ -26,7 +26,7 @@ export default function Page() {
         const email = localStorage.getItem("user_email");
 
         if (!token || !email) {
-            router.replace("/login");
+            router.replace("/onboarding");
             return;
         }
 
