@@ -1,13 +1,10 @@
+import { userRankData, fetchRank } from "../apis/rankApi";
+
 const RANK_KEY = "userRank";
 
-export interface UserRankData {
-    score: number; // 현재 레이팅 포인트
-    rank: string;
-}
-
-const defaultRank: UserRankData = {
-    score: 0,
-    rank: "Iron", // 랭크 초기화
+const defaultRank: userRankData = {
+    name: "Unranked",
+    point: 0
 };
 
 export function initRank(): void {
@@ -21,7 +18,8 @@ export function initRank(): void {
 }
 
 const rankTable = [
-    {rank: "Iron", minpoint: 0},
+    {rank: "Unranked", minpoint: 0},
+    {rank: "Iron", minpoint: 1},
     {rank: "Bronze", minpoint: 200},
     {rank: "Silver", minpoint: 400},
     {rank: "Gold", minpoint: 800},
@@ -31,13 +29,13 @@ const rankTable = [
 ];
 
 // 가져오기
-export function getRank(): UserRankData {
+export function getRank(): userRankData {
     if (typeof window === "undefined") return defaultRank;
 
     const data = localStorage.getItem(RANK_KEY);
     if (data) {
         try {
-            return JSON.parse(data) as UserRankData;
+            return JSON.parse(data) as userRankData;
         } catch (e) {
             console.error("Failed to parse userRank:", e);
             return defaultRank;
@@ -47,7 +45,7 @@ export function getRank(): UserRankData {
 }
 
 // 저장하기
-export function setRank(newRank: UserRankData): void {
+export function setRank(newRank: userRankData): void {
     if (typeof window === "undefined") return;
     localStorage.setItem(RANK_KEY, JSON.stringify(newRank));
 
@@ -68,23 +66,37 @@ function calculateRank(score: number): string {
 
 export function addScore(amount: number = 1): void {
     const current = getRank();
-    const newScore = current.score + amount;
+    const newScore = current.point + amount;
     const newRank = calculateRank(newScore);
 
     setRank({
-        score: newScore,
-        rank: newRank
+        name: newRank,
+        point: newScore
     });
 }
 
 // 점수 감소
 export function subtractScore(amount: number = 1): void {
     const current = getRank();
-    const newScore = Math.max(0, current.score - amount);
+    const newScore = Math.max(0, current.point - amount);
     const newRank = calculateRank(newScore);
 
     setRank({
-        score: newScore,
-        rank: newRank,
+        name: newRank,
+        point: newScore
     });
+}
+
+export async function syncUserRank(){
+    try {
+        const serverData = await fetchRank();
+
+
+        setRank({
+            name: serverData.name,
+            point: serverData.point
+        });
+    } catch (e) {
+        console.error("유저 랭크 동기 실패:", e);
+    }
 }
