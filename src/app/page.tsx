@@ -63,7 +63,7 @@ export default function Page() {
 
     }, [router]);
 
-    if (!isReady) return null;
+    if (!isReady) return router.push("/");
 
     return (
         <>
