@@ -51,18 +51,20 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
             <div className="space-y-6 mb-6">
                 <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
                 {!isChallenge && <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />}
-                {isChallenge && (
-                        <ResultItem label="획득한 점수:" value={`+${score}`} color="text-orange-600" isScore={true} />
-                )}
+                {isChallenge && <ResultItem label="획득한 점수:" value={`+${score}`} color="text-orange-600" isScore={true} />}
             </div>
 
-            <MyButton onClick={handleGoLog} className="w-1/2 h-14 py-3">
-                풀이 기록 확인하기
-            </MyButton>
+            <div className="flex justify-center gap-4 mt-6">
+                {todayStreakQuizLeft != null && (
+                    <MyButton onClick={handleGoLog} className="w-1/2 h-14 py-3">
+                        풀이 기록 확인하기
+                    </MyButton>
+                )}
 
-            <MyButton onClick={handleGoHome} className="w-1/2 h-14 py-3">
-                메인 화면으로 돌아가기
-            </MyButton>
+                <MyButton onClick={handleGoHome} className="w-1/2 h-14 py-3">
+                    메인 화면으로 돌아가기
+                </MyButton>
+            </div>
         </div>
     );
 };
