@@ -27,7 +27,7 @@ export default function Page() {
         const email = localStorage.getItem("user_email");
 
         if (!token || !email) {
-            router.replace("/login");
+            router.replace("/onboarding");
             return;
         }
 
@@ -72,7 +72,15 @@ export default function Page() {
 
     }, [router]);
 
-    if (!isReady) return null; // 빌드오류나서 null
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!isReady) {
+                window.location.reload();
+            }
+        }, 1000); // 또는 2000ms
+
+        return () => clearTimeout(timeout);
+    }, [isReady]);
 
     return (
         <>
