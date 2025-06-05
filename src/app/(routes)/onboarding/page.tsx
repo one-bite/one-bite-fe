@@ -52,14 +52,14 @@ const OnboardingPage = () => {
                     icon={
                         // <div className={`bg-purple-500 mx-2 md:mx-5 rounded-full pt-1 px-0.5 flex items-center justify-center `}>
                             // <Logo strokeWidth={13} className="text-purple-500 fill-purple-300" size={55}/>
-                            <h1 className="font-linebold text-[33px] text-purple-500">AI</h1>
+                            <h1 className="font-linebold text-[33px] text-purple-500 mt-1">AI</h1>
                         // </div>
                         
                     } 
                     title="문제 해설" description="문제에 적용된 개념을 AI가 친절하게 설명" 
                 />
                 <FeatureBlock
-                    icon={<ProgressIcon className="w-10 h-10 text-blue-400" />}
+                    icon={<ProgressIcon className="w-10 h-10 text-blue-400"/>}
                     title="풀이 기록"
                     description="내가 푼 문제와 성장 기록을 한눈에"
                 />
