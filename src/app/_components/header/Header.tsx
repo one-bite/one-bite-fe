@@ -71,7 +71,7 @@ export default function App() {
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
                 {isLogin && !shouldHideStats && (
-                    <UserStats streak={streak.nowStreak} rank={ranks.rank}/>
+                    <UserStats streak={streak.nowStreak} rank={ranks.name}/>
                 )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
