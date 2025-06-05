@@ -17,7 +17,7 @@ export default function BadgeCard() {
                     </div>
                     <h2 className="text-xl font-linebold text-pink-600">획득한 뱃지</h2>
                 </div>
-                <div className="flex flex-row gap-3 overflow-x-scroll">
+                <div className="flex flex-row gap-5 items-center overflow-x-scroll">
                     {ownedBadgeIds.map((id)=>{
                         const {level} = userBadgeMap[id];
                         return (
