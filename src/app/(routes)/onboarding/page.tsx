@@ -8,9 +8,6 @@ import { Logo } from "@/app/_components/icon/LogoIcon";
 import { ProgressIcon } from "@/app/_components/icon/ProgressIcon";
 import FeatureBlock from "@/app/_components/onboarding/FeatureBlock";
 import StreakIcon from "@/app/_components/icon/StreakIcon";
-import GeneratedByAiIcon from "@/app/_components/icon/GeneratedByAiIcon";
-import PointIcon from "@/app/_components/icon/PointIcon";
-import HowToBlock from "@/app/_components/onboarding/HowToBlock";
 
 const OnboardingPage = () => {
     return (
