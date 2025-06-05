@@ -15,13 +15,13 @@ export default function App() {
     initRank();
 
     const [streak, setStreak] = useState(getStreak());
-    const [rank, setRank] = useState(getRank());
+    const [ranks, setRanks] = useState(getRank());
     const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const handleStorageChange = () => {
             setStreak(getStreak());
-            setRank(getRank());
+            setRanks(getRank());
         };
 
         window.addEventListener("userStatsUpdated", handleStorageChange);
@@ -71,7 +71,7 @@ export default function App() {
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
                 {isLogin && !shouldHideStats && (
-                    <UserStats streak={streak.nowStreak} rank={rank.rank}/>
+                    <UserStats streak={streak.nowStreak} rank={ranks.rank}/>
                 )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
