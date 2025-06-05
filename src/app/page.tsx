@@ -94,7 +94,7 @@ export default function Page() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <EnterChallengeCard rank={rank} score={score} />
-                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={totalToday - todayStreakLeft}/>
+                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={totalToday}/>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <RecentActivityCard />

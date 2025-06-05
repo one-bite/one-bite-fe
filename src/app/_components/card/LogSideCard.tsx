@@ -39,6 +39,14 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect, selectedP
         return "그 이전";
     };
 
+    const datePriority: Record<string, number> = {
+        "오늘": 0,
+        "어제": 1,
+        "일주일 이내": 2,
+        "한 달 이내": 3,
+        "그 이전": 4,
+    };
+
     const groupByDate = (histories: ProblemHistory[]) => {
         return histories.reduce((acc, h) => {
             const date = parseSubmittedAt(h.submittedAt);
@@ -114,40 +122,48 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect, selectedP
                 </div>
             </div>
             <div className="mt-4 p-1 w-full overflow-y-scroll overflow-x-hidden scrollbar-hide">
+
                 {quizType === "날짜 별"
-                    ? Object.entries(groupedByDate).map(([group, entries]) => (
-                        <div key={group} className="mb-2">
-                            <div
-                                className="flex justify-between text-lg items-center cursor-pointer font-linebold"
-                                onClick={() => toggleGroup(group)}
-                            >
-                                <span>{group}</span>
-                                {topicGroups[group] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                            </div>
-                            {topicGroups[group] && (
-                                <div className="ml-2 mt-1 space-y-1">
-                                    {entries.map((h) => {
-                                        const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
-                                        if (!problem) return null;
-                                        const rawTitle = problem.title?.trim();
-                                        const replaceToTopic = (title: string) =>
-                                            title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-                                        const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
-                                        return (
-                                            <ProblemItem
-                                                key={h.historyId}
-                                                id={h.historyId}
-                                                title={showTitle}
-                                                choose={() => onSelect(problem, h)}
-                                                isCorrect = {h.isCorrect}
-                                            />
-                                        );
-                                    })}
+                    ? Object.entries(groupedByDate)
+                        .sort(([a], [b]) => {
+                            const aPriority = datePriority[a] ?? 999;
+                            const bPriority = datePriority[b] ?? 999;
+                            return aPriority - bPriority;
+                        })
+                        .map(([group, entries]) => (
+                            <div key={group} className="mb-2">
+                                <div
+                                    className="flex justify-between text-lg items-center cursor-pointer font-linebold"
+                                    onClick={() => toggleGroup(group)}
+                                >
+                                    <span>{group}</span>
+                                    {topicGroups[group] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                                 </div>
-                            )}
-                        </div>
-                    )) : (
-                    Object.entries(groupedByTopic).map(([topicId, histories]) => (
+                                {topicGroups[group] && (
+                                    <div className="ml-2 mt-1 space-y-1">
+                                        {entries.map((h) => {
+                                            const problem = quizProblems.find(p => p.problemId === h.problem.problemId);
+                                            if (!problem) return null;
+                                            const rawTitle = problem.title?.trim();
+                                            const replaceToTopic = (title: string) =>
+                                                title.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                                            const showTitle = rawTitle || replaceToTopic(h.problem.topics[0].name);
+                                            return (
+                                                <ProblemItem
+                                                    key={h.historyId}
+                                                    id={h.historyId}
+                                                    title={showTitle}
+                                                    choose={() => onSelect(problem, h)}
+                                                    isCorrect={h.isCorrect}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        ))
+                    : (
+                        Object.entries(groupedByTopic).map(([topicId, histories]) => (
                         <div key={topicId} className="mb-2">
                             <div className="flex justify-between text-lg items-center cursor-pointer font-linebold" onClick={() => toggleGroup(topicId)}>
                                 <span>{topicNameMap[topicId] ?? topicId}</span>
