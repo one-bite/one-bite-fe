@@ -51,7 +51,7 @@ jobs:
                       heung115/spaghetti-fe:latest
                       heung115/spaghetti-fe:${{ env.DATE_TAG }}-${{ env.SHORT_SHA }}
                   build-args: |
-                      NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+                      NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID_PROD }}
                       NEXT_PUBLIC_FRONTEND_URL=${{ secrets.NEXT_PUBLIC_FRONTEND_URL_PROD }}
                       NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_PROD }}
 

@@ -23,7 +23,7 @@ const StartQuizButton = ({className = "", ...props }: StartQuizButtonProps) => {
         router.push(`/quiz`);
     }
 
-    const buttonText =  todaystreak.todayStreakQuizLeft == 0 ? "오늘의 문제 풀이 내역 보기" : todaystreak.todayStreakQuizLeft < 10 ? "오늘의 문제 이어서 풀기" : "오늘의 문제 풀러 가기";
+    const buttonText =  todaystreak.todayStreakQuizLeft == 0 ? "문제 풀이 내역 보기" : todaystreak.todayStreakQuizLeft < 10 ? "오늘의 문제 이어서 풀기" : "오늘의 문제 풀러 가기";
 
     return (
         <Button

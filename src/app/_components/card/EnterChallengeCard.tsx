@@ -3,29 +3,13 @@
 import MainSectionCard from "./MainSectionCard";
 import {useRouter} from "next/navigation";
 import {Logo} from "app/_components/icon/LogoIcon";
+import { getRankColor } from "@/utils/user";
 
 interface EnterChallengeCardProps {
     rank: string;
     score: number
 }
 
-const rankTextColorMap: Record<string, string> = {
-    Iron: "text-gray-500",
-    Bronze: "text-amber-700",
-    Silver: "text-gray-300",
-    Gold: "text-yellow-500",
-    Platinum: "text-teal-400",
-    Diamond: "text-blue-500",
-};
-
-const rankBadgeColorMap: Record<string, string> = {
-    Iron: "bg-gray-500",
-    Bronze: "bg-amber-700",
-    Silver: "bg-gray-300",
-    Gold: "bg-yellow-500",
-    Platinum: "bg-teal-400",
-    Diamond: "bg-blue-500",
-};
 
 const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
     const router = useRouter();
@@ -34,8 +18,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
         router.push(`/challenge`);
     };
 
-    const colorClass = rankTextColorMap[rank] ?? "text-gray-800";
-    const badgeColor = rankBadgeColorMap[rank] ?? "bg-gray-800";
+    const { textColor, badgeColor } = getRankColor(rank);
 
     return (
         <MainSectionCard minHeight="160px">
@@ -57,7 +40,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
                             <div className="text-xl font-linebold text-purple-800 mt-1">점수 :
                                 <span className="font-linebold text-gray-700"> {score}pt</span>
                             </div>
-                            <div className={`${colorClass} font-linebold text-3xl`}>{rank}</div>
+                            <div className={`${textColor} font-linebold text-3xl`}>{rank}</div>
                         </div>
                     </div>
                 </div>

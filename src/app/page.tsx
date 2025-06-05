@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
-import {getRank, getStreak, syncUserStreak, UserRankData} from "@/utils/user";
+import {getRank, getStreak, syncUserStreak, syncUserRank} from "@/utils/user";
 import React, { useState, useEffect } from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import { fetchTotalProblemNumber } from "@/utils/apis/problemStats";
@@ -18,7 +18,8 @@ export default function Page() {
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
     const [problemStats, setProblemStats] = useState<{ total: number; solved: number }>({ total: 1, solved: 0 });
-    const [userRank,setUserRank] = useState<UserRankData>({score:0,rank:"Iron"});
+    const [rank, setRank] = useState<string>("Unranked");
+    const [score, setScore] = useState<number>(0);
     const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
 
     useEffect(() => {
@@ -26,7 +27,7 @@ export default function Page() {
         const email = localStorage.getItem("user_email");
 
         if (!token || !email) {
-            router.replace("/login");
+            router.replace("/onboarding");
             return;
         }
 
@@ -35,6 +36,13 @@ export default function Page() {
             const mystreak = getStreak();
             setTodayStreakLeft(mystreak.todayStreakQuizLeft);
             setWeeklyStreakHistory(mystreak.streakHistory);
+        };
+
+        const syncRank = async () => {
+            await syncUserRank();
+            const myrank = getRank();
+            setRank(myrank.name);
+            setScore(myrank.point);
         };
 
         const loadStats = async () => {
@@ -55,9 +63,10 @@ export default function Page() {
             setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
         };
 
-        Promise.all([syncStreak(), loadStats()]).then(() => {
+        Promise.all([syncStreak(), loadStats(), syncRank()]).then(() => {
             const rankData = getRank();
-            setUserRank(rankData);
+            setRank(rankData.name);
+            setScore(rankData.point);
             setIsReady(true);
         });
 
@@ -72,7 +81,7 @@ export default function Page() {
                     <DailyStreakCard streakleftquiz={todayStreakLeft} streakHistory={weeklyStreakHistory} />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
-                    <EnterChallengeCard rank={userRank.rank} score={userRank.score} />
+                    <EnterChallengeCard rank={rank} score={score} />
                     <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={10 - todayStreakLeft}/>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
