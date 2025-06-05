@@ -1,6 +1,6 @@
 "use client";
 
-//import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Navbar, NavbarBrand, NavbarContent, Link, DropdownTrigger, Dropdown, Avatar } from "@nextui-org/react";
 import { Logo } from "../icon/LogoIcon";
 import UserStats from "./UserStats";
@@ -10,18 +10,18 @@ import { useState, useEffect } from "react";
 import { initStreak, initRank } from "@/utils/user"; // 초기화 함수들
 
 export default function App() {
-    //const pathname = usePathname();
+    const pathname = usePathname();
     initStreak();
     initRank();
 
     const [streak, setStreak] = useState(getStreak());
-    const [rank, setRank] = useState(getRank());
+    const [ranks, setRanks] = useState(getRank());
     const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         const handleStorageChange = () => {
             setStreak(getStreak());
-            setRank(getRank());
+            setRanks(getRank());
         };
 
         window.addEventListener("userStatsUpdated", handleStorageChange);
@@ -58,6 +58,8 @@ export default function App() {
         }
     }, []);
 
+    const shouldHideStats = ["/login", "/onboarding"].includes(pathname);
+
     return (
         <Navbar className="bg-lime-500">
             <NavbarBrand>
@@ -68,8 +70,8 @@ export default function App() {
             </NavbarBrand>
 
             <NavbarContent as="div" justify="end" className="items-center gap-6">
-                {isLogin && (
-                    <UserStats streak={streak.nowStreak} rank={rank.name}/>
+                {isLogin && !shouldHideStats && (
+                    <UserStats streak={streak.nowStreak} rank={ranks.name}/>
                 )}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
