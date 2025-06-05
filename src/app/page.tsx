@@ -21,7 +21,7 @@ export default function Page() {
     const [rank, setRank] = useState<string>("Unranked");
     const [score, setScore] = useState<number>(0);
     const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
-
+/*
     useEffect(() => {
         const token = localStorage.getItem("accessToken");
         const email = localStorage.getItem("user_email");
@@ -73,7 +73,7 @@ export default function Page() {
     }, [router]);
 
     if (!isReady) return router.push("/");
-
+*/
     return (
         <>
             <div className="max-w-4xl mx-auto w-full px-4 md:px-0">

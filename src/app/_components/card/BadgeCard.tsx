@@ -17,7 +17,7 @@ export default function BadgeCard() {
                     </div>
                     <h2 className="text-xl font-linebold text-pink-600">획득한 뱃지</h2>
                 </div>
-                <div className="flex flex-row gap-5 items-center overflow-x-scroll">
+                <div className="flex flex-row gap-2 items-center h-full bg-gray-50 rounded-lg overflow-x-scroll scroll-mt4">
                     {ownedBadgeIds.map((id)=>{
                         const {level} = userBadgeMap[id];
                         return (
@@ -29,9 +29,6 @@ export default function BadgeCard() {
                         )
                     })}
                 </div>
-                <a href="#" className="inline-block mt-4 text-indigo-600 text-sm font-semibold hover:underline">
-                    전체 뱃지 보기 →
-                </a>
             </div>
         </MainSectionCard>
     );
