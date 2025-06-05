@@ -26,11 +26,20 @@ export default function TodayModal({ isOpen, isCorrect, remaining, onClose }: To
                     {isCorrect ? "입니다!" : "입니다..."}
                 </h2>
 
-                {isCorrect && (
+                {(isCorrect && remaining > 0) && (
                     <div className="flex flex-col items-center text-sm text-gray-800 gap-2 mb-6">
                         <div className="flex items-center gap-2 text-red-500">
                             <StreakIcon className="w-4 h-4"/>
                             <span className="font-semibold">{remaining} Problems Left</span>
+                        </div>
+                    </div>
+                )}
+
+                {(isCorrect && remaining == 0) && (
+                    <div className="flex flex-col items-center text-sm text-gray-800 gap-2 mb-6">
+                        <div className="flex items-center gap-2 text-red-500">
+                            <StreakIcon className="w-4 h-4"/>
+                            <span className="font-semibold">모든 문제를 다 풀었어요!</span>
                         </div>
                     </div>
                 )}
