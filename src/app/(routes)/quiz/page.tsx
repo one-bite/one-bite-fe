@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect, Suspense} from "react";
+import {useState, useEffect, Suspense, useCallback} from "react";
 import { fetchTodayProblems } from "@/utils/apis/todayProblem";
 import { submitTodayProblem } from "@/utils/apis/submitTodayProblem";
 import { TodayQuizResponse } from "app/_configs/types/quiz";
@@ -35,7 +35,7 @@ const QuizPage = () => {
     }
   };
 
-  const restoreFromHistory = (index: number) => {
+  const restoreFromHistory = useCallback((index: number) => {
     if (!quizData) return;
     const pid = quizData.problemList[index].problemId;
     const hist = history.find(h => h.problem.problemId === pid);
@@ -49,7 +49,13 @@ const QuizPage = () => {
       setIsCorrect(null);
       setIsSolved(null);
     }
-  };
+
+    const correct = history.filter(h => h.isCorrect === true).length;
+    const wrong = history.filter(h => h.isCorrect === false).length;
+
+    setCorrectCount(correct);
+    setWrongCount(wrong);
+  }, [quizData, history]);
 
   useEffect(() => {
       const loadProblems = async () => {
@@ -85,7 +91,7 @@ const QuizPage = () => {
       setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
     }
     restoreFromHistory(currentIndex);
-  }, [quizData, currentIndex, history]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
+  }, [quizData, currentIndex, history, restoreFromHistory]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
   
   const [selected, setSelected] = useState<string | null>(null); // 선택한 답
   const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
