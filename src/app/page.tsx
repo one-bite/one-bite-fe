@@ -27,7 +27,7 @@ export default function Page() {
         const email = localStorage.getItem("user_email");
 
         if (!token || !email) {
-            router.replace("/onboarding");
+            router.replace("/login");
             return;
         }
 
@@ -72,7 +72,7 @@ export default function Page() {
 
     }, [router]);
 
-    if (!isReady) return router.push("/");
+    if (!isReady) return null; // 빌드오류나서 null
 
     return (
         <>
