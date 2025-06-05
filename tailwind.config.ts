@@ -9,6 +9,20 @@ export default {
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
         "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     ],
+    safelist: [
+        "text-amber-700",
+        "text-gray-500",
+        "text-gray-300",
+        "text-yellow-500",
+        "text-teal-400",
+        "text-cyan-400",
+        "bg-amber-700",
+        "bg-gray-500",
+        "bg-gray-300",
+        "bg-yellow-500",
+        "bg-teal-400",
+        "bg-cyan-400",
+    ],
     darkMode: "class",
     theme: {
         extend: {
