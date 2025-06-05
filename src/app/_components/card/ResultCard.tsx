@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import MyButton from "app/_components/buttons/MyButton";
+import { Logo } from "../icon/LogoIcon";
 
 interface ResultCardProps {
     correctAnswers: number;
@@ -10,6 +11,9 @@ interface ResultCardProps {
     score: number | null; // 스트릭 결과라면 null
     todayStreakQuizLeft: number | null; // 챌린지 결과라면 null
     isChallenge: boolean;
+    rank?: string; // 챌린지 결과
+    textColor?: string; // 챌린지 결과
+    badgeColor?: string; // 챌린지 결과
 }
 
 const ResultItem: React.FC<{ label: string; value: string | number; color: string; isScore?: boolean }> = ({ label, value, color, isScore }) => {
@@ -21,7 +25,7 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
     );
 };
 
-const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft, isChallenge }) => {
+const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, score, todayStreakQuizLeft, isChallenge, rank, textColor, badgeColor }) => {
     const router = useRouter();
 
     const handleGoLog = () => {
@@ -52,6 +56,12 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
                 <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
                 {!isChallenge && <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />}
                 {isChallenge && <ResultItem label="획득한 점수:" value={`+${score}`} color="text-orange-600" isScore={true} />}
+                {isChallenge && (
+                    <div className="flex flex-col items-center justify-center">
+                        <ResultItem label="현재 랭크:" value={`${rank}`} color={`${textColor}`}/>
+                        <Logo size={80} className={`${badgeColor} rounded-full`}/>
+                    </div>
+                )}
             </div>
 
             <div className="flex justify-center gap-4 mt-6">
