@@ -1,25 +1,19 @@
 import {
-    CheckCircleIcon,
-    BookOpenIcon,
+    PencilSquareIcon,
+    FlagIcon,
     FireIcon,
-    CursorArrowRaysIcon,
-    BeakerIcon,
-    LightBulbIcon,
-    BoltIcon,
-    PlayCircleIcon,
     TrophyIcon,
-    ExclamationTriangleIcon,
+    MagnifyingGlassIcon,
+    AcademicCapIcon,
+    BoltIcon,
 } from "@heroicons/react/24/solid";
 
-export const badgeIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-    "우등생": CheckCircleIcon,
-    "모범생": BookOpenIcon,
-    "꾸준함": FireIcon,
-    "오늘의 도전": CursorArrowRaysIcon,
-    "한 우물 파기": BeakerIcon,
-    "척척 박사": LightBulbIcon,
-    "도전자": BoltIcon,
-    "자, 이제 시작이야": PlayCircleIcon,
-    "내 등급은?": TrophyIcon,
-    "죄송합니다": ExclamationTriangleIcon,
+export const badgeIconMap: Record<string, { name: string; icon: React.FC<{ className?: string }> }> = {
+    "1": { name: "우등생", icon: PencilSquareIcon },
+    "2": { name: "모범생", icon: FlagIcon },
+    "3": { name: "꾸준함", icon: FireIcon },
+    "4": { name: "오늘의 도전", icon: TrophyIcon },
+    "5": { name: "한 우물 파기", icon: MagnifyingGlassIcon },
+    "6": { name: "척척 박사", icon: AcademicCapIcon },
+    "7": { name: "도전자", icon: BoltIcon },
 };

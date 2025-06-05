@@ -18,7 +18,7 @@ const Badge = ({id, level, size = 64, labelColor="text-black"}:BadgeProps) => {
     const badgeSize = size * 0.6;
 
     return (
-        <div className="flex flex-col items-center mx-2 md:mx-3 mt-4 md:mt-5">
+        <div className="flex flex-col items-center mx-3 md:mx-4 mt-4 md:mt-5">
             <div
                 className={`rounded-full flex items-center justify-center shadow ${bgColor}`}
                 style={{width: size, height: size}}
