@@ -76,6 +76,8 @@ export default function Page() {
 
     }, [router]);
 
+    if (!isReady) return null;
+
     return (
         <>
             <div className="max-w-4xl mx-auto w-full px-4 md:px-0">
