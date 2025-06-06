@@ -76,7 +76,15 @@ export default function Page() {
 
     }, [router]);
 
-    if (!isReady) return null;
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!isReady) {
+                window.location.reload();
+            }
+        }, 10000); // 또는 2000ms
+
+        return () => clearTimeout(timeout);
+    }, [isReady]);
 
     return (
         <>
