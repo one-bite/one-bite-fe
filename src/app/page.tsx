@@ -76,16 +76,6 @@ export default function Page() {
 
     }, [router]);
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            if (!isReady) {
-                window.location.reload();
-            }
-        }, 1000); // 또는 2000ms
-
-        return () => clearTimeout(timeout);
-    }, [isReady]);
-
     return (
         <>
             <div className="max-w-4xl mx-auto w-full px-4 md:px-0">
