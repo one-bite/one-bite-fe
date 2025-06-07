@@ -61,7 +61,7 @@ const Log = () => {
             if (!selectedProblemId || !selectedHistoryId) return;
 
                 const pid = parseInt(selectedProblemId,10);
-                const hid = parseInt(selectedProblemId,10);
+                const hid = parseInt(selectedHistoryId,10);
 
                 const problem = problems.find(p => p.problemId === pid);
                 const history = histories.find(h => h.historyId === hid);
@@ -71,9 +71,12 @@ const Log = () => {
                     setSelectedHistory(history);
                 } else {
                     fetchProblem(pid).then((p) => {
-                        if (p && history) {
+                        if (p) {
+                            const h = histories.find(h => h.historyId === hid);
+                            if (h) {
                             setSelectedProblem(p);
-                            setSelectedHistory(history);
+                            setSelectedHistory(h);
+                            }
                         }
                     })
                 }
