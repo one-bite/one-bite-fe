@@ -120,8 +120,6 @@ const QuizPage = () => {
     decreaseTodayQuizLeft();
     setTodayStreak(getStreak());
 
-    await loadData();
-
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
       
@@ -195,7 +193,10 @@ const QuizPage = () => {
               isOpen={showModal}
               isCorrect={isCorrect ?? false}
               remaining={todayStreak.todayStreakQuizLeft} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-              onClose={() => setShowModal(false)}
+              onClose={async() => {
+                setShowModal(false);
+              await loadData(); 
+              }}
           />
         </div>
       </Suspense>
