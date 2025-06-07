@@ -75,6 +75,9 @@ export default function Page() {
         });
 
     }, [router]);
+
+    if (!isReady) return null;
+
 //그냥 안쓰는게 좋겠다 이거 수정할때까지 무효
 /*    useEffect(() => {
         const timeout = setTimeout(() => {
