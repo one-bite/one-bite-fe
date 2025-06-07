@@ -42,12 +42,18 @@ const QuizPage = () => {
             return;
           }
 
-          const todayStart = new Date().setHours(0, 0, 0, 0);
-          const todayEnd = todayStart + 86400000;
+          const now = new Date();
+          const todayYMD = [now.getFullYear(), now.getMonth() + 1, now.getDate()];
 
-          const todayHistory = historyData.filter(h => 
-            h.submittedAt.some(ts => ts >= todayStart && ts < todayEnd)
-          );
+          const todayHistory = historyData.filter(h => {
+            const submmitedYMD = h.submittedAt.slice(0, 3);
+            return (
+              submmitedYMD[0] === todayYMD[0] &&
+              submmitedYMD[1] === todayYMD[1] &&
+              submmitedYMD[2] === todayYMD[2]
+            );
+          });
+          console.log("오늘의 문제 히스토리:", todayHistory);
 
           const initialIndex = data.problemStatus.findIndex((v) => !v);
           const index = initialIndex >= 0 ? initialIndex : 0;
@@ -60,8 +66,14 @@ const QuizPage = () => {
           setSelected(matched?.submittedAnswer ?? null);
           setIsCorrect(matched?.isCorrect ?? null);
           setIsSolved(data.problemStatus[index]);
-          setCorrectCount(todayHistory.filter(h => h.isCorrect).length);
-          setWrongCount(todayHistory.filter(h => h.isCorrect === false).length);
+
+          const correct = todayHistory.filter(h => h.isCorrect).length;
+          const wrong = todayHistory.filter(h => h.isCorrect === false).length;
+          setCorrectCount(correct);
+          setWrongCount(wrong);
+          console.log(
+            "맞춘 문제 수:", correct, "틀린 문제 수:", wrong
+          );
         } catch (error) {
           console.error("문제 불러오기 오류:", error);
           router.push("/");
