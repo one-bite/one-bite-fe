@@ -125,7 +125,7 @@ const QuizPage = () => {
       
   };
 
-  const handleNext = () => {
+  const handleNext = async() => {
     if (isLast) {
       // 마지막 문제에서 결과 페이지로 이동
       router.push(`/result-streak?correct=${correctCount}&wrong=${wrongCount}`);
@@ -136,6 +136,8 @@ const QuizPage = () => {
     setIsCorrect(null); // 정답 여부 초기화
     setIsSolved(null); // 문제 풀었음 초기화
     setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
+    
+    await loadData(); // 다음 문제 데이터
   };
 
   const handleprev = () => {
@@ -193,10 +195,7 @@ const QuizPage = () => {
               isOpen={showModal}
               isCorrect={isCorrect ?? false}
               remaining={todayStreak.todayStreakQuizLeft} //정답일 때만 표시할 것이니 -1해서 넘겨줌.
-              onClose={async() => {
-                setShowModal(false);
-              await loadData(); 
-              }}
+              onClose={() => setShowModal(false)}
           />
         </div>
       </Suspense>
