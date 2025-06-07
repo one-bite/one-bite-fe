@@ -44,14 +44,22 @@ const QuizPage = () => {
       setSelected(hist.submittedAnswer);
       setIsCorrect(hist.isCorrect);
       setIsSolved(true);
+      
     } else {
       setSelected(null);
       setIsCorrect(null);
       setIsSolved(null);
     }
 
-    const correct = history.filter(h => h.isCorrect === true).length;
-    const wrong = history.filter(h => h.isCorrect === false).length;
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const todayEnd = todayStart + 86400000;
+
+    const todayHistory = history.filter(h => {
+      return h.submittedAt.some(ts => ts >= todayStart && ts < todayEnd);
+    });
+    const correct = todayHistory.filter(h => h.isCorrect === true).length;
+    const wrong = todayHistory.filter(h => h.isCorrect === false).length;
 
     setCorrectCount(correct);
     setWrongCount(wrong);
