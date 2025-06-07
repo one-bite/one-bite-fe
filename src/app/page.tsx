@@ -21,6 +21,7 @@ export default function Page() {
     const [rank, setRank] = useState<string>("Unranked");
     const [score, setScore] = useState<number>(0);
     const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
+    const [totalToday, setTotalToday] = useState(10);
 
     useEffect(() => {
         const token = localStorage.getItem("accessToken");
@@ -57,10 +58,13 @@ export default function Page() {
             const todayProblems = await fetchTodayLog();
             const todayProblemsIds = todayProblems?.problemList.map((p) => p.problemId) || [];
 
+            const totalTodayProblem = todayProblems?.problemList.map((p) => p.problemId).length || 10;
+
             const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
 
             setProblemStats({ total: totalData, solved: solvedData });
             setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
+            setTotalToday(totalTodayProblem);
         };
 
         Promise.all([syncStreak(), loadStats(), syncRank()]).then(() => {
@@ -72,8 +76,19 @@ export default function Page() {
 
     }, [router]);
 
-    if (!isReady) return router.push("/");
+    if (!isReady) return null;
 
+//그냥 안쓰는게 좋겠다 이거 수정할때까지 무효
+/*    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!isReady) {
+                window.location.reload();
+            }
+        }, 10000); // 또는 2000ms
+
+        return () => clearTimeout(timeout);
+    }, [isReady]);
+*/
     return (
         <>
             <div className="max-w-4xl mx-auto w-full px-4 md:px-0">
@@ -82,7 +97,7 @@ export default function Page() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <EnterChallengeCard rank={rank} score={score} />
-                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={10 - todayStreakLeft}/>
+                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={totalToday}/>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <RecentActivityCard />
