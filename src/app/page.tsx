@@ -100,7 +100,6 @@ export default function Page() {
                     <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={totalToday}/>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
-                    <RecentActivityCard />
                     <BadgeCard/>
                 </div>
             </div>
