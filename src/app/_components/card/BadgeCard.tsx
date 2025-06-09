@@ -42,7 +42,7 @@ export default function BadgeCard() {
                 </div>
                 <div
                     className="hidden md:flex flex-wrap gap-2 items-center justify-center w-full md:w-full h-full bg-gray-100 rounded-lg overflow-x-auto md:max-w-full">
-                    {ownedBadgeIds.map((id) => {
+                    {sortedBadgeIds.map((id) => {
                         const {level} = userBadgeMap[id];
                         return (
                             <Badge
