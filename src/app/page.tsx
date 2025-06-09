@@ -6,7 +6,6 @@ import {getRank, getStreak, syncUserStreak, syncUserRank} from "@/utils/user";
 import React, { useState, useEffect } from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import { fetchTotalProblemNumber } from "@/utils/apis/problemStats";
-import RecentActivityCard from "@/app/_components/card/RecentActivityCard";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
@@ -100,7 +99,6 @@ export default function Page() {
                     <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={totalToday}/>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
-                    <RecentActivityCard />
                     <BadgeCard/>
                 </div>
             </div>
