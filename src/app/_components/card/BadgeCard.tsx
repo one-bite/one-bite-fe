@@ -9,16 +9,17 @@ export default function BadgeCard() {
     const ownedBadgeIds = Object.keys(userBadgeMap);
 
     return (
-        <MainSectionCard minHeight="240px">
-            <div className="flex flex-col justify-between h-full gap-4">
+        <MainSectionCard minHeight="240px" className={'md:col-span-2'}>
+            <div className="flex flex-col justify-betweenl w-full h-full gap-4">
                 <div className={"flex flex-row justify-start items-center gap-3"}>
                     <div className={`bg-pink-700 rounded-full p-2.5 flex items-center justify-center`}>
                         <TrophyIcon size={24} className={'text-white'}/>
                     </div>
                     <h2 className="text-xl font-linebold text-pink-600">획득한 뱃지</h2>
                 </div>
-                <div className="flex flex-row gap-2 items-center h-full bg-gray-50 rounded-lg overflow-x-scroll md:overflow-x-scroll scroll-mt4">
-                    {ownedBadgeIds.map((id)=>{
+                <div
+                    className="flex flex-wrap gap-2 items-center justify-center w-full md:w-full h-full bg-gray-100 rounded-lg overflow-x-auto md:max-w-full">
+                    {ownedBadgeIds.map((id) => {
                         const {level} = userBadgeMap[id];
                         return (
                             <Badge
