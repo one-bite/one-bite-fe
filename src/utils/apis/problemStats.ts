@@ -1,11 +1,10 @@
+import { apiRequestWithTokenRefresh } from "./login";
+
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchTotalProblemNumber = async () => {
-    const response = await fetch(`${apiUrl}/problem/stats`, {
+    const response = await apiRequestWithTokenRefresh(`${apiUrl}/problem/stats`, {
         method: "GET",
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
     });
 
     if (!response.ok) {
@@ -15,4 +14,4 @@ export const fetchTotalProblemNumber = async () => {
     }
 
     return await response.json();
-}
+};

@@ -1,10 +1,11 @@
 import { userRankData, fetchRank } from "../apis/rankApi";
+import { setCookie, getCookie } from "../auth/tokenUtils";
 
 const RANK_KEY = "userRank";
 
 const defaultRank: userRankData = {
     name: "Unranked",
-    point: 0
+    point: 0,
 };
 
 const rankTextColorMap: Record<string, string> = {
@@ -29,32 +30,31 @@ const rankBadgeColorMap: Record<string, string> = {
 
 function getRankBaseName(rank: string): string {
     return rank.split(" ")[0];
-};
+}
 
-export function getRankColor(name: string): { textColor: string; badgeColor: string; } {
+export function getRankColor(name: string): { textColor: string; badgeColor: string } {
     const base = getRankBaseName(name);
     return {
         textColor: rankTextColorMap[base] || "text-gray-800",
         badgeColor: rankBadgeColorMap[base] || "bg-gray-800",
-    }
-};
+    };
+}
 
 export function initRank(): void {
     if (typeof window === "undefined") return;
 
-    const data = localStorage.getItem(RANK_KEY);
+    const data = getCookie(RANK_KEY);
 
     if (!data) {
-        localStorage.setItem(RANK_KEY, JSON.stringify(defaultRank));
+        setCookie(RANK_KEY, JSON.stringify(defaultRank), 1);
     }
 }
-
 
 // 가져오기
 export function getRank(): userRankData {
     if (typeof window === "undefined") return defaultRank;
 
-    const data = localStorage.getItem(RANK_KEY);
+    const data = getCookie(RANK_KEY);
     if (data) {
         try {
             return JSON.parse(data) as userRankData;
@@ -69,20 +69,18 @@ export function getRank(): userRankData {
 // 저장하기
 export function setRank(newRank: userRankData): void {
     if (typeof window === "undefined") return;
-    localStorage.setItem(RANK_KEY, JSON.stringify(newRank));
+    setCookie(RANK_KEY, JSON.stringify(newRank), 1);
 
     window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
 
-
-export async function syncUserRank(){
+export async function syncUserRank() {
     try {
         const serverData = await fetchRank();
 
-
         setRank({
             name: serverData.name,
-            point: serverData.point
+            point: serverData.point,
         });
     } catch (e) {
         console.error("유저 랭크 동기 실패:", e);

@@ -1,12 +1,13 @@
 import { ChallengeResponse } from "app/_configs/types/quiz";
+import { getCookie } from "../auth/tokenUtils";
 
-export const fetchChallengeProblems = async () : Promise<ChallengeResponse | null> => {
+export const fetchChallengeProblems = async (): Promise<ChallengeResponse | null> => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await fetch(`${apiUrl}/problem/challenge`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            Authorization: `Bearer ${getCookie("accessToken")}`,
         },
     });
 
@@ -17,20 +18,20 @@ export const fetchChallengeProblems = async () : Promise<ChallengeResponse | nul
     }
 
     const contentLength = response.headers.get("Content-Length");
-  if (response.status === 204 || contentLength === "0") {
-    return null;
-  }
+    if (response.status === 204 || contentLength === "0") {
+        return null;
+    }
 
-  const text = await response.text();
-  if (!text) {
-    return null;
-  }
+    const text = await response.text();
+    if (!text) {
+        return null;
+    }
 
-  try {
-    const data: ChallengeResponse = JSON.parse(text);
-    return data;
-  } catch (err) {
-    console.error("JSON 파싱 실패:", err);
-    return null;
-  }
+    try {
+        const data: ChallengeResponse = JSON.parse(text);
+        return data;
+    } catch (err) {
+        console.error("JSON 파싱 실패:", err);
+        return null;
+    }
 };

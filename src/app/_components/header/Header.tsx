@@ -8,6 +8,7 @@ import ProfileMenu from "./ProfileMenu"; // 추가!
 import { getStreak, getRank } from "@/utils/user";
 import { useState, useEffect } from "react";
 import { initStreak, initRank } from "@/utils/user"; // 초기화 함수들
+import { getCookie } from "@/utils/auth/tokenUtils";
 
 export default function App() {
     const pathname = usePathname();
@@ -31,15 +32,15 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        const accessToken = localStorage.getItem("accessToken");
-        const userEmail = localStorage.getItem("user_email");
+        const accessToken = getCookie("accessToken");
+        const userEmail = getCookie("user_email");
         if (accessToken && userEmail) {
             setIsLogin(true);
         }
 
         const handleLogin = () => {
-            const token = localStorage.getItem("accessToken");
-            const email = localStorage.getItem("user_email");
+            const token = getCookie("accessToken");
+            const email = getCookie("user_email");
             if (token && email) {
                 setIsLogin(true);
             }
@@ -55,7 +56,7 @@ export default function App() {
         return () => {
             window.removeEventListener("loginSuccess", handleLogin);
             window.removeEventListener("logout", handleLogout);
-        }
+        };
     }, []);
 
     const shouldHideStats = ["/login", "/onboarding"].includes(pathname);
@@ -70,9 +71,7 @@ export default function App() {
             </NavbarBrand>
 
             <NavbarContent as="div" justify="end" className="items-center gap-3">
-                {isLogin && !shouldHideStats && (
-                    <UserStats streak={streak.nowStreak} rank={ranks.name}/>
-                )}
+                {isLogin && !shouldHideStats && <UserStats streak={streak.nowStreak} rank={ranks.name} />}
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <Avatar

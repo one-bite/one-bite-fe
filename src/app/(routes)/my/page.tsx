@@ -7,8 +7,9 @@ import Header from "app/_components/header/Header";
 import PageInfo from "@/app/_components/PageInfo";
 import { validateUserEmail, removeLocalUserData } from "@/utils/apis/login";
 import { Button, Spacer } from "@nextui-org/react";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { fetchLogoutFromGoogle } from "@/utils/apis/login";
+import { getCookie, deleteCookie } from "@/utils/auth/tokenUtils";
 
 const MyPage = () => {
     const router = useRouter();
@@ -17,10 +18,11 @@ const MyPage = () => {
     useEffect(() => {
         if (typeof window === "undefined") return;
 
-        const accessToken = localStorage.getItem("accessToken");
-        const user_email = localStorage.getItem("user_email");
+        const accessToken = getCookie("accessToken");
+        const user_email = getCookie("user_email");
 
-        if (!accessToken || !user_email) { //Email 검사 제거?
+        if (!accessToken || !user_email) {
+            //Email 검사 제거?
             router.push("/login");
             return;
         }
@@ -43,7 +45,7 @@ const MyPage = () => {
             }
         };
 
-        //checkUserValidity();
+        checkUserValidity();
     }, [router]);
 
     const handleLogout = () => {
@@ -53,8 +55,8 @@ const MyPage = () => {
     };
 
     const handleClearLocalStorage = () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("user_email");
+        deleteCookie("accessToken");
+        deleteCookie("user_email");
         alert("로컬 스토리지가 초기화되었습니다.");
         router.push("/login"); // 로그인 페이지로 리다이렉트
     };
