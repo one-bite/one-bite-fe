@@ -1,7 +1,7 @@
 "use client";
 
 import StreakIcon from "app/_components/icon/StreakIcon";
-import TierIcon from "app/_components/icon/TierIcon";
+import {getRankColor} from "@/utils/user";
 
 interface userStatData {
     streak: number;
@@ -11,6 +11,8 @@ interface userStatData {
 
 export default function UserStats({ streak, rank } : userStatData) {
 
+    const { textColor} = getRankColor(rank);
+
     return (
         <div className="flex items-center gap-2">
             {/* Streak */}
@@ -19,10 +21,9 @@ export default function UserStats({ streak, rank } : userStatData) {
                 <span className="text-red-900 text-sm font-linebold">{streak}</span>
             </div>
 
-            {/* Lives */}
+            {/* RankTier */}
             <div className="flex justify-between min-w-20 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
-                <TierIcon className="size-6 text-gray-500" />
-                <span className="text-gray-700 text-sm font-linebold">{rank}</span>
+                <span className={`text-sm font-linebold ${textColor}`}>{rank}</span>
             </div>
         </div>
     );
