@@ -69,7 +69,7 @@ export default function App() {
                 </Link>
             </NavbarBrand>
 
-            <NavbarContent as="div" justify="end" className="items-center gap-6">
+            <NavbarContent as="div" justify="end" className="items-center gap-3">
                 {isLogin && !shouldHideStats && (
                     <UserStats streak={streak.nowStreak} rank={ranks.name}/>
                 )}

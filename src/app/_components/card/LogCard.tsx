@@ -67,7 +67,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
          
 
     return (
-        <BigCard className={`flex flex-col max-w-screen items-start w-full h-[800px] mt-1 mx-0 bg-white ${className} `}>
+        <BigCard className={`flex flex-col max-w-screen items-start w-full h-full min-h-[800px] mt-1 mx-0 bg-white ${className} `}>
             <div className="min-w-[660px] w-full p-4">
                 <QuizCard
                     topic={`${history?.problem.topics.map((t) => t.name)}`}
@@ -86,7 +86,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
 
             <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
                 <ExplanationViewer explanation={explanation} isLoading={isLoading}/>
-                <div className={"flex flex-row"}>
+                <div className={"flex flex-col md:flex-row"}>
                     <ProblemExplainationButton className={"justify-center items-center"} onClick={async ()=>{
                         if(!problem || !history) return;
                         setIsLoading(true);
