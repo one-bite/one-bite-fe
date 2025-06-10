@@ -78,11 +78,10 @@ export function middleware(request: NextRequest) {
         if (!accessToken) {
             console.log(`[${new Date().toISOString()}] ${method} ${path} → 인증 필요: 토큰 없음`);
             const response = NextResponse.redirect(new URL("/login", request.url));
-            // HTTP 환경에서는 Secure 플래그 제거
+            // 쿠키 설정 수정
             response.cookies.set("accessToken", "", {
                 expires: new Date(0),
                 path: "/",
-                httpOnly: true,
                 sameSite: "lax",
             });
             return response;
