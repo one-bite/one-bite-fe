@@ -2,29 +2,32 @@
 
 import { useRouter } from "next/navigation";
 import DailyStreakCard from "app/_components/card/DailyStreakCard";
-import {getRank, getStreak, syncUserStreak, syncUserRank} from "@/utils/user";
+import { getRank, getStreak, syncUserStreak, syncUserRank } from "@/utils/user";
 import React, { useState, useEffect } from "react";
 import ProgressCard from "app/_components/card/ProgressCard";
 import { fetchTotalProblemNumber } from "@/utils/apis/problemStats";
 import EnterChallengeCard from "app/_components/card/EnterChallengeCard";
 import BadgeCard from "app/_components/card/BadgeCard";
-import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {fetchTodayLog} from "@/utils/apis/todayProblem";
+import { fetchProblemHistory } from "@/utils/apis/problemHistory";
+import { fetchTodayLog } from "@/utils/apis/todayProblem";
+import { useTokenRefresh } from "@/utils/hooks/useTokenRefresh";
+import { getCookie } from "@/utils/auth/tokenUtils";
 
 export default function Page() {
     const router = useRouter();
+    useTokenRefresh(); // 토큰 자동 갱신 훅 추가
     const [isReady, setIsReady] = useState(false);
     const [todayStreakLeft, setTodayStreakLeft] = useState(0);
     const [weeklyStreakHistory, setWeeklyStreakHistory] = useState<string[]>([]);
     const [problemStats, setProblemStats] = useState<{ total: number; solved: number }>({ total: 1, solved: 0 });
     const [rank, setRank] = useState<string>("Unranked");
     const [score, setScore] = useState<number>(0);
-    const [correctStats, setCorrectStats] = useState({correct:0, todayCorrect:0});
+    const [correctStats, setCorrectStats] = useState({ correct: 0, todayCorrect: 0 });
     const [totalToday, setTotalToday] = useState(10);
 
     useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        const email = localStorage.getItem("user_email");
+        const token = getCookie("accessToken");
+        const email = getCookie("user_email");
 
         if (!token || !email) {
             router.replace("/onboarding");
@@ -50,19 +53,19 @@ export default function Page() {
             const history = await fetchProblemHistory();
 
             const totalData = data.total;
-            const solvedData = data.solved
+            const solvedData = data.solved;
 
-            const totalCorrect = history.filter((h)=>h.isCorrect).length;
+            const totalCorrect = history.filter((h) => h.isCorrect).length;
 
             const todayProblems = await fetchTodayLog();
             const todayProblemsIds = todayProblems?.problemList.map((p) => p.problemId) || [];
 
             const totalTodayProblem = todayProblems?.problemList.map((p) => p.problemId).length || 10;
 
-            const correctTodayStreak = history.filter((h)=>todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
+            const correctTodayStreak = history.filter((h) => todayProblemsIds.includes(h.problem.problemId) && h.isCorrect).length;
 
             setProblemStats({ total: totalData, solved: solvedData });
-            setCorrectStats({correct: totalCorrect, todayCorrect: correctTodayStreak});
+            setCorrectStats({ correct: totalCorrect, todayCorrect: correctTodayStreak });
             setTotalToday(totalTodayProblem);
         };
 
@@ -72,13 +75,12 @@ export default function Page() {
             setScore(rankData.point);
             setIsReady(true);
         });
-
     }, [router]);
 
     if (!isReady) return null;
 
-//그냥 안쓰는게 좋겠다 이거 수정할때까지 무효
-/*    useEffect(() => {
+    //그냥 안쓰는게 좋겠다 이거 수정할때까지 무효
+    /*    useEffect(() => {
         const timeout = setTimeout(() => {
             if (!isReady) {
                 window.location.reload();
@@ -96,10 +98,16 @@ export default function Page() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
                     <EnterChallengeCard rank={rank} score={score} />
-                    <ProgressCard total={problemStats.total} solved={problemStats.solved} correct={correctStats.correct} todayCorrect={correctStats.todayCorrect} todayTotal={totalToday}/>
+                    <ProgressCard
+                        total={problemStats.total}
+                        solved={problemStats.solved}
+                        correct={correctStats.correct}
+                        todayCorrect={correctStats.todayCorrect}
+                        todayTotal={totalToday}
+                    />
                 </div>
                 <div className="grid md:grid-cols-2 gap-6 mt-8">
-                    <BadgeCard/>
+                    <BadgeCard />
                 </div>
             </div>
         </>
