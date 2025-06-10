@@ -77,7 +77,15 @@ export function middleware(request: NextRequest) {
         // 둘 다 없으면 로그인 페이지로 리다이렉트
         if (!accessToken) {
             console.log(`[${new Date().toISOString()}] ${method} ${path} → 인증 필요: 토큰 없음`);
-            return NextResponse.redirect(new URL("/login", request.url));
+            const response = NextResponse.redirect(new URL("/login", request.url));
+            // HTTP 환경에서는 Secure 플래그 제거
+            response.cookies.set("accessToken", "", {
+                expires: new Date(0),
+                path: "/",
+                httpOnly: true,
+                sameSite: "lax",
+            });
+            return response;
         }
 
         try {
