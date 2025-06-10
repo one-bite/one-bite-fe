@@ -13,7 +13,7 @@ interface AnswerOptionsProps {
 
 const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect, selected, isCorrect, correctAnswer }) => {
     return (
-        <div className="flex flex-row justify-center space-x-14">
+        <div className="flex flex-row justify-center space-x-10">
             {options.map((option, index) => {
                 const isSelected = selected === (index+1).toString();
                 const isAnwer = correctAnswer === (index+1).toString();

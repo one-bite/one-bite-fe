@@ -11,7 +11,6 @@ import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
 import {useRouter} from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {ProblemHistory} from "app/_configs/types/problemHistory";
 const QuizPage = () => {
     const router = useRouter();
 
@@ -24,81 +23,71 @@ const QuizPage = () => {
 
     const [isLoading, setIsLoading] = useState(true);
 
-  const [history, setHistory] = useState<ProblemHistory[]>([]);
-
-  const loadHistory = async () => {
-    try {
-      const data = await fetchProblemHistory();
-      setHistory(data);
-    } catch (err) {
-      console.error("히스토리 로드 실패:", err);
-    }
-  };
-
-  const restoreFromHistory = useCallback((index: number) => {
-    if (!quizData) return;
-    const pid = quizData.problemList[index].problemId;
-    const hist = history.find(h => h.problem.problemId === pid);
-
-    if (hist) {
-      setSelected(hist.submittedAnswer);
-      setIsCorrect(hist.isCorrect);
-      setIsSolved(true);
-    } else {
-      setSelected(null);
-      setIsCorrect(null);
-      setIsSolved(null);
-    }
-
-    const correct = history.filter(h => h.isCorrect === true).length;
-    const wrong = history.filter(h => h.isCorrect === false).length;
-
-    setCorrectCount(correct);
-    setWrongCount(wrong);
-  }, [quizData, history]);
-
-  useEffect(() => {
-      const loadProblems = async () => {
-        try {
-          setIsLoading(true);
-          const data = await fetchTodayProblems();
-          console.log("응답 형태:", data);
-          loadHistory();
-
-        // 문제가 없을 경우 처리
-          if (!data || !data.problemList || data.problemList.length === 0) {
-            setQuizData(null);
-          } else {
-            setQuizData(data);
-            const initialIndex = data.problemStatus.findIndex((v) => !v);
-            setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
-          }
-        } catch (error) {
-          console.error("문제 불러오기 오류:", error);
-          alert("문제를 불러오는 데 실패했습니다. 메인 화면으로 이동합니다.");
-          router.push("/");
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      loadProblems();
-      }, [router]);
-  
- 
-  useEffect(() => {
-    if (quizData) {
-      setIsSolved(quizData.problemStatus[currentIndex]); // 현재 문제 풀었는지 여부
-    }
-    restoreFromHistory(currentIndex);
-  }, [quizData, currentIndex, history, restoreFromHistory]); // quizData 처음 로드 시와 currentIndex 변경 시에 실행
-  
-  const [selected, setSelected] = useState<string | null>(null); // 선택한 답
+    const [selected, setSelected] = useState<string | null>(null); // 선택한 답
   const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
   const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
+
+  const loadData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+          const data = await fetchTodayProblems();
+          const historyData = await fetchProblemHistory();
+
+          if (!data || !data.problemList || data.problemList.length === 0) {
+            setQuizData(null);
+            setIsLoading(false);
+            return;
+          }
+
+          const now = new Date();
+          const todayYMD = [now.getFullYear(), now.getMonth() + 1, now.getDate()];
+
+          const todayHistory = historyData.filter(h => {
+            const submmitedYMD = h.submittedAt.slice(0, 3);
+            return (
+              submmitedYMD[0] === todayYMD[0] &&
+              submmitedYMD[1] === todayYMD[1] &&
+              submmitedYMD[2] === todayYMD[2]
+            );
+          });
+          console.log("오늘의 문제 히스토리:", todayHistory);
+
+          const initialIndex = data.problemStatus.findIndex((v) => !v);
+          const index = initialIndex >= 0 ? initialIndex : 0;
+
+          const pid = data.problemList[index].problemId;
+          const matched = todayHistory.find(h => h.problem.problemId === pid);
+
+          setQuizData(data);
+          setCurrentIndex(index);
+          setSelected(matched?.submittedAnswer ?? null);
+          setIsCorrect(matched?.isCorrect ?? null);
+          setIsSolved(data.problemStatus[index]);
+
+          const correct = todayHistory.filter(h => h.isCorrect).length;
+          const wrong = todayHistory.filter(h => h.isCorrect === false).length;
+          setCorrectCount(correct);
+          setWrongCount(wrong);
+          console.log(
+            "맞춘 문제 수:", correct, "틀린 문제 수:", wrong
+          );
+        } catch (error) {
+          console.error("문제 불러오기 오류:", error);
+          router.push("/");
+        } finally {
+          setIsLoading(false);
+        }
+      }, [router]);
+
+  useEffect(() => {
+      loadData();
+      }, [loadData]);
+
+
+  
   if (isLoading) {
     return (
         <div className="w-full h-[500px] flex flex-col gap-4 items-center justify-center font-line">
@@ -143,14 +132,12 @@ const QuizPage = () => {
     decreaseTodayQuizLeft();
     setTodayStreak(getStreak());
 
-    await loadHistory();
-
     setShowModal(true); // 모달 표시
     setIsSolved(true); // 문제 풀었음 표시
       
   };
 
-  const handleNext = () => {
+  const handleNext = async() => {
     if (isLast) {
       // 마지막 문제에서 결과 페이지로 이동
       router.push(`/result-streak?correct=${correctCount}&wrong=${wrongCount}`);
@@ -161,6 +148,8 @@ const QuizPage = () => {
     setIsCorrect(null); // 정답 여부 초기화
     setIsSolved(null); // 문제 풀었음 초기화
     setCurrentIndex((prev) => prev + 1); // 문제 인덱스를 증가시켜 다음 문제로
+    
+    await loadData(); // 다음 문제 데이터
   };
 
   const handleprev = () => {
@@ -195,7 +184,8 @@ const QuizPage = () => {
             <MyButton
                 className="bg-lime-500 shadow-lime-900 hover:bg-lime-600 active:shadow-lime-900"
                 onClick={handleprev}
-                disabled={currentIndex === 0} // 첫 번째 문제일 때 비활성화
+                disabled={currentIndex === 0}
+                hidden={currentIndex === 0}// 첫 번째 문제일 때 비활성화
             >
               이전 문제로
             </MyButton>

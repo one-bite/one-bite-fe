@@ -61,7 +61,7 @@ const Log = () => {
             if (!selectedProblemId || !selectedHistoryId) return;
 
                 const pid = parseInt(selectedProblemId,10);
-                const hid = parseInt(selectedProblemId,10);
+                const hid = parseInt(selectedHistoryId,10);
 
                 const problem = problems.find(p => p.problemId === pid);
                 const history = histories.find(h => h.historyId === hid);
@@ -71,9 +71,12 @@ const Log = () => {
                     setSelectedHistory(history);
                 } else {
                     fetchProblem(pid).then((p) => {
-                        if (p && history) {
+                        if (p) {
+                            const h = histories.find(h => h.historyId === hid);
+                            if (h) {
                             setSelectedProblem(p);
-                            setSelectedHistory(history);
+                            setSelectedHistory(h);
+                            }
                         }
                     })
                 }
@@ -87,7 +90,7 @@ const Log = () => {
     return (
         <div className="min-h-screen flex justify-center m-0 p-6">
             <div className="flex flex-col md:flex-row m-0 gap-6">
-                <div className="flex justify-center min-w-64 w-screen md:w-1/4 h-screen">
+                <div className="flex justify-center min-w-64 w-screen md:w-full md:min-w-[300px] h-full">
                     <LogSideCard histories={histories}
                                  quizProblems={problems}
                                  selectedProblemId={selectedProblem?.problemId}
@@ -99,7 +102,7 @@ const Log = () => {
                         sessionStorage.setItem("selectedHistoryId", history.historyId.toString());
                     }}/>
                 </div>
-                <div className={`${selectedProblem ? "block" : "hidden"} md:block flex justify-center w-screen md:mx-0 mx-0 md:w-3/4`}>
+                <div className={`${selectedProblem ? "flex" : "hidden"} md:flex justify-center w-screen md:mx-0 mx-0 md:w-full`}>
                     <LogCard problem={selectedProblem} history={selectedHistory} className="overflow-y-auto"/>
                 </div>
             </div>

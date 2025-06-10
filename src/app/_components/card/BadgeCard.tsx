@@ -1,36 +1,59 @@
+"use client"
+
 import MainSectionCard from "./MainSectionCard";
+import Badge from "@/app/_configs/badge/Badge";
+import {TrophyIcon} from "app/_components/icon/TrophyIcon";
+import {userBadgeMap} from "app/_configs/badge/userBadgeMap";
 
 export default function BadgeCard() {
+    const ownedBadgeIds = Object.keys(userBadgeMap);
+
+    const levelOrder = ["Diamond", "Platinum", "Gold", "Silver", "Bronze", "Iron"];
+
+    const sortedBadgeIds = ownedBadgeIds.sort((a, b) => {
+        const levelA = userBadgeMap[a].level;
+        const levelB = userBadgeMap[b].level;
+        return levelOrder.indexOf(levelA) - levelOrder.indexOf(levelB);
+    });
+
+    const topBadges = sortedBadgeIds.slice(0, 3);
+
     return (
-        <MainSectionCard minHeight="240px">
-            <div className="flex flex-col justify-between h-full gap-4">
-                <div>
-                    <h2 className="text-lg font-bold text-gray-900 mb-3">획득한 뱃지</h2>
-                    <div className="flex flex-wrap gap-3">
-                        <div className="flex flex-col items-center">
-                            <span className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-300 to-yellow-500 flex items-center justify-center text-2xl shadow">
-                                🏅
-                            </span>
-                            <span className="text-xs mt-1 text-gray-700">5일 연속</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <span className="w-12 h-12 rounded-full bg-gradient-to-tr from-pink-300 to-pink-500 flex items-center justify-center text-2xl shadow">
-                                🔥
-                            </span>
-                            <span className="text-xs mt-1 text-gray-700">스트릭 10회</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <span className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-300 to-blue-500 flex items-center justify-center text-2xl shadow">
-                                💡
-                            </span>
-                            <span className="text-xs mt-1 text-gray-700">첫 문제풀이</span>
-                        </div>
+        <MainSectionCard minHeight="240px" className={'md:col-span-2'}>
+            <div className="flex flex-col justify-betweenl w-full h-full gap-4">
+                <div className={"flex flex-row justify-start items-center gap-3"}>
+                    <div className={`bg-pink-700 rounded-full p-2.5 flex items-center justify-center`}>
+                        <TrophyIcon size={24} className={'text-white'}/>
                     </div>
+                    <h2 className="text-xl font-linebold text-pink-600">획득한 뱃지</h2>
                 </div>
-                <a href="#" className="inline-block mt-4 text-indigo-600 text-sm font-semibold hover:underline">
-                    전체 뱃지 보기 →
-                </a>
+                <div
+                    className="md:hidden flex flex-wrap gap-2 items-center justify-center w-full md:w-full h-full bg-gray-100 rounded-lg overflow-x-auto md:max-w-full">
+                    {topBadges.map((id) => {
+                        const {level} = userBadgeMap[id];
+                        return (
+                            <Badge
+                                key={id}
+                                id={id}
+                                level={level}
+                            />
+                        )
+                    })}
+                </div>
+                <div
+                    className="hidden md:flex flex-wrap gap-2 items-center justify-center w-full md:w-full h-full bg-gray-100 rounded-lg overflow-x-auto md:max-w-full">
+                    {sortedBadgeIds.map((id) => {
+                        const {level} = userBadgeMap[id];
+                        return (
+                            <Badge
+                                key={id}
+                                id={id}
+                                level={level}
+                            />
+                        )
+                    })}
+                </div>
             </div>
         </MainSectionCard>
     );
-}
+};
