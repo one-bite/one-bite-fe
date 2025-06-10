@@ -11,7 +11,7 @@ interface ProblemItemProps {
 }
 
 const ProblemItem = ({ id, title, choose, isCorrect }: ProblemItemProps) => {
-    const titleColor = isCorrect == null ? "text-black" : isCorrect ? "text-green-900 bg-green-200" : "text-red-700 font-linebold";
+    const titleColor = isCorrect == null ? "text-black" : isCorrect ? "text-green-900" : "text-red-700 bg-red-50 rounded-lg";
 
     return (
         <div className={`flex px-1 py-1 hover:bg-gray-300 active:bg-gray-400 selection:bg-gray-400 md:hover:bg-gray-300 md:active:bg-gray-400 md:selection:bg-gray-400 rounded-lg cursor-pointer`} onClick={choose}>
