@@ -88,7 +88,7 @@ const Log = () => {
     }, [histories, problems]);
 
     return (
-        <div className="min-h-screen flex justify-center m-1 p-6">
+        <div className="min-h-screen flex justify-center m-0 p-6">
             <div className="flex flex-col md:flex-row m-0 gap-6">
                 <div className="flex justify-center min-w-64 w-screen md:w-1/4 h-screen">
                     <LogSideCard histories={histories}
