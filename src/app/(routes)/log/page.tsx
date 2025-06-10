@@ -90,7 +90,7 @@ const Log = () => {
     return (
         <div className="min-h-screen flex justify-center m-0 p-6">
             <div className="flex flex-col md:flex-row m-0 gap-6">
-                <div className="flex justify-center min-w-64 w-screen md:w-1/4 md:min-w-[280px] h-screen">
+                <div className="flex justify-center min-w-64 w-screen md:w-full md:min-w-[300px] h-screen">
                     <LogSideCard histories={histories}
                                  quizProblems={problems}
                                  selectedProblemId={selectedProblem?.problemId}
@@ -102,7 +102,7 @@ const Log = () => {
                         sessionStorage.setItem("selectedHistoryId", history.historyId.toString());
                     }}/>
                 </div>
-                <div className={`${selectedProblem ? "flex" : "hidden"} md:flex justify-center w-screen md:mx-0 mx-0 md:w-3/4`}>
+                <div className={`${selectedProblem ? "flex" : "hidden"} md:flex justify-center w-screen md:mx-0 mx-0 md:w-full`}>
                     <LogCard problem={selectedProblem} history={selectedHistory} className="overflow-y-auto"/>
                 </div>
             </div>
