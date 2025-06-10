@@ -1,3 +1,5 @@
+import { apiRequestWithTokenRefresh } from "./login";
+
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export interface userRankData {
@@ -6,14 +8,11 @@ export interface userRankData {
 }
 
 export async function fetchRank(): Promise<userRankData> {
-    const response = await fetch(`${apiUrl}/users/rank`, {
+    const response = await apiRequestWithTokenRefresh(`${apiUrl}/users/rank`, {
         method: "GET",
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
     });
 
-    if(!response.ok) {
+    if (!response.ok) {
         throw new Error("Failed to fetch user rank data");
     }
 

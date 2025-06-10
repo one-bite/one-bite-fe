@@ -1,13 +1,14 @@
-import {fetchUserStreak} from "@/utils/apis/streakApi";
+import { fetchUserStreak } from "@/utils/apis/streakApi";
 import { fetchTodayProblems } from "../apis/todayProblem";
+import { setCookie, getCookie, deleteCookie } from "../auth/tokenUtils";
 
 const STREAK_KEY = "userStreak";
 
 export interface UserStreakData {
-    maxStreak: number;       // 최대 스트릭 수
-    nowStreak: number;  // 현재 스트릭 수
-    todayStreakQuizLeft: number;      // 오늘 남은 문제 수
-    streakHistory: string[];    // 스트릭 달성한 날짜 리스트 (ex: ["2025-04-14", "2025-04-15"])
+    maxStreak: number; // 최대 스트릭 수
+    nowStreak: number; // 현재 스트릭 수
+    todayStreakQuizLeft: number; // 오늘 남은 문제 수
+    streakHistory: string[]; // 스트릭 달성한 날짜 리스트 (ex: ["2025-04-14", "2025-04-15"])
 }
 
 // 기본 초기값
@@ -21,10 +22,10 @@ const defaultStreak: UserStreakData = {
 export function initStreak(): void {
     if (typeof window === "undefined") return;
 
-    const data = localStorage.getItem(STREAK_KEY);
+    const data = getCookie(STREAK_KEY);
 
     if (!data) {
-        localStorage.setItem(STREAK_KEY, JSON.stringify(defaultStreak));
+        setCookie(STREAK_KEY, JSON.stringify(defaultStreak), 1);
     }
 }
 
@@ -32,7 +33,7 @@ export function initStreak(): void {
 export function getStreak(): UserStreakData {
     if (typeof window === "undefined") return defaultStreak;
 
-    const data = localStorage.getItem(STREAK_KEY);
+    const data = getCookie(STREAK_KEY);
     if (data) {
         try {
             return JSON.parse(data) as UserStreakData;
@@ -51,7 +52,7 @@ export function setStreak(newStreak: Partial<UserStreakData>): void {
     const current = getStreak();
     const updated = { ...current, ...newStreak };
 
-    localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
+    setCookie(STREAK_KEY, JSON.stringify(updated), 1);
     window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }
 
@@ -76,8 +77,7 @@ export function decreaseTodayQuizLeft(): void {
                 todayStreakQuizLeft: 0,
                 streakHistory: [...streakData.streakHistory, today],
             });
-
-        };
+        }
 
         setStreak({
             nowStreak: streakData.nowStreak + 1,
@@ -91,7 +91,7 @@ export function decreaseTodayQuizLeft(): void {
     }
 }
 
-export async function syncUserStreak(){
+export async function syncUserStreak() {
     try {
         const serverData = await fetchUserStreak();
 

@@ -1,3 +1,5 @@
+import { setCookie, getCookie, deleteCookie } from "../auth/tokenUtils";
+
 const POINT_KEY = "userPoint";
 
 export interface UserPointData {
@@ -11,10 +13,10 @@ const defaultPoint: UserPointData = {
 export function initPoint(): void {
     if (typeof window === "undefined") return;
 
-    const data = localStorage.getItem(POINT_KEY);
+    const data = getCookie(POINT_KEY);
 
     if (!data) {
-        localStorage.setItem(POINT_KEY, JSON.stringify(defaultPoint));
+        setCookie(POINT_KEY, JSON.stringify(defaultPoint), 1);
     }
 }
 
@@ -22,7 +24,7 @@ export function initPoint(): void {
 export function getPoint(): number {
     if (typeof window === "undefined") return defaultPoint.point;
 
-    const data = localStorage.getItem(POINT_KEY);
+    const data = getCookie(POINT_KEY);
     if (data) {
         try {
             return JSON.parse(data).point as number;
@@ -37,7 +39,7 @@ export function getPoint(): number {
 // 저장하기
 export function setPoint(newPoint: number): void {
     if (typeof window === "undefined") return;
-    localStorage.setItem(POINT_KEY, JSON.stringify({ point: newPoint }));
+    setCookie(POINT_KEY, JSON.stringify({ point: newPoint }), 1);
 
     window.dispatchEvent(new Event("userStatsUpdated")); // 다른 탭에서도 업데이트 반영
 }

@@ -7,10 +7,12 @@ import { jwtDecode } from "jwt-decode";
 import { fetchAccessTokenFromGoogle, LoginResponseProps } from "@/utils/apis/login";
 import { setUserEmail } from "@/utils/user/userEmail";
 import { syncUserStreak } from "@/utils/user/streak"; // 스트릭 동기화 함수
+import { setTokenToCookie, setCookie } from "@/utils/auth/tokenUtils";
 
 type Userinformation = {
     sub: string;
     new_user: boolean;
+    roles?: string[];
     exp: number;
     iat: number;
 };
@@ -36,13 +38,19 @@ const GoogleCallback = () => {
 
                         const decoded = jwtDecode<Userinformation>(data.accessToken);
 
-                        localStorage.setItem("accessToken", data.accessToken);
-                        localStorage.setItem("refreshToken", data.refreshToken);
+                        // 토큰을 쿠키에 저장
+                        setTokenToCookie(data.accessToken, data.refreshToken);
+
                         const user_email = decoded.sub;
                         setUserEmail(user_email);
-                        localStorage.setItem("new_user", JSON.stringify(decoded.new_user));
-                        localStorage.setItem("token_exp", decoded.exp.toString());
-                        localStorage.setItem("lastActivity", Date.now().toString());
+                        setCookie("new_user", JSON.stringify(decoded.new_user), 1);
+                        setCookie("token_exp", decoded.exp.toString(), 1);
+                        setCookie("lastActivity", Date.now().toString(), 1);
+
+                        // 사용자 권한 정보 저장 (있는 경우)
+                        if (decoded.roles) {
+                            setCookie("user_roles", JSON.stringify(decoded.roles), 1);
+                        }
 
                         //유저 스탯 표시 상태 동기화
                         window.dispatchEvent(new Event("loginSuccess"));
@@ -50,9 +58,7 @@ const GoogleCallback = () => {
                         //유저 스트릭 동기화
                         syncUserStreak();
 
-
                         router.replace("/");
-
                     } else {
                         console.error("Login Failed: No Access Token.");
                         alert("로그인에 실패했습니다.");

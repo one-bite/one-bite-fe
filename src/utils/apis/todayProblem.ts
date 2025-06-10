@@ -1,13 +1,11 @@
-import {TodayQuizResponse} from "app/_configs/types/quiz";
+import { TodayQuizResponse } from "app/_configs/types/quiz";
+import { apiRequestWithTokenRefresh } from "./login";
 
-export const fetchTodayProblems = async () : Promise<TodayQuizResponse | null> => {
+export const fetchTodayProblems = async (): Promise<TodayQuizResponse | null> => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const response = await fetch(`${apiUrl}/users/today`, {
+    const response = await apiRequestWithTokenRefresh(`${apiUrl}/users/today`, {
         method: "GET",
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-        },
     });
 
     if (!response.ok) {
@@ -17,32 +15,29 @@ export const fetchTodayProblems = async () : Promise<TodayQuizResponse | null> =
     }
 
     const contentLength = response.headers.get("Content-Length");
-  if (response.status === 204 || contentLength === "0") {
-    return null;
-  }
+    if (response.status === 204 || contentLength === "0") {
+        return null;
+    }
 
-  const text = await response.text();
-  if (!text) {
-    return null;
-  }
+    const text = await response.text();
+    if (!text) {
+        return null;
+    }
 
-  try {
-    const data: TodayQuizResponse = JSON.parse(text);
-    return data;
-  } catch (err) {
-    console.error("JSON 파싱 실패:", err);
-    return null;
-  }
+    try {
+        const data: TodayQuizResponse = JSON.parse(text);
+        return data;
+    } catch (err) {
+        console.error("JSON 파싱 실패:", err);
+        return null;
+    }
 };
 
-export const fetchTodayLog = async () : Promise<TodayQuizResponse | null> => {
+export const fetchTodayLog = async (): Promise<TodayQuizResponse | null> => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const response = await fetch(`${apiUrl}/users/today/logs`, {
+    const response = await apiRequestWithTokenRefresh(`${apiUrl}/users/today/logs`, {
         method: "GET",
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-        },
     });
 
     if (!response.ok) {
@@ -63,4 +58,4 @@ export const fetchTodayLog = async () : Promise<TodayQuizResponse | null> => {
         console.error("JSON 파싱 실패:", err);
         return null;
     }
-}
+};
