@@ -69,12 +69,32 @@ export default function Page() {
             setTotalToday(totalTodayProblem);
         };
 
-        Promise.all([syncStreak(), loadStats(), syncRank()]).then(() => {
-            const rankData = getRank();
-            setRank(rankData.name);
-            setScore(rankData.point);
-            setIsReady(true);
-        });
+        const fetchAll = async () => {
+            try {
+                await Promise.all([syncStreak(), loadStats(), syncRank()]);
+                const rankData = getRank();
+                setRank(rankData.name);
+                setScore(rankData.point);
+                setIsReady(true);
+            } catch (e) {
+                console.error("초기 데이터 로딩 실패", e);
+                // 1차 실패 시 재시도 예약
+                setTimeout(() => {
+                    if (!isReady) {
+                        location.reload(); // 자동 새로고침
+                    }
+                }, 5000);
+                // 2차 실패: 온보딩으로
+                setTimeout(() => {
+                    if (!isReady) {
+                        router.replace("/onboarding");
+                    }
+                }, 10000); // 총 10초 기다림
+            }
+        };
+
+        fetchAll();
+
     }, [router]);
 
     if (!isReady) return null;
@@ -90,6 +110,7 @@ export default function Page() {
         return () => clearTimeout(timeout);
     }, [isReady]);
 */
+
     return (
         <>
             <div className="max-w-4xl mx-auto w-full px-4 md:px-0">
