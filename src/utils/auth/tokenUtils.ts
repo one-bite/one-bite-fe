@@ -1,7 +1,7 @@
 // 쿠키 기반 토큰 관리 유틸리티
 export const setCookie = (name: string, value: string, days: number = 7) => {
     const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
-    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Strict; Secure`;
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax; httpOnly`;
 };
 
 export const getCookie = (name: string): string | null => {

@@ -2,7 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtDecode } from "jwt-decode";
 
 export const config = {
-    matcher: ["/((?!_next/static|_next/image|favicon.ico|login|$).*)"],
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         * - icons (icon files)
+         */
+        "/((?!api|_next/static|_next/image|favicon.ico|icons).*)",
+    ],
 };
 
 interface DecodedToken {
@@ -24,6 +34,16 @@ export function middleware(request: NextRequest) {
     const method = request.method;
     const path = request.nextUrl.pathname;
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
+    const accessToken = request.cookies.get("accessToken");
+    const userEmail = request.cookies.get("user_email");
+
+    // 토큰 상태 로깅
+    console.log(`[${new Date().toISOString()}] ${request.method} ${request.nextUrl.pathname} → 토큰 상태:`, {
+        hasAccessToken: !!accessToken,
+        hasUserEmail: !!userEmail,
+        path: request.nextUrl.pathname,
+    });
 
     // 공개 라우트는 인증 체크 없이 통과
     if (publicRoutes.some((route) => path.startsWith(route))) {
@@ -56,8 +76,16 @@ export function middleware(request: NextRequest) {
 
         // 둘 다 없으면 로그인 페이지로 리다이렉트
         if (!accessToken) {
-            console.log(`[MIDDLEWARE] No access token found, redirecting to login: ${path}`);
-            return NextResponse.redirect(new URL("/login", request.url));
+            console.log(`[${new Date().toISOString()}] ${method} ${path} → 인증 필요: 토큰 없음`);
+            const response = NextResponse.redirect(new URL("/login", request.url));
+            // HTTP 환경에서는 Secure 플래그 제거
+            response.cookies.set("accessToken", "", {
+                expires: new Date(0),
+                path: "/",
+                httpOnly: true,
+                sameSite: "lax",
+            });
+            return response;
         }
 
         try {
@@ -67,7 +95,7 @@ export function middleware(request: NextRequest) {
 
             // 토큰 만료 체크
             if (decoded.exp < currentTime) {
-                console.log(`[MIDDLEWARE] Token expired, redirecting to login: ${path}`);
+                console.log(`[${new Date().toISOString()}] ${method} ${path} → 토큰 만료: 토큰 만료`);
                 const response = NextResponse.redirect(new URL("/login", request.url));
                 response.cookies.delete("accessToken");
                 response.cookies.delete("refreshToken");
@@ -84,7 +112,7 @@ export function middleware(request: NextRequest) {
             logRequest(method, path, response.status, Date.now() - start, ip, decoded.sub);
             return response;
         } catch (error) {
-            console.error(`[MIDDLEWARE] Token validation failed:`, error);
+            console.error(`[${new Date().toISOString()}] ${method} ${path} → 토큰 검증 실패:`, error);
             const response = NextResponse.redirect(new URL("/login", request.url));
             response.cookies.delete("accessToken");
             response.cookies.delete("refreshToken");
