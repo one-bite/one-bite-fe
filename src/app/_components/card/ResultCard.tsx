@@ -39,13 +39,13 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
     return (
         <div className="bg-white p-6 rounded-xl shadow-2xl border-2 border-gray-200 w-full max-w-4xl text-center">
             {todayStreakQuizLeft != null && ( //스트릭 결과라면 해당 값을 프롭으로 전달. 이 값이 존재하면 해당 문구 표시
-                <h1 className="text-6xl font-extrabold text-lime-600 mb-12 mt-4">
+                <h1 className="text-5xl font-extrabold text-lime-600 mb-12 mt-4">
                     오늘의 <span className="text-red-500">스트릭</span>을 달성했어요!
                 </h1>
             )}
             {isChallenge && (
                 <>
-                    <h1 className="text-6xl font-extrabold text-lime-600 mb-12 mt-4">
+                    <h1 className="text-5xl font-extrabold text-lime-600 mb-12 mt-4">
                         <span className="text-purple-500">역량평가</span>가 완료되었습니다!
                     </h1>
                     <p className="text-3xl font-extrabold text-gray-700 mb-8">채점 결과</p>
