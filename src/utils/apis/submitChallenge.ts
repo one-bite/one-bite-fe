@@ -1,3 +1,5 @@
+import { apiRequestWithTokenRefresh } from "./login";
+
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 interface SubmitResult {
@@ -6,16 +8,11 @@ interface SubmitResult {
     score: number;
 }
 
-export const submitChallenge = async (
-    problemId: number,
-    answer: string,
-    solveTime = 0
-): Promise<SubmitResult> => {
-    const response = await fetch(`${apiUrl}/problem/challenge`, {
+export const submitChallenge = async (problemId: number, answer: string, solveTime = 0): Promise<SubmitResult> => {
+    const response = await apiRequestWithTokenRefresh(`${apiUrl}/problem/challenge`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify({
             problemId,

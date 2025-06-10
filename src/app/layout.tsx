@@ -3,6 +3,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import Header from "./_components/header/Header";
 import Footer from "./_components/Footer";
+import TokenManager from "./_components/TokenManager";
 import * as process from "process";
 
 export const metadata: Metadata = {
@@ -28,15 +29,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="ko">
             <body className="min-h-screen flex-col justify-center bg-gray-50">
-            <Header/>
-            <div className="flex justify-center">
-                <div className="max-w-screen-lg w-screen">
-                    <Providers>{children}</Providers>
+                <Header />
+                <div className="flex justify-center">
+                    <div className="max-w-screen-lg w-screen">
+                        <Providers>
+                            <TokenManager />
+                            {children}
+                        </Providers>
+                    </div>
                 </div>
-            </div>
-            <div className={"flex justify-center items-center overflow-x-hidden"}>
-                <Footer />
-            </div>
+                <div className={"flex justify-center items-center overflow-x-hidden"}>
+                    <Footer />
+                </div>
             </body>
         </html>
     );
