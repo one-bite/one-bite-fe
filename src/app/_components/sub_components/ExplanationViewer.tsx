@@ -13,7 +13,7 @@ interface ExplanationViewerProps {
 
 const ExplanationViewer = ({ explanation, isLoading }: ExplanationViewerProps) => {
     return (
-        <BigCard className="w-full max-h-[400px] mx-1 my-0 border border-gray-400 shadow-none p-4 overflow-y-auto">
+        <BigCard className="w-full max-h-[400px] mx-4 my-0 border border-gray-400 shadow-none p-4 overflow-y-auto">
             {isLoading ? (
                 <div className="flex justify-center items-center h-full">
                     <Spinner label="AI 해설 생성 중..." color="primary" />
