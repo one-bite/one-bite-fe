@@ -102,7 +102,7 @@ const Log = () => {
                         sessionStorage.setItem("selectedHistoryId", history.historyId.toString());
                     }}/>
                 </div>
-                <div className={`${selectedProblem ? "flex" : "hidden"} md:flex justify-center w-screen md:mx-0 mx-1 md:w-3/4`}>
+                <div className={`${selectedProblem ? "flex" : "hidden"} md:flex justify-center w-full md:mx-0 mx-1 md:w-3/4`}>
                     <LogCard problem={selectedProblem} history={selectedHistory} className="overflow-y-auto"/>
                 </div>
             </div>

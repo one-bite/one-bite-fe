@@ -22,7 +22,7 @@ export default function UserStats({ streak, rank } : userStatData) {
             </div>
 
             {/* RankTier */}
-            <div className="flex justify-between min-w-20 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
+            <div className="flex justify-between min-w-24 h-8 items-end gap-1 bg-white px-3 py-1 rounded-full">
                 <span className={`text-sm font-linebold ${textColor}`}>{rank}</span>
             </div>
         </div>
