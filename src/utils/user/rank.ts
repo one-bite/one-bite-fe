@@ -1,5 +1,5 @@
 import { userRankData, fetchRank } from "../apis/rankApi";
-import { setCookie, getCookie, deleteCookie } from "../auth/tokenUtils";
+import { setCookie, getCookie } from "../auth/tokenUtils";
 
 const RANK_KEY = "userRank";
 

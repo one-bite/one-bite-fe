@@ -1,4 +1,4 @@
-import { setCookie, getCookie, deleteCookie } from "../auth/tokenUtils";
+import { setCookie, getCookie } from "../auth/tokenUtils";
 
 const POINT_KEY = "userPoint";
 

@@ -4,8 +4,6 @@ import "./globals.css";
 import Header from "./_components/header/Header";
 import Footer from "./_components/Footer";
 import TokenManager from "./_components/TokenManager";
-import TokenDebugPanel from "./_components/debug/TokenDebugPanel";
-import TokenTestPanel from "./_components/debug/TokenTestPanel";
 import * as process from "process";
 
 export const metadata: Metadata = {

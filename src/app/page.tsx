@@ -94,8 +94,7 @@ export default function Page() {
         };
 
         fetchAll();
-
-    }, [router]);
+    }, [router, isReady]);
 
     if (!isReady) return null;
 

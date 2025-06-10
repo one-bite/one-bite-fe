@@ -1,6 +1,6 @@
 import { fetchUserStreak } from "@/utils/apis/streakApi";
 import { fetchTodayProblems } from "../apis/todayProblem";
-import { setCookie, getCookie, deleteCookie } from "../auth/tokenUtils";
+import { setCookie, getCookie } from "../auth/tokenUtils";
 
 const STREAK_KEY = "userStreak";
 
