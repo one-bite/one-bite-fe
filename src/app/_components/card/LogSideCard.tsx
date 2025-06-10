@@ -113,7 +113,7 @@ const LogSideCard = ({className="", histories, quizProblems, onSelect, selectedP
     }, [selectedProblemId, quizType, histories]);
 
     return(
-        <BigCard className={`min-w-60 w-full max-w-screen md:h-[800px] my-1 mx-6 p-6 justify-start bg-white ${className}`}>
+        <BigCard className={`min-w-60 w-full max-w-screen md:h-[800px] md:w-[300px] my-1 mx-6 p-6 justify-start bg-white ${className}`}>
             <div className="mt-1 flex flex-col items-center">
                 <p className="font-linebold text-3xl mb-4">문제 목록</p>
                 <div className="flex gap-4">
