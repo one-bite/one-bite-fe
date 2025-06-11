@@ -42,7 +42,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
     return (
         <Card className={`w-full max-w-3xl p-4 ${className}`}>
             <CardBody>
-                <div className={"relative w-full"}>
+                <div className={"flex flex-col md:relative w-full"}>
                     <div className="mb-4">
                         {typeof lives === "number" && (
                             <div className="bg-purple-500 rounded-lg px-4 py-1 w-fit h-[26px] text-white font-line mb-2">

@@ -11,6 +11,8 @@ import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
 import {useRouter} from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
+import {ProblemHistory} from "app/_configs/types/problemHistory";
+
 const QuizPage = () => {
     const router = useRouter();
 
@@ -25,16 +27,31 @@ const QuizPage = () => {
 
     const [selected, setSelected] = useState<string | null>(null); // 선택한 답
   const [correctCount, setCorrectCount] = useState(0); // 맞힌 문제 수
+
   const [wrongCount, setWrongCount] = useState(0); // 틀린 문제 수
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
+  const [historyData, setHistoryData] = useState<ProblemHistory[]>([]);
 
   const loadData = useCallback(async () => {
+
+    if (isSolved) {
+      const pid = quizData!.problemList[currentIndex].problemId;
+      const matched = historyData.find(h => h.problem.problemId === pid);
+
+      setSelected(matched?.submittedAnswer??null);
+      setIsCorrect(matched?.isCorrect ?? null);
+      return;
+    }
+
+
         setIsLoading(true);
         try {
           const data = await fetchTodayProblems();
           const historyData = await fetchProblemHistory();
+
+          setHistoryData(historyData);
 
           if (!data || !data.problemList || data.problemList.length === 0) {
             setQuizData(null);
@@ -53,6 +70,7 @@ const QuizPage = () => {
               submmitedYMD[2] === todayYMD[2]
             );
           });
+
           console.log("오늘의 문제 히스토리:", todayHistory);
 
           const initialIndex = data.problemStatus.findIndex((v) => !v);
@@ -68,19 +86,20 @@ const QuizPage = () => {
           setIsSolved(data.problemStatus[index]);
 
           const correct = todayHistory.filter(h => h.isCorrect).length;
-          const wrong = todayHistory.filter(h => h.isCorrect === false).length;
+          const wrong = todayHistory.filter(h => !h.isCorrect).length;
           setCorrectCount(correct);
           setWrongCount(wrong);
           console.log(
             "맞춘 문제 수:", correct, "틀린 문제 수:", wrong
           );
+
         } catch (error) {
           console.error("문제 불러오기 오류:", error);
           router.push("/");
         } finally {
           setIsLoading(false);
         }
-      }, [router]);
+      }, [router,isSolved,quizData,currentIndex,historyData]);
 
   useEffect(() => {
       loadData();
