@@ -36,16 +36,6 @@ const QuizPage = () => {
 
   const loadData = useCallback(async () => {
 
-    if (isSolved) {
-      const pid = quizData!.problemList[currentIndex].problemId;
-      const matched = historyData.find(h => h.problem.problemId === pid);
-
-      setSelected(matched?.submittedAnswer??null);
-      setIsCorrect(matched?.isCorrect ?? null);
-      return;
-    }
-
-
         setIsLoading(true);
         try {
           const data = await fetchTodayProblems();
