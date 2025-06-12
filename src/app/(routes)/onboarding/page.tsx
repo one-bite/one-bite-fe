@@ -20,7 +20,7 @@ const OnboardingPage = () => {
                         <Logo size={150} className="text-lime-500"/>
                     </div>
                     <div className={'md:hidden block'}>
-                        <Logo size={100} className="text-lime-500"/>
+                        <Logo size={112} className="text-lime-500"/>
                     </div>
                 </Link>
             </section>
