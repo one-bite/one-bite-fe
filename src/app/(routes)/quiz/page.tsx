@@ -11,7 +11,6 @@ import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
 import {useRouter} from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {ProblemHistory} from "app/_configs/types/problemHistory";
 
 const QuizPage = () => {
     const router = useRouter();
@@ -186,14 +185,14 @@ const QuizPage = () => {
           </div>
 
           <div className="flex justify-center mt-8 gap-4">
+            {currentIndex > 0 && (
             <MyButton
                 className="bg-lime-500 shadow-lime-900 hover:bg-lime-600 active:shadow-lime-900"
                 onClick={handleprev}
-                disabled={currentIndex === 0}
-                hidden={currentIndex === 0}// 첫 번째 문제일 때 비활성화
             >
               이전 문제로
             </MyButton>
+            )}
 
             {!isSolved && !showModal && (
                 <MyButton onClick={handleSubmit} disabled={!selected}>
