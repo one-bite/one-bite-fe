@@ -11,7 +11,7 @@ import StreakIcon from "@/app/_components/icon/StreakIcon";
 
 const OnboardingPage = () => {
     return (
-        <div className="min-h-screen flex flex-col items-center bg-gray-50 mt-4 md:mx-0 mx-4">
+        <div className="min-h-screen flex flex-col items-center bg-gray-50 md:mx-0 mx-4">
             {/* 로고 */}
             {/* <header className="w-full max-w-2xl flex justify-center items-center py-6"> */}
             <section>
