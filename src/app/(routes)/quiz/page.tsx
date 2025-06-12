@@ -11,7 +11,6 @@ import {getStreak, decreaseTodayQuizLeft, UserStreakData} from "@/utils/user";
 import {useRouter} from "next/navigation";
 import {Spinner} from "@nextui-org/react";
 import {fetchProblemHistory} from "@/utils/apis/problemHistory";
-import {ProblemHistory} from "app/_configs/types/problemHistory";
 
 const QuizPage = () => {
     const router = useRouter();
