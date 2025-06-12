@@ -32,16 +32,12 @@ const QuizPage = () => {
   const [showModal, setShowModal] = useState(false); // 모달 표시 여부
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  const [historyData, setHistoryData] = useState<ProblemHistory[]>([]);
-
   const loadData = useCallback(async () => {
 
         setIsLoading(true);
         try {
           const data = await fetchTodayProblems();
           const historyData = await fetchProblemHistory();
-
-          setHistoryData(historyData);
 
           if (!data || !data.problemList || data.problemList.length === 0) {
             setQuizData(null);
@@ -89,7 +85,7 @@ const QuizPage = () => {
         } finally {
           setIsLoading(false);
         }
-      }, [router,isSolved,quizData,currentIndex,historyData]);
+      }, [router]);
 
   useEffect(() => {
       loadData();
