@@ -13,7 +13,7 @@ const Badge = ({id, level, size = 64, labelColor="text-black"}:BadgeProps) => {
     if (!icon) return null;
 
     const {name, icon: Icon} = icon;
-    const bgColor = badgeColorMap[level] ?? "bg-gray-500";
+    const bgColor = badgeColorMap[level] ?? "bg-lime-500";
 
     return (
         <div className="flex flex-col items-center mx-3 md:mx-4 mt-2 md:mt-2">
@@ -21,7 +21,11 @@ const Badge = ({id, level, size = 64, labelColor="text-black"}:BadgeProps) => {
                 className={`rounded-full flex items-center justify-center shadow ${bgColor}`}
                 style={{width: size, height: size}}
             >
-                <Icon className={`text-white size-11`}/>
+                {bgColor == "bg-lime-500" ? (
+                    <Icon className={`text-gray-300 size-11`}/>
+                ) : (
+                    <Icon className={`text-white size-11`}/>
+                )};
             </div>
             <span className={`mt-1 text-center ${labelColor} text-sm md:text-xs font-linebold`}>
         {name}
