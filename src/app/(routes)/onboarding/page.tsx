@@ -16,14 +16,19 @@ const OnboardingPage = () => {
             {/* <header className="w-full max-w-2xl flex justify-center items-center py-6"> */}
             <section>
                 <Link href="/onboarding" className="flex justify-center items-center mt-4 mb-4">
-                    <Logo size={150} className="text-lime-500"/>
+                    <div className={'hidden md:block'}>
+                        <Logo size={150} className="text-lime-500"/>
+                    </div>
+                    <div className={'md:hidden block'}>
+                        <Logo size={100} className="text-lime-500"/>
+                    </div>
                 </Link>
             </section>
             {/* </header> */}
             {/* 서비스 한 줄 소개 + 대표 이미지/일러스트 */}
             <section className="w-full max-w-2xl flex flex-col items-center text-center mb-12">
-                <h1 className="text-4xl font-extrabold mb-4">코딩학습은 한입코딩에서 시작됩니다</h1>
-                <p className="text-lg text-gray-600 mb-6">매일 10문제, AI 해설, 풀이 기록까지! 한입에 끝내는 코딩 학습</p>
+                <h1 className="text-2xl md:text-4xl font-extrabold mb-4">코딩학습은 한입코딩에서 시작됩니다</h1>
+                <p className="text-xs md:text-lg text-gray-600 mb-6">매일 10문제, AI 해설, 풀이 기록까지! 한입에 끝내는 코딩 학습</p>
                 <div className="w-full h-full bg-gray-200 rounded-xl flex items-center justify-center mb-4 mx-2 md:mx-0">
                     {/* 대표 이미지/일러스트 */}
                     <Image
@@ -80,11 +85,11 @@ const OnboardingPage = () => {
                     </Button>
                 </Link>
                 <div className="flex justify-center mt-4 text-gray-400 text-xs gap-2">
-                    <Link href="/privacy" className="hover:underline">
+                    <Link href="#" className="hover:underline">
                         개인정보처리방침
                     </Link>
                     <span>·</span>
-                    <Link href="/terms" className="hover:underline">
+                    <Link href="#" className="hover:underline">
                         이용약관
                     </Link>
                 </div>
