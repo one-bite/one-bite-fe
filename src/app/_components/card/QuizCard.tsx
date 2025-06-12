@@ -58,7 +58,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
                         )}
                     </div>
 
-                    <div className="absolute top-0 right-0 flex flex-col items-end gap-2">
+                    <div className="md:absolute top-0 right-0 flex flex-col items-end gap-2">
                         {typeof lives === "number" && (
                             <div className="flex gap-1">
                                 {[...Array(3)].map((_, i) => {
