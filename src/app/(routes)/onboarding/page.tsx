@@ -11,7 +11,7 @@ import StreakIcon from "@/app/_components/icon/StreakIcon";
 
 const OnboardingPage = () => {
     return (
-        <div className="min-h-screen flex flex-col items-center bg-gray-50 md:mx-0 mx-4">
+        <div className="min-h-screen flex flex-col items-center bg-gray-50 mt-4 md:mx-0 mx-4">
             {/* 로고 */}
             {/* <header className="w-full max-w-2xl flex justify-center items-center py-6"> */}
             <section>
@@ -26,10 +26,10 @@ const OnboardingPage = () => {
             </section>
             {/* </header> */}
             {/* 서비스 한 줄 소개 + 대표 이미지/일러스트 */}
-            <section className="w-full max-w-2xl flex flex-col items-center text-center mb-12">
+            <section className="w-full max-w-2xl flex flex-col items-center text-center mb-8">
                 <h1 className="text-2xl md:text-4xl font-extrabold mb-4">코딩학습은 한입코딩에서 시작됩니다</h1>
                 <p className="text-xs md:text-lg text-gray-600 mb-6">매일 10문제, AI 해설, 풀이 기록까지! 한입에 끝내는 코딩 학습</p>
-                <div className="w-full h-full bg-gray-200 rounded-xl flex items-center justify-center mb-4 mx-2 md:mx-0">
+                <div className="w-full h-full bg-gray-200 rounded-xl flex items-center justify-center mt-8 mb-4 mx-2 md:mx-0">
                     {/* 대표 이미지/일러스트 */}
                     <Image
                         src="/images/example.png"
