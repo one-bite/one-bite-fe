@@ -15,7 +15,7 @@ function Results() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-4xl p-6">
+      <div className="w-full max-w-4xl md:p-6 -p-2">
         <ResultCard
           correctAnswers={correctAnswers}
           wrongAnswers={wrongAnswers}

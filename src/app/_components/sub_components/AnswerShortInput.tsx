@@ -23,7 +23,7 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ selected, onSelec
                 : "text-black";
 
     return (
-        <div className="flex flex-col mt-20 mx-16 mb-6">
+        <div className="flex flex-col md:mt-20 mt-6 md:mx-16 mx-2 mb-6">
             <Input
                 placeholder={"정답을 입력하세요"}
                 value={selected ?? ""}

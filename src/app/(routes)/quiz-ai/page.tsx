@@ -81,7 +81,7 @@ const QuizAI = () => {
   }
 
   return (
-    <div className="m-12 min-h-screen p-4">
+    <div className="m-2 md:m-12 min-h-screen p-4">
       
       <div className="flex justify-center">
           <QuizCard
