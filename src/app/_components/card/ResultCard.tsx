@@ -20,7 +20,7 @@ const ResultItem: React.FC<{ label: string; value: string | number; color: strin
     return (
         <div className="flex flex-col md:flex-auto justify-center items-center text-3xl mb-6 px-8 text-center">
             <span className="font-extrabold text-2xl mr-4">{label}</span>
-            <span className={`font-extrabold ${isScore ? "text-6xl" : "text-5xl"} ${color} ml-[80px]`}>{value}</span>
+            <span className={`font-extrabold ${isScore ? "text-6xl" : "text-5xl"} ${color} md:ml-[80px] mx-0`}>{value}</span>
         </div>
     );
 };
@@ -53,7 +53,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
             )}
 
             <div className="space-y-6 mb-12">
-                <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
+                <ResultItem label="맞힌 문제 수" value={correctAnswers} color="text-blue-500" />
                 {!isChallenge && <ResultItem label="틀린 문제 수" value={wrongAnswers} color="text-red-500" />}
                 {isChallenge && <ResultItem label="획득한 점수" value={`+${score}`} color="text-orange-600" isScore={true} />}
                 {isChallenge && (
