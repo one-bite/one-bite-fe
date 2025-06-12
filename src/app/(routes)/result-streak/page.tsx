@@ -14,7 +14,7 @@ function Results() {
   const wrongAnswers = Number(searchParams.get("wrong") || 0);
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6">
+    <main className="min-h-screen flex items-center justify-center md:p-6 p-6 pt-2">
       <div className="w-full max-w-4xl md:p-6 -p-2">
         <ResultCard
           correctAnswers={correctAnswers}

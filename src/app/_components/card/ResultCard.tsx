@@ -18,9 +18,9 @@ interface ResultCardProps {
 
 const ResultItem: React.FC<{ label: string; value: string | number; color: string; isScore?: boolean }> = ({ label, value, color, isScore }) => {
     return (
-        <div className="flex flex-col md:flex-auto justify-center items-center text-3xl mb-6 px-8 text-center">
+        <div className="flex flex-col md:flex-auto justify-center items-center text-3xl gap-1 mb-6 px-8 text-center">
             <span className="font-extrabold text-2xl mr-4">{label}</span>
-            <span className={`font-extrabold ${isScore ? "text-6xl" : "text-5xl"} ${color} md:ml-[80px] mx-0`}>{value}</span>
+            <span className={`font-extrabold md:mt-0 mt-2 ${isScore ? "text-3xl md:text-6xl" : "text-3xl md:text-5xl"} ${color} md:ml-[80px] mx-0`}>{value}</span>
         </div>
     );
 };
@@ -57,7 +57,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
                 {!isChallenge && <ResultItem label="틀린 문제 수" value={wrongAnswers} color="text-red-500" />}
                 {isChallenge && <ResultItem label="획득한 점수" value={`+${score}`} color="text-orange-600" isScore={true} />}
                 {isChallenge && (
-                    <div className="flex md:flex-col flex-row items-center justify-center">
+                    <div className="flex flex-col items-center justify-center">
                         <ResultItem label="현재 랭크" value={`${rank}`} color={`${textColor}`}/>
                         <Logo size={80} className={`${badgeColor} text-white rounded-full`}/>
                     </div>
