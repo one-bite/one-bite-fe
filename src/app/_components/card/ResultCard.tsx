@@ -18,7 +18,7 @@ interface ResultCardProps {
 
 const ResultItem: React.FC<{ label: string; value: string | number; color: string; isScore?: boolean }> = ({ label, value, color, isScore }) => {
     return (
-        <div className="flex justify-center items-center text-3xl mb-6 px-8 text-center">
+        <div className="flex flex-col md:flex-auto justify-center items-center text-3xl mb-6 px-8 text-center">
             <span className="font-extrabold text-2xl mr-4">{label}</span>
             <span className={`font-extrabold ${isScore ? "text-6xl" : "text-5xl"} ${color} ml-[80px]`}>{value}</span>
         </div>
@@ -54,11 +54,11 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
 
             <div className="space-y-6 mb-12">
                 <ResultItem label="맞힌 문제 수:" value={correctAnswers} color="text-blue-500" />
-                {!isChallenge && <ResultItem label="틀린 문제 수:" value={wrongAnswers} color="text-red-500" />}
-                {isChallenge && <ResultItem label="획득한 점수:" value={`+${score}`} color="text-orange-600" isScore={true} />}
+                {!isChallenge && <ResultItem label="틀린 문제 수" value={wrongAnswers} color="text-red-500" />}
+                {isChallenge && <ResultItem label="획득한 점수" value={`+${score}`} color="text-orange-600" isScore={true} />}
                 {isChallenge && (
                     <div className="flex flex-col items-center justify-center">
-                        <ResultItem label="현재 랭크:" value={`${rank}`} color={`${textColor}`}/>
+                        <ResultItem label="현재 랭크" value={`${rank}`} color={`${textColor}`}/>
                         <Logo size={80} className={`${badgeColor} rounded-full`}/>
                     </div>
                 )}
@@ -66,12 +66,11 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
 
             <div className="flex flex-col md:flex-row justify-center gap-4 mt-6">
                 {todayStreakQuizLeft != null && (
-                    <MyButton onClick={handleGoLog} className="w-1/2 h-14 py-3">
+                    <MyButton onClick={handleGoLog} className="w-full md:w-1/2 h-14 py-3">
                         풀이 기록 확인하기
                     </MyButton>
                 )}
-
-                <MyButton onClick={handleGoHome} className="w-1/2 h-14 py-3">
+                <MyButton onClick={handleGoHome} className="w-full md:w-1/2 h-14 py-3">
                     메인 화면으로 돌아가기
                 </MyButton>
             </div>
