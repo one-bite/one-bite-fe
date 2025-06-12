@@ -8,10 +8,10 @@ interface FeatureBlockProps {
 
 const FeatureBlock = ({ icon, title, description }: FeatureBlockProps) => (
     <div className="flex items-center gap-6 bg-white rounded-2xl shadow p-6">
-        <div className="w-16 h-16 bg-lime-100 rounded-full flex items-center justify-center text-2xl font-bold">{icon}</div>
+        <div className="w-16 h-16 bg-lime-200 rounded-full flex items-center justify-center text-2xl font-bold">{icon}</div>
         <div className="text-left">
-            <h2 className="text-xl font-bold mb-1">{title}</h2>
-            <p className="text-gray-600">{description}</p>
+            <h2 className="text-lg md:text-xl font-bold mb-1">{title}</h2>
+            <p className="text-sm md:text-base text-gray-600">{description}</p>
         </div>
     </div>
 );
