@@ -11,7 +11,7 @@ const AIGenerateButton = ({ onClick, className = "" }: AIGenerateButtonProps) =>
     return (
         <Button
             onClick={onClick}
-            className={`flex justify-center items-center gap-2 my-8 mx-4
+            className={`flex justify-center items-center gap-2 my-2 md:my-8 mx-4
                         w-[240px] h-16 text-white text-lg font-linebold
                         bg-gradient-to-r from-indigo-500 to-purple-500
                         rounded-2xl
