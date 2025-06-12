@@ -35,8 +35,8 @@ function getRankBaseName(rank: string): string {
 export function getRankColor(name: string): { textColor: string; badgeColor: string } {
     const base = getRankBaseName(name);
     return {
-        textColor: rankTextColorMap[base] || "text-gray-800",
-        badgeColor: rankBadgeColorMap[base] || "bg-gray-800",
+        textColor: rankTextColorMap[base] || "text-lime-500",
+        badgeColor: rankBadgeColorMap[base] || "bg-lime-500",
     };
 }
 
