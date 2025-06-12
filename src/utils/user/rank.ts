@@ -9,7 +9,7 @@ const defaultRank: userRankData = {
 };
 
 const rankTextColorMap: Record<string, string> = {
-    Unranked: "text-gray-800",
+    Unranked: "text-lime-500",
     Iron: "text-gray-500",
     Bronze: "text-amber-700",
     Silver: "text-gray-300",
@@ -19,7 +19,7 @@ const rankTextColorMap: Record<string, string> = {
 };
 
 const rankBadgeColorMap: Record<string, string> = {
-    Unranked: "bg-gray-800",
+    Unranked: "bg-lime-500",
     Iron: "bg-gray-500",
     Bronze: "bg-amber-700",
     Silver: "bg-gray-300",

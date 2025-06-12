@@ -25,7 +25,7 @@ const Badge = ({id, level, size = 64, labelColor="text-black"}:BadgeProps) => {
                     <Icon className={`text-gray-300 size-11`}/>
                 ) : (
                     <Icon className={`text-white size-11`}/>
-                )};
+                )}
             </div>
             <span className={`mt-1 text-center ${labelColor} text-sm md:text-xs font-linebold`}>
         {name}
