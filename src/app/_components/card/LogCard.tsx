@@ -84,7 +84,7 @@ const LogCard = ({ className = "", problem, history }:LogCardProps) => {
                 />
             </div>
 
-            <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 justify-center items-center">
+            <div className="flex flex-col w-full h-full p-4 pb-0 mb-4 md:justify-center justify-start items-center">
                 <ExplanationViewer explanation={explanation} isLoading={isLoading}/>
                 <div className={"flex flex-col md:flex-row"}>
                     <ProblemExplainationButton className={"justify-center items-center"} onClick={async ()=>{
