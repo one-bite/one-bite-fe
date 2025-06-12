@@ -168,7 +168,7 @@ const QuizPage = () => {
           문제를 불러오는 중입니다...
         </div>
       }>
-        <div className="m-12 min-h-screen p-4">
+        <div className="m-2 md:m-12 min-h-screen p-4">
           <div className="flex justify-center">
             <QuizCard
                 leftStreak={todayStreak.todayStreakQuizLeft}
