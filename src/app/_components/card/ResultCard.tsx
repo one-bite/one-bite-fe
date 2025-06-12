@@ -64,7 +64,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
                 )}
             </div>
 
-            <div className="flex justify-center gap-4 mt-6">
+            <div className="flex flex-col md:flex-row justify-center gap-4 mt-6">
                 {todayStreakQuizLeft != null && (
                     <MyButton onClick={handleGoLog} className="w-1/2 h-14 py-3">
                         풀이 기록 확인하기
