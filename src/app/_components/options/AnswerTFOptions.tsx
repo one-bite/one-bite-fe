@@ -43,7 +43,7 @@ const AnswerMultipleOptions: React.FC<AnswerOptionsProps> = ({ options, onSelect
                     className="my-10 ml-0 flex items-center justify-center bg-gray-100 w-[300px] h-[200px]"
                     isDisabled={isCorrect !== null} // 정답 제출 후 비활성화
                 >
-                    <span className="text-9xl leading-none mt-6 font-linebold">{option}</span>
+                    <span className="text-6xl md:text-9xl leading-none mt-6 font-linebold">{option}</span>
                 </Button>
                 );
             })}
