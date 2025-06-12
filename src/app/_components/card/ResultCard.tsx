@@ -57,9 +57,9 @@ const ResultCard: React.FC<ResultCardProps> = ({ correctAnswers, wrongAnswers, s
                 {!isChallenge && <ResultItem label="틀린 문제 수" value={wrongAnswers} color="text-red-500" />}
                 {isChallenge && <ResultItem label="획득한 점수" value={`+${score}`} color="text-orange-600" isScore={true} />}
                 {isChallenge && (
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex md:flex-col flex-row items-center justify-center">
                         <ResultItem label="현재 랭크" value={`${rank}`} color={`${textColor}`}/>
-                        <Logo size={80} className={`${badgeColor} rounded-full`}/>
+                        <Logo size={80} className={`${badgeColor} text-white rounded-full`}/>
                     </div>
                 )}
             </div>
