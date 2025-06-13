@@ -15,7 +15,7 @@ const EnterChallengeCard = ({ rank, score }: EnterChallengeCardProps) => {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/challenge`);
+        router.push(`/challenge/#`);
     };
 
     const { textColor, badgeColor } = getRankColor(rank);
